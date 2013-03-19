@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="userSessionManager"
+		class="com.cjs.basicweb.modules.login.usersession.SimpleSessionManager"
+		scope="singleton" />
+
+	<bean id="userSession"
+		class="com.cjs.basicweb.modules.login.usersession.SimpleUserSession"
+		scope="prototype" />
+
+	<bean id="user" class="com.cjs.basicweb.model.user.SimpleUser"
+		scope="prototype" />
+
+	<bean id="loginBL" class="com.cjs.basicweb.modules.login.logic.LoginBL"
+		scope="prototype" />
+
+	<bean id="loginExecuteAction"
+		class="com.cjs.basicweb.modules.login.action.LoginExecuteAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="logoutExecuteAction" class="com.cjs.basicweb.modules.logout.action.LogoutExecuteAction"
+		scope="prototype" />
+
+	<bean id="pageFail" class="com.cjs.basicweb.utility.PageFail"
+		scope="singleton" >
+		<constructor-arg value="/jsp/main/error_session_expired.jsp"/>
+		<constructor-arg value="/jsp/main/error_not_authorized.jsp"/>
+		<constructor-arg value="/jsp/main/error_page.jsp"/>
+		<property name="urlDoesntNeedSession">
+			<list>
+				<value>/jsp/modules/login/login.jsp</value>
+				<value>/modules/login/executeLogin.action</value>
+				<value>/main/index.action</value>
+				<value>/index.action</value>
+			</list>
+		</property>
+		<property name="urlDoesntNeedPrivilege">
+			<list>
+				<value>/main/leftFrame.action</value>
+				<value>/main/topFrame.action</value>
+				<value>/main/home.action</value>
+				<value>/modules/logout/executeLogout.action</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

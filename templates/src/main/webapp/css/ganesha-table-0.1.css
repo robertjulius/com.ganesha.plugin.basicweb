@@ -1,0 +1,56 @@
+table.grid {
+	border: thin;
+	border-style: solid;
+	border-color: #000000;
+	border-collapse: separate;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+table.grid td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+table.form { /*
+	border: thin;
+	border-style: solid;
+	background-color: #A0A0D0;
+	border-color: #000000;
+	*/
+	
+}
+
+tr.rowOdd {
+	background-color: #F0F0FF;
+}
+
+tr.rowEven {
+	background-color: #E0E0FF;
+}
+
+tbody.selectable tr:HOVER {
+	background-color: #FFFFAA;
+	cursor: hand;
+	cursor: pointer;
+}
+
+table.pagination {
+}
+
+table.pagination td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+table.pagination td.pageSelected {
+	background-color: #AAAAAA;
+}
+
+table.pagination a {
+	
+}
+
+table.pagination a:HOVER {
+	color: red;
+}

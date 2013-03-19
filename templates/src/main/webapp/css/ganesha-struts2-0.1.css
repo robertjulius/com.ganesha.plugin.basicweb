@@ -1,0 +1,23 @@
+.tdLabel {
+	text-align: right;
+	vertical-align: middle;
+}
+
+.label {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+}
+
+
+.errorLabel {
+    color: inherit;
+    font-style: italic;
+}
+
+.errorMessage {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 11px;
+	color: red;
+	font-weight: normal;
+}

@@ -1,0 +1,46 @@
+.wwFormTable {
+	font-family: cursive;
+	font-size: small;
+	background-color: #eeeeee;
+}
+
+.label {
+	
+}
+
+.errorMessage {
+	font-weight: bold;
+	color: red;
+}
+
+.checkboxLabel {
+	
+}
+
+.checkboxErrorLabel {
+	color: red;
+}
+
+.required {
+	color: red;
+}
+
+.tdLabel {
+	text-align: right;
+	vertical-align: top;
+}
+
+.textBox {
+	width: 200px;
+	height: 20px;
+}
+
+.password {
+	width: 200px;
+	height: 20px;
+}
+
+.button {
+	height: 30px;
+	font-size: small;
+}

@@ -1,0 +1,31 @@
+.wwFormTable {
+	background-color: #000fff
+}
+
+.label {
+	font-size: small;
+	font-family: cursive;
+	float: left;
+}
+
+.errorLabel {
+	font-style: italic;
+	color: red;
+}
+
+.errorMessage {
+	font-weight: bold;
+	color: red;
+}
+
+.checkboxLabel {
+	
+}
+
+.checkboxErrorLabel {
+	color: red;
+}
+
+.required {
+	color: red;
+}

@@ -1,0 +1,35 @@
+body {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 11px;
+	white-space: nowrap;
+	background-color: #F5F5F5;
+}
+
+table {
+	border-collapse: collapse;
+	margin: auto;
+}
+
+input {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 11px;
+}
+
+select {
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 11px;
+}
+
+thead {
+	background-color: blue;
+	color: white;
+	font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:HOVER {
+	color: red;
+}

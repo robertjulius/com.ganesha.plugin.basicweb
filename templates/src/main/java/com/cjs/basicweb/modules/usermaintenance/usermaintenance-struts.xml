@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="usermaintenance" extends="basicweb"
+		namespace="/modules/usermaintenance">
+
+		<!-- =================================== -->
+		<!-- UserMaintenanceMainAction : BEGIN -->
+		<!-- =================================== -->
+		<action name="initial"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="initial">
+			<result name="success" type="chain">main
+			</result>
+		</action>
+
+		<action name="main"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_main.jsp
+			</result>
+		</action>
+
+		<action name="search"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="search">
+			<result name="success" type="chain">searchResult
+			</result>
+		</action>
+
+		<action name="searchResult"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_search.jsp
+			</result>
+		</action>
+
+		<action name="prepareDetail"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="prepareDetail">
+			<result name="success" type="chain">detail
+			</result>
+		</action>
+
+		<action name="detail"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceMainAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_detail.jsp
+			</result>
+		</action>
+		<!-- ================================= -->
+		<!-- UserMaintenanceMainAction : END -->
+		<!-- ================================= -->
+
+		<!-- ===================================== -->
+		<!-- UserMaintenanceUpdateAction : BEGIN -->
+		<!-- ===================================== -->
+		<action name="prepareUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="prepareUpdate">
+			<result name="success" type="chain">formUpdate
+			</result>
+		</action>
+
+		<action name="formUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_update.jsp
+			</result>
+		</action>
+
+		<action name="validateUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="validateUpdate">
+			<result name="success" type="chain">confirmUpdate
+			</result>
+			<result name="error">/jsp/modules/usermaintenance/user_maintenance_update.jsp
+			</result>
+		</action>
+
+		<action name="confirmUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_confirm_update.jsp
+			</result>
+		</action>
+
+		<action name="executeUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="executeUpdate">
+			<result name="success" type="chain">summaryUpdate
+			</result>
+			<result name="error">/jsp/modules/usermaintenance/user_maintenance_confirm_update.jsp
+			</result>
+		</action>
+
+		<action name="summaryUpdate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceUpdateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_main.jsp
+			</result>
+		</action>
+		<!-- =================================== -->
+		<!-- UserMaintenanceUpdateAction : END -->
+		<!-- =================================== -->
+
+		<!-- ===================================== -->
+		<!-- UserMaintenanceCreateAction : BEGIN -->
+		<!-- ===================================== -->
+		<action name="prepareCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="prepareCreate">
+			<result name="success" type="chain">formCreate
+			</result>
+		</action>
+
+		<action name="formCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_create.jsp
+			</result>
+		</action>
+
+		<action name="validateCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="validateCreate">
+			<result name="success" type="chain">confirmCreate
+			</result>
+			<result name="error">/jsp/modules/usermaintenance/user_maintenance_create.jsp
+			</result>
+		</action>
+
+		<action name="confirmCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_confirm_create.jsp
+			</result>
+		</action>
+
+		<action name="executeCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="executeCreate">
+			<result name="success" type="chain">summaryCreate
+			</result>
+			<result name="error">/jsp/modules/usermaintenance/user_maintenance_confirm_create.jsp
+			</result>
+		</action>
+
+		<action name="summaryCreate"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceCreateAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_main.jsp
+			</result>
+		</action>
+		<!-- =================================== -->
+		<!-- UserMaintenanceCreateAction : END -->
+		<!-- =================================== -->
+
+		<!-- ===================================== -->
+		<!-- UserMaintenanceDeleteAction : BEGIN -->
+		<!-- ===================================== -->
+		<action name="executeDelete"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceDeleteAction"
+			method="executeDelete">
+			<result name="success" type="chain">summaryDelete
+			</result>
+			<result name="error">/jsp/modules/usermaintenance/user_maintenance_detail.jsp
+			</result>
+		</action>
+
+		<action name="summaryDelete"
+			class="com.cjs.basicweb.modules.usermaintenance.action.UserMaintenanceDeleteAction"
+			method="chainAction">
+			<result name="success">/jsp/modules/usermaintenance/user_maintenance_main.jsp
+			</result>
+		</action>
+		<!-- =================================== -->
+		<!-- UserMaintenanceDeleteAction : END -->
+		<!-- =================================== -->
+
+	</package>
+
+</struts>

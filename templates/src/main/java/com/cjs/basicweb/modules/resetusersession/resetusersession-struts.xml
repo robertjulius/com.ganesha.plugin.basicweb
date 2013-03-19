@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="resetusersession" extends="basicweb"
+		namespace="/modules/resetusersession">
+
+		<action name="initial"
+			class="com.cjs.basicweb.modules.resetusersession.action.ResetUserSessionMainAction"
+			method="initial">
+			<result name="success">/jsp/modules/resetusersession/reset_user_session_main.jsp</result>
+		</action>
+
+		<action name="prepareDetail"
+			class="com.cjs.basicweb.modules.resetusersession.action.ResetUserSessionMainAction"
+			method="prepareDetail">
+			<result name="success">/jsp/modules/resetusersession/reset_user_session_detail.jsp</result>
+		</action>
+
+		<action name="executeReset"
+			class="com.cjs.basicweb.modules.resetusersession.action.ResetUserSessionMainAction"
+			method="executeReset">
+			<result name="success" type="redirectAction">initial</result>
+		</action>
+
+	</package>
+
+</struts>
