@@ -15,6 +15,14 @@
             class="com.ganesha.plugin.basicweb.wizards.SampleNewWizard"
             id="com.ganesha.plugin.basicweb.wizards.SampleNewWizard">
       </wizard>
+      <wizard
+            name="Basic Web Project"
+            icon="icons/sample.gif"
+            category="com.ganesha.plugin.basicweb"
+            class="com.ganesha.plugin.basicweb.wizards.BasicWebProjectWizard"
+            id="com.ganesha.plugin.basicweb.wizards.BasicWebProjectWizard"
+            project="true">
+      </wizard>
    </extension>
 
 </plugin>
