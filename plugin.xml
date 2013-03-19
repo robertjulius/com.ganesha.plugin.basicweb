@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Ganesha"
+            id="com.ganesha.plugin.basicweb">
+      </category>
+      <wizard
+            name="Multi-page Editor file"
+            icon="icons/sample.gif"
+            category="com.ganesha.plugin.basicweb"
+            class="com.ganesha.plugin.basicweb.wizards.SampleNewWizard"
+            id="com.ganesha.plugin.basicweb.wizards.SampleNewWizard">
+      </wizard>
+   </extension>
+
+</plugin>
