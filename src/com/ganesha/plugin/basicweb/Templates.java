@@ -8,6 +8,7 @@ public class Templates {
 
 	static {
 		files.add(".classpath");
+		files.add(".ganesha");
 		files.add(".project");
 		files.add(".settings/.jsdtscope");
 		files.add(".settings/org.eclipse.jdt.core.prefs");

@@ -22,8 +22,6 @@ public class DatabaseSettingPage extends WizardPage {
 	private Text txtUserName;
 	private Text txtPassword;
 
-	private GridData gd_txtUserName;
-
 	public DatabaseSettingPage() {
 		super(NAME);
 		setTitle("Database Setting");
@@ -54,8 +52,7 @@ public class DatabaseSettingPage extends WizardPage {
 		lblUsername.setText("User Name:");
 
 		txtUserName = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd_txtUserName = new GridData(GridData.FILL_HORIZONTAL);
-		txtUserName.setLayoutData(gd_txtUserName);
+		txtUserName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		txtUserName.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
