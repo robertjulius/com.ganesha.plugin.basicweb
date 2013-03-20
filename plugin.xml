@@ -19,8 +19,8 @@
             name="Basic Web Project"
             icon="icons/sample.gif"
             category="com.ganesha.plugin.basicweb"
-            class="com.ganesha.plugin.basicweb.wizards.BasicWebProjectWizard"
-            id="com.ganesha.plugin.basicweb.wizards.BasicWebProjectWizard"
+            class="com.ganesha.plugin.basicweb.wizards.newproject.BasicWebProjectWizard"
+            id="com.ganesha.plugin.basicweb.wizards.newproject.BasicWebProjectWizard"
             project="true">
       </wizard>
    </extension>
