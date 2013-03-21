@@ -14,14 +14,14 @@
 <s:head />
 
 <link rel="stylesheet"
-	href="/basicweb/js/jquery-treeview/jquery.treeview.css" />
-<link rel="stylesheet" href="/basicweb/js/jquery-treeview/screen.css" />
+	href="<%=request.getContextPath() %>/js/jquery-treeview/jquery.treeview.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/js/jquery-treeview/screen.css" />
 
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-<script src="/basicweb/js/jquery-treeview/lib/jquery.cookie.js"
+<script src="<%=request.getContextPath() %>/js/jquery-treeview/lib/jquery.cookie.js"
 	type="text/javascript"></script>
-<script src="/basicweb/js/jquery-treeview/jquery.treeview.js"
+<script src="<%=request.getContextPath() %>/js/jquery-treeview/jquery.treeview.js"
 	type="text/javascript"></script>
 
 <script type="text/javascript">
