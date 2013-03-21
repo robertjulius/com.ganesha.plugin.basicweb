@@ -73,7 +73,7 @@ public class DatabaseSettingPage extends WizardPage {
 			}
 		});
 
-		initForm();
+		initialize();
 		validateInput();
 		setControl(container);
 	}
@@ -90,7 +90,7 @@ public class DatabaseSettingPage extends WizardPage {
 		return txtUserName.getText();
 	}
 
-	private void initForm() {
+	private void initialize() {
 		txtUrl.setText("jdbc:mysql://localhost:3306/iseng");
 		txtUserName.setText("root");
 		txtPassword.setText("root");

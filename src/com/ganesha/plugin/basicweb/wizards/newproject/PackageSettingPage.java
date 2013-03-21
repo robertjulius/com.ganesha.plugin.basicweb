@@ -25,6 +25,19 @@ public class PackageSettingPage extends WizardPage {
 		setTitle("Package Setting");
 	}
 
+	@Override
+	public boolean canFlipToNextPage() {
+		if (getErrorMessage() != null) {
+			return false;
+		}
+
+		if (getNextPage() == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * @see IDialogPage#createControl(Composite)
 	 */
@@ -58,7 +71,7 @@ public class PackageSettingPage extends WizardPage {
 			}
 		});
 
-		initialPage();
+		initialize();
 		validateInput();
 		setControl(container);
 	}
@@ -71,7 +84,7 @@ public class PackageSettingPage extends WizardPage {
 		return txtClient.getText();
 	}
 
-	private void initialPage() {
+	private void initialize() {
 		txtClient.setText("kingdavid");
 		txtBasePackage.setText("website");
 	}
