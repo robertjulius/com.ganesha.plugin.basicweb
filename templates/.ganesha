@@ -1,2 +1,4 @@
 com.ganesha.client=$_gns_var_ganesha_client
 com.ganesha.client.basepackage=$_gns_var_ganesha_basepackage
+com.ganesha.client.basepackage.modules=$_gns_var_ganesha_modules
+com.ganesha.client.basepackage.model=$_gns_var_ganesha_model
