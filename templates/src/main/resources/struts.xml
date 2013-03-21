@@ -46,14 +46,14 @@
 
 	</package>
 	
-	<include file="com/cjs/basicweb/modules/login/login-struts.xml"></include>
-	<include file="com/cjs/basicweb/modules/logout/logout-struts.xml"></include>
-	<include file="com/cjs/basicweb/modules/resetusersession/resetusersession-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/login/login-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/logout/logout-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/resetusersession/resetusersession-struts.xml"></include>
 	
-	<include file="com/cjs/basicweb/modules/module/modulemaintenance-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/module/modulemaintenance-struts.xml"></include>
 	
-	<include file="com/cjs/basicweb/modules/usergroupmaintenance/usergroupmaintenance-struts.xml"></include>
-	<include file="com/cjs/basicweb/modules/usermaintenance/usermaintenance-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/usergroupmaintenance/usergroupmaintenance-struts.xml"></include>
+	<include file="com/ganesha/basicweb/modules/usermaintenance/usermaintenance-struts.xml"></include>
 	
 	
 	

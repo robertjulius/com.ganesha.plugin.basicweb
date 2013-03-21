@@ -15,10 +15,10 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- <mapping resource="com/mkyong/customer/hibernate/Customer.hbm.xml" /> -->
 		<!-- <mapping class="com.mkyong.customer.model.Customer" /> -->
-		<mapping class="com.cjs.basicweb.model.accesspath.AccessPath" />
-		<mapping class="com.cjs.basicweb.model.module.Module" />
-		<mapping class="com.cjs.basicweb.model.user.SimpleUser" />
-		<mapping class="com.cjs.basicweb.model.usergroup.UserGroup" />
-		<mapping class="com.cjs.basicweb.model.activitylog.ActivityLog" />
+		<mapping class="com.ganesha.basicweb.model.accesspath.AccessPath" />
+		<mapping class="com.ganesha.basicweb.model.module.Module" />
+		<mapping class="com.ganesha.basicweb.model.user.SimpleUser" />
+		<mapping class="com.ganesha.basicweb.model.usergroup.UserGroup" />
+		<mapping class="com.ganesha.basicweb.model.activitylog.ActivityLog" />
 	</session-factory>
 </hibernate-configuration>

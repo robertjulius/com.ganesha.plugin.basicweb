@@ -1,9 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.TreeMap"%>
-<%@page import="com.cjs.basicweb.modules.login.Privilege"%>
+<%@page import="com.ganesha.basicweb.modules.login.Privilege"%>
 <%@page
-	import="com.cjs.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
-<%@page import="com.cjs.basicweb.utility.GeneralConstants"%>
+	import="com.ganesha.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
+<%@page import="com.ganesha.basicweb.utility.GeneralConstants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>

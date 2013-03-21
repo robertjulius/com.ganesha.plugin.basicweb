@@ -6,7 +6,7 @@
 	<display-name>Archetype Created Web Application</display-name>
 
 	<listener>
-		<listener-class>com.cjs.basicweb.utility.SimpleSessionListener</listener-class>
+		<listener-class>com.ganesha.basicweb.utility.SimpleSessionListener</listener-class>
 	</listener>
 
 	<listener>
@@ -15,19 +15,19 @@
 
 	<servlet>
 		<servlet-name>ServletStartUp</servlet-name>
-		<servlet-class>com.cjs.basicweb.utility.ServletStartUp</servlet-class>
+		<servlet-class>com.ganesha.basicweb.utility.ServletStartUp</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	
 	<servlet>
 		<servlet-name>AppContextManager</servlet-name>
-		<servlet-class>com.cjs.basicweb.utility.AppContextManager</servlet-class>
+		<servlet-class>com.ganesha.basicweb.utility.AppContextManager</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 
 	<filter>
 		<filter-name>pageFilter</filter-name>
-		<filter-class>com.cjs.basicweb.utility.SimpleFilter</filter-class>
+		<filter-class>com.ganesha.basicweb.utility.SimpleFilter</filter-class>
 	</filter>
 
 	<filter>

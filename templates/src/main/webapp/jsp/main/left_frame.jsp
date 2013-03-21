@@ -1,9 +1,9 @@
-<%@page import="com.cjs.basicweb.modules.login.HtmlMenuGenerator"%>
-<%@page import="com.cjs.core.User"%>
-<%@page import="com.cjs.core.UserSession"%>
+<%@page import="com.ganesha.basicweb.modules.login.HtmlMenuGenerator"%>
+<%@page import="com.ganesha.core.User"%>
+<%@page import="com.ganesha.core.UserSession"%>
 <%@page import="com.opensymphony.xwork2.ActionContext"%>
 <%@page
-	import="com.cjs.basicweb.modules.login.usersession.SimpleUserSession"%>
+	import="com.ganesha.basicweb.modules.login.usersession.SimpleUserSession"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>

@@ -58,7 +58,7 @@ public class PackageSettingPage extends WizardPage {
 			}
 		});
 
-		initForm();
+		initialPage();
 		validateInput();
 		setControl(container);
 	}
@@ -71,9 +71,9 @@ public class PackageSettingPage extends WizardPage {
 		return txtClient.getText();
 	}
 
-	private void initForm() {
-		txtClient.setText("btpn");
-		txtBasePackage.setText("btpn.lapps");
+	private void initialPage() {
+		txtClient.setText("kingdavid");
+		txtBasePackage.setText("website");
 	}
 
 	private void updateStatus(String message) {

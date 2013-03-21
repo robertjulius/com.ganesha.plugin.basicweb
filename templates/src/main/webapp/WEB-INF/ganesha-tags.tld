@@ -10,7 +10,7 @@
     <description><![CDATA["Ganesha Tags"]]></description>
     <tag>
 		<name>pagination</name>
-		<tag-class>com.cjs.struts2.views.jsp.PaginationTag</tag-class>
+		<tag-class>com.ganesha.struts2.views.jsp.PaginationTag</tag-class>
 		<body-content>scriptless</body-content>
 		<attribute>
 			<name>formAction</name>

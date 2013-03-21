@@ -6,28 +6,28 @@
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<bean id="userSessionManager"
-		class="com.cjs.basicweb.modules.login.usersession.SimpleSessionManager"
+		class="com.ganesha.basicweb.modules.login.usersession.SimpleSessionManager"
 		scope="singleton" />
 
 	<bean id="userSession"
-		class="com.cjs.basicweb.modules.login.usersession.SimpleUserSession"
+		class="com.ganesha.basicweb.modules.login.usersession.SimpleUserSession"
 		scope="prototype" />
 
-	<bean id="user" class="com.cjs.basicweb.model.user.SimpleUser"
+	<bean id="user" class="com.ganesha.basicweb.model.user.SimpleUser"
 		scope="prototype" />
 
-	<bean id="loginBL" class="com.cjs.basicweb.modules.login.logic.LoginBL"
+	<bean id="loginBL" class="com.ganesha.basicweb.modules.login.logic.LoginBL"
 		scope="prototype" />
 
 	<bean id="loginExecuteAction"
-		class="com.cjs.basicweb.modules.login.action.LoginExecuteAction"
+		class="com.ganesha.basicweb.modules.login.action.LoginExecuteAction"
 		scope="prototype">
 	</bean>
 
-	<bean id="logoutExecuteAction" class="com.cjs.basicweb.modules.logout.action.LogoutExecuteAction"
+	<bean id="logoutExecuteAction" class="com.ganesha.basicweb.modules.logout.action.LogoutExecuteAction"
 		scope="prototype" />
 
-	<bean id="pageFail" class="com.cjs.basicweb.utility.PageFail"
+	<bean id="pageFail" class="com.ganesha.basicweb.utility.PageFail"
 		scope="singleton" >
 		<constructor-arg value="/jsp/main/error_session_expired.jsp"/>
 		<constructor-arg value="/jsp/main/error_not_authorized.jsp"/>
