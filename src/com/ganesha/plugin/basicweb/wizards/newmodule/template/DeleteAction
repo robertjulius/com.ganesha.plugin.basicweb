@@ -1,0 +1,16 @@
+package $_gns_var_package.action;
+
+import $_gns_var_package.$_gns_var_bl_class;
+import $_gns_var_package.$_gns_var_form_class;
+import com.ganesha.core.exception.AppException;
+import com.ganesha.struts2.FormAction;
+
+public abstract class $_gns_var_class extends
+		FormAction<$_gns_var_form_class, $_gns_var_bl_class> {
+
+	private static final long serialVersionUID = 1L;
+
+	public $_gns_var_class() throws AppException {
+		super($_gns_var_form_class.class, $_gns_var_bl_class.class);
+	}
+}

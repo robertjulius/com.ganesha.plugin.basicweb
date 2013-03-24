@@ -1,10 +1,24 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -15,63 +29,57 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWizard;
 
-/**
- * This is a sample new wizard. Its role is to create a new file resource in the
- * provided container. If the container resource (a folder or a project) is
- * selected in the workspace when the wizard is opened, it will accept it as the
- * target container. The wizard creates one file with the extension "mpe". If a
- * sample multi-page editor (also available as a template) is registered for the
- * same extension, it will be able to open it.
- */
+import com.ganesha.plugin.Utils;
+import com.ganesha.plugin.basicweb.Constants;
 
 public class NewModuleWizard extends Wizard implements INewWizard {
-	private NewModuleWizardPage page;
 	private ISelection selection;
 
-	/**
-	 * Constructor for SampleNewWizard.
-	 */
+	private String moduleName;
+	private String prefixClassName;
+	private Properties properties;
+
 	public NewModuleWizard() {
 		super();
 		setNeedsProgressMonitor(true);
 	}
 
-	/**
-	 * Adding the page to the wizard.
-	 */
-
 	@Override
 	public void addPages() {
-		page = new NewModuleWizardPage();
-		addPage(page);
+		addPage(new NewModuleWizardPage());
 	}
 
-	/**
-	 * We will accept the selection in the workbench to see if we can initialize
-	 * from it.
-	 * 
-	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
-	 */
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.selection = selection;
 	}
 
-	/**
-	 * This method is called when 'Finish' button is pressed in the wizard. We
-	 * will create an operation and run it using wizard as execution context.
-	 */
 	@Override
 	public boolean performFinish() {
-		final String moduleName = page.getModuleName();
+		NewModuleWizardPage page = (NewModuleWizardPage) getPage(NewModuleWizardPage.class
+				.getName());
+
+		moduleName = page.getModuleName();
+
+		while (moduleName.contains("  ")) {
+			moduleName = moduleName.replaceAll("  ", " ");
+		}
+		String[] moduleNames = moduleName.split(" ");
+		prefixClassName = "";
+		for (String string : moduleNames) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(string.substring(0, 1).toUpperCase());
+			stringBuilder.append(string.substring(1).toLowerCase());
+			prefixClassName += stringBuilder.toString();
+		}
+
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException {
 				try {
-					doFinish(moduleName, monitor);
+					doFinish(monitor);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
@@ -92,17 +100,180 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
-	/**
-	 * The worker method. It will find the container, create the file if missing
-	 * or just replace its contents, and open the editor on the newly created
-	 * file.
-	 */
+	private void createAction(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
 
-	private void doFinish(String moduleName, IProgressMonitor monitor)
-			throws CoreException {
-		// create a sample file
-		// monitor.beginTask("Creating " + moduleName, 2);
-		// IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		String actionPath = modulePath + IPath.SEPARATOR + "action";
+		String packageName = properties
+				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
+				+ "." + moduleName.replace(" ", "").toLowerCase();
+
+		IFolder folder = project.getFolder(actionPath);
+		Utils.createResource(folder, monitor);
+
+		List<InputStream> inputStreams = new ArrayList<>();
+
+		{ // base action
+			IFile baseAction = project.getFile(actionPath + IPath.SEPARATOR
+					+ prefixClassName + "Action");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR, baseAction.getName());
+			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			InputStream inputStream = openContentStream("template/BaseAction",
+					map);
+			inputStreams.add(inputStream);
+			createFile(baseAction, inputStream, monitor);
+		}
+
+		{ // main action
+			IFile mainAction = project.getFile(actionPath + IPath.SEPARATOR
+					+ prefixClassName + "MainAction");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR, mainAction.getName());
+			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			InputStream inputStream = openContentStream("template/MainAction",
+					map);
+			inputStreams.add(inputStream);
+			createFile(mainAction, inputStream, monitor);
+		}
+
+		{ // create action
+			IFile createAction = project.getFile(actionPath + IPath.SEPARATOR
+					+ prefixClassName + "CreateAction");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR, createAction.getName());
+			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			InputStream inputStream = openContentStream(
+					"template/CreateAction", map);
+			inputStreams.add(inputStream);
+			createFile(createAction, inputStream, monitor);
+		}
+
+		{ // delete action
+			IFile deleteAction = project.getFile(actionPath + IPath.SEPARATOR
+					+ prefixClassName + "DeleteAction");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR, deleteAction.getName());
+			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			InputStream inputStream = openContentStream(
+					"template/DeleteAction", map);
+			inputStreams.add(inputStream);
+			createFile(deleteAction, inputStream, monitor);
+		}
+
+		{ // update action
+			IFile updateAction = project.getFile(actionPath + IPath.SEPARATOR
+					+ prefixClassName + "UpdateAction");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR, updateAction.getName());
+			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			InputStream inputStream = openContentStream(
+					"template/UpdateAction", map);
+			inputStreams.add(inputStream);
+			createFile(updateAction, inputStream, monitor);
+		}
+	}
+
+	private void createFile(IFile file, InputStream contentStream,
+			IProgressMonitor monitor) throws CoreException {
+
+		if (file.exists()) {
+			file.setContents(contentStream, true, true, monitor);
+		} else {
+			file.create(contentStream, true, monitor);
+		}
+	}
+
+	private void createForm() {
+
+	}
+
+	private void createLogic() {
+
+	}
+
+	private void createModule(String javaSource, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		String basePackage = javaSource
+				+ IPath.SEPARATOR
+				+ (String) properties
+						.get(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES);
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(basePackage);
+		stringBuilder.append(".").append(
+				moduleName.replace(" ", "").toLowerCase());
+
+		String modulePath = stringBuilder.toString().replace('.',
+				IPath.SEPARATOR);
+
+		IFolder folder = project.getFolder(modulePath);
+		Utils.createResource(folder, monitor);
+
+		createAction(modulePath, project, monitor);
+	}
+
+	private void createNLSProperties() {
+
+	}
+
+	private void createStrutsXml() {
+
+	}
+
+	private void doFinish(IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+
+			IStructuredSelection ssel = (IStructuredSelection) selection;
+			if (ssel.size() > 1) {
+				return;
+			}
+
+			IResource resource = (IResource) ssel.getFirstElement();
+			IProject project = resource.getProject();
+			IFile file = (IFile) project.findMember("/.ganesha");
+
+			inputStream = file.getContents();
+
+			if (properties == null) {
+				properties = new Properties();
+			} else {
+				properties.clear();
+			}
+			properties.load(inputStream);
+
+			createModule(Constants.JAVA_SOURCE, project, monitor);
+
+		} catch (IOException e) {
+			IStatus status = new Status(IStatus.ERROR, this.getClass()
+					.getName(), IStatus.OK, e.getLocalizedMessage(), null);
+			throw new CoreException(status);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+
 		// IResource resource = root.findMember(new Path(moduleName));
 		// if (!resource.exists() || !(resource instanceof IContainer)) {
 		// throwCoreException("Container \"" + moduleName
@@ -136,18 +307,48 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		// monitor.worked(1);
 	}
 
-	/**
-	 * We will initialize file contents with a sample text.
-	 */
+	private InputStream openContentStream(String filePath,
+			Map<String, String> map) throws CoreException {
 
-	private InputStream openContentStream() {
-		String contents = "This is the initial file contents for *.mpe file that should be word-sorted in the Preview page of the multi-page editor";
-		return new ByteArrayInputStream(contents.getBytes());
-	}
+		String newLine = System.getProperty("line.separator");
+		StringBuilder sb = new StringBuilder();
 
-	private void throwCoreException(String message) throws CoreException {
-		IStatus status = new Status(IStatus.ERROR,
-				"com.ganesha.plugin.basicweb", IStatus.OK, message, null);
-		throw new CoreException(status);
+		InputStream input = null;
+		BufferedReader reader = null;
+
+		try {
+			input = this.getClass().getResourceAsStream(filePath);
+			reader = new BufferedReader(new InputStreamReader(input));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				Iterator<String> iterator = map.keySet().iterator();
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					String value = map.get(key);
+					line = line.replaceAll("\\" + key, value);
+				}
+				sb.append(line);
+				sb.append(newLine);
+			}
+
+		} catch (IOException e) {
+			IStatus status = new Status(IStatus.ERROR, this.getClass()
+					.getName(), IStatus.OK, e.getLocalizedMessage(), null);
+			throw new CoreException(status);
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+
+		return new ByteArrayInputStream(sb.toString().getBytes());
 	}
 }
