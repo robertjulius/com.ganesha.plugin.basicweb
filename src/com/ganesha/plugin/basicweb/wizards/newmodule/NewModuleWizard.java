@@ -115,11 +115,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		{ // base action
 			IFile baseAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "Action");
+					+ prefixClassName + "Action.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR, baseAction.getName());
-			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_VAR,
+					baseAction.getName().replace(".java", ""));
+			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			InputStream inputStream = openContentStream("template/BaseAction",
 					map);
@@ -129,11 +130,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		{ // main action
 			IFile mainAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "MainAction");
+					+ prefixClassName + "MainAction.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR, mainAction.getName());
-			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_VAR,
+					mainAction.getName().replace(".java", ""));
+			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			InputStream inputStream = openContentStream("template/MainAction",
 					map);
@@ -143,11 +145,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		{ // create action
 			IFile createAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "CreateAction");
+					+ prefixClassName + "CreateAction.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR, createAction.getName());
-			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_VAR,
+					createAction.getName().replace(".java", ""));
+			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			InputStream inputStream = openContentStream(
 					"template/CreateAction", map);
@@ -157,11 +160,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		{ // delete action
 			IFile deleteAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "DeleteAction");
+					+ prefixClassName + "DeleteAction.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR, deleteAction.getName());
-			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_VAR,
+					deleteAction.getName().replace(".java", ""));
+			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			InputStream inputStream = openContentStream(
 					"template/DeleteAction", map);
@@ -171,11 +175,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		{ // update action
 			IFile updateAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "UpdateAction");
+					+ prefixClassName + "UpdateAction.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR, updateAction.getName());
-			map.put(Constants.BL_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_VAR,
+					updateAction.getName().replace(".java", ""));
+			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			InputStream inputStream = openContentStream(
 					"template/UpdateAction", map);
@@ -194,12 +199,46 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 	}
 
-	private void createForm() {
+	private void createForm(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+		String packageName = properties
+				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
+				+ "." + moduleName.replace(" ", "").toLowerCase();
 
+		List<InputStream> inputStreams = new ArrayList<>();
+
+		{ // business logic class
+			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
+					+ prefixClassName + "Form.java");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR,
+					businessLogic.getName().replace(".java", ""));
+			InputStream inputStream = openContentStream("template/Form", map);
+			inputStreams.add(inputStream);
+			createFile(businessLogic, inputStream, monitor);
+		}
 	}
 
-	private void createLogic() {
+	private void createLogic(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+		String packageName = properties
+				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
+				+ "." + moduleName.replace(" ", "").toLowerCase();
 
+		List<InputStream> inputStreams = new ArrayList<>();
+
+		{ // business logic class
+			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
+					+ prefixClassName + "BL.java");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.PACKAGE_VAR, packageName);
+			map.put(Constants.CLASS_VAR,
+					businessLogic.getName().replace(".java", ""));
+			InputStream inputStream = openContentStream("template/BL", map);
+			inputStreams.add(inputStream);
+			createFile(businessLogic, inputStream, monitor);
+		}
 	}
 
 	private void createModule(String javaSource, IProject project,
@@ -221,6 +260,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		IFolder folder = project.getFolder(modulePath);
 		Utils.createResource(folder, monitor);
 
+		createLogic(modulePath, project, monitor);
+		createForm(modulePath, project, monitor);
 		createAction(modulePath, project, monitor);
 	}
 

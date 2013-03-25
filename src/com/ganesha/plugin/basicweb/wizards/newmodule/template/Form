@@ -1,0 +1,8 @@
+package $_gns_var_package;
+
+import com.ganesha.basicweb.model.FormBean;
+
+public class $_gns_var_class extends FormBean {
+
+	private static final long serialVersionUID = 1L;
+}

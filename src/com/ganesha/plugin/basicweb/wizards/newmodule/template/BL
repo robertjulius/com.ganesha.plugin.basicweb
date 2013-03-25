@@ -1,0 +1,6 @@
+package $_gns_var_package;
+
+import com.ganesha.basicweb.modules.BusinessLogic;
+
+public class $_gns_var_class extends BusinessLogic {
+}
