@@ -1,8 +1,30 @@
 package $_gns_var_package;
 
+import java.util.List;
+
 import com.ganesha.basicweb.model.FormBean;
+import com.ganesha.basicweb.model.Trackable;
+import com.ganesha.core.exception.AppException;
+import com.opensymphony.xwork2.ActionSupport;
 
 public class $_gns_var_class extends FormBean {
 
 	private static final long serialVersionUID = 1L;
+	
+	private String searchCriteria1;
+	private String searchCriteria2;
+	private List<Trackable> searchResult;;
+	
+	private String selectedId;
+	
+	private Trackable old;
+	
+	private String newField1;
+	private String newField2;
+
+	@Override
+	public void validate(ActionSupport action) throws AppException {
+		// TODO Auto-generated method stub
+		super.validate(action);
+	}
 }
