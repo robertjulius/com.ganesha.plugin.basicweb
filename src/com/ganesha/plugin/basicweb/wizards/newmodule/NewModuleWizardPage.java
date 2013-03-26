@@ -70,6 +70,7 @@ public class NewModuleWizardPage extends WizardPage {
 		lblEntity.setText("Entity:");
 
 		txtEntity = new Text(container, SWT.BORDER);
+		txtEntity.setEditable(false);
 		txtEntity.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				1, 1));
 
@@ -128,6 +129,11 @@ public class NewModuleWizardPage extends WizardPage {
 	private void validateInput() {
 		if (getModuleName().length() == 0) {
 			updateStatus("Module Name must be specified");
+			return;
+		}
+
+		if (getEntity() == null) {
+			updateStatus("Entity must be specified");
 			return;
 		}
 

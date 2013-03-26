@@ -39,6 +39,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private String moduleName;
 	private String prefixClassName;
 	private Properties properties;
+	private String entitySimpleName;
+	private String entityFullName;
 
 	public NewModuleWizard() {
 		super();
@@ -73,6 +75,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			stringBuilder.append(string.substring(1).toLowerCase());
 			prefixClassName += stringBuilder.toString();
 		}
+
+		@SuppressWarnings("restriction")
+		String fullyQualifiedName = page.getEntity().getFullyQualifiedName();
+		entityFullName = fullyQualifiedName;
+
+		@SuppressWarnings("restriction")
+		String elementName = page.getEntity().getElementName();
+		entitySimpleName = elementName;
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
@@ -122,6 +132,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					baseAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream("template/BaseAction",
 					map);
 			inputStreams.add(inputStream);
@@ -137,6 +149,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					mainAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream("template/MainAction",
 					map);
 			inputStreams.add(inputStream);
@@ -152,6 +166,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					createAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream(
 					"template/CreateAction", map);
 			inputStreams.add(inputStream);
@@ -167,6 +183,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					deleteAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream(
 					"template/DeleteAction", map);
 			inputStreams.add(inputStream);
@@ -182,6 +200,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					updateAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream(
 					"template/UpdateAction", map);
 			inputStreams.add(inputStream);
@@ -214,6 +234,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_VAR,
 					businessLogic.getName().replace(".java", ""));
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream("template/Form", map);
 			inputStreams.add(inputStream);
 			createFile(businessLogic, inputStream, monitor);
@@ -235,6 +257,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_VAR,
 					businessLogic.getName().replace(".java", ""));
+			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			InputStream inputStream = openContentStream("template/BL", map);
 			inputStreams.add(inputStream);
 			createFile(businessLogic, inputStream, monitor);
@@ -373,6 +397,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				sb.append(newLine);
 			}
 
+			return new ByteArrayInputStream(sb.toString().getBytes());
+
 		} catch (IOException e) {
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
 					.getName(), IStatus.OK, e.getLocalizedMessage(), null);
@@ -389,7 +415,5 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				}
 			}
 		}
-
-		return new ByteArrayInputStream(sb.toString().getBytes());
 	}
 }
