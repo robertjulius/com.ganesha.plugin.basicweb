@@ -14,7 +14,7 @@ import com.ganesha.basicweb.utility.PropertiesConstants;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 
-public class $_gns_var_class extends BusinessLogic {
+public class $_gns_var_bl_class extends BusinessLogic {
 
 	public void create(String createBy, Timestamp createDate)
 			throws AppException {
@@ -73,8 +73,7 @@ public class $_gns_var_class extends BusinessLogic {
 		return ($_gns_var_entity_simple_class) criteria.uniqueResult();
 	}
 	
-	public List<$_gns_var_entity_simple_class> search(String searchCriteria1, String searchCriteria2,
-			String searchCriteria3) throws AppException {
+	public List<$_gns_var_entity_simple_class> search(String searchCriteria1, String searchCriteria2) throws AppException {
 
 		/*
 		 * TODO Auto-generated method stub
@@ -89,11 +88,6 @@ public class $_gns_var_class extends BusinessLogic {
 
 		if (searchCriteria2 != null && !searchCriteria2.trim().isEmpty()) {
 			criteria.add(Restrictions.like("searchCriteria2", "%" + searchCriteria2 + "%"));
-		}
-
-		if (searchCriteria3 != null && !searchCriteria3.trim().isEmpty()) {
-			criteria.add(Restrictions.like("searchCriteria3", "%"
-					+ searchCriteria3 + "%"));
 		}
 
 		criteria.add(Restrictions.eq("recStatus",

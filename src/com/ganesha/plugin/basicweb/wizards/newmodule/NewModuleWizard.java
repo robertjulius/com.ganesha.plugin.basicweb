@@ -1,5 +1,7 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
+import static com.ganesha.plugin.basicweb.Constants.BL_VAR;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -128,7 +130,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					+ prefixClassName + "Action.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
+			map.put(Constants.BASE_ACTION_VAR,
 					baseAction.getName().replace(".java", ""));
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
@@ -149,10 +151,13 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		{ // main action
 			IFile mainAction = project.getFile(actionPath + IPath.SEPARATOR
 					+ prefixClassName + "MainAction.java");
+			String baseAction = prefixClassName + "Action";
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
+			map.put(Constants.MAIN_ACTION_VAR,
 					mainAction.getName().replace(".java", ""));
+			map.put(Constants.BASE_ACTION_VAR, baseAction);
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
@@ -172,10 +177,13 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		{ // create action
 			IFile createAction = project.getFile(actionPath + IPath.SEPARATOR
 					+ prefixClassName + "CreateAction.java");
+			String baseAction = prefixClassName + "Action";
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
-					createAction.getName().replace(".java", ""));
+			map.put(Constants.CREATE_ACTION_VAR, createAction.getName()
+					.replace(".java", ""));
+			map.put(Constants.BASE_ACTION_VAR, baseAction);
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
@@ -195,10 +203,13 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		{ // delete action
 			IFile deleteAction = project.getFile(actionPath + IPath.SEPARATOR
 					+ prefixClassName + "DeleteAction.java");
+			String baseAction = prefixClassName + "Action";
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
-					deleteAction.getName().replace(".java", ""));
+			map.put(Constants.DELETE_ACTION_VAR, deleteAction.getName()
+					.replace(".java", ""));
+			map.put(Constants.BASE_ACTION_VAR, baseAction);
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
@@ -218,10 +229,13 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		{ // update action
 			IFile updateAction = project.getFile(actionPath + IPath.SEPARATOR
 					+ prefixClassName + "UpdateAction.java");
+			String baseAction = prefixClassName + "Action";
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
-					updateAction.getName().replace(".java", ""));
+			map.put(Constants.UPDATE_ACTION_VAR, updateAction.getName()
+					.replace(".java", ""));
+			map.put(Constants.BASE_ACTION_VAR, baseAction);
 			map.put(Constants.FORM_VAR, prefixClassName + "Form");
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
@@ -262,7 +276,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					+ prefixClassName + "Form.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
+			map.put(Constants.FORM_VAR,
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
@@ -291,8 +305,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					+ prefixClassName + "BL.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CLASS_VAR,
-					businessLogic.getName().replace(".java", ""));
+			map.put(BL_VAR, businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 

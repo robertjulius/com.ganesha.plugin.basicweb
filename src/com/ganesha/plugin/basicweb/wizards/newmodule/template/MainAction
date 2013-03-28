@@ -1,16 +1,45 @@
 package $_gns_var_package.action;
 
-import $_gns_var_package.$_gns_var_bl_class;
+import java.util.List;
+
+import $_gns_var_entity_full_class;
 import $_gns_var_package.$_gns_var_form_class;
 import com.ganesha.core.exception.AppException;
-import com.ganesha.struts2.FormAction;
 
-public abstract class $_gns_var_class extends
-		FormAction<$_gns_var_form_class, $_gns_var_bl_class> {
+public abstract class $_gns_var_main_action_class extends $_gns_var_base_action_class {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_class() throws AppException {
-		super($_gns_var_form_class.class, $_gns_var_bl_class.class);
+	public $_gns_var_main_action_class() throws AppException {
+		super();
+	}
+	
+	public String initial() throws AppException {
+		// TODO Auto-generated method stub
+		return SUCCESS;
+	}
+	
+	public String prepareDetail() throws AppException {
+		// TODO Auto-generated method stub
+		$_gns_var_form_class form = getForm();
+		String selectedId = form.getSelectedId();
+
+		$_gns_var_entity_simple_class $_gns_var_entity_var_name = getBL().getDetail(selectedId);
+		form.setOld($_gns_var_entity_var_name);
+
+		return SUCCESS;
+	}
+	
+	public String search() throws AppException {
+		// TODO Auto-generated method stub
+		$_gns_var_form_class form = getForm();
+		
+		String searchCriteria1 = form.getSearchCriteria1();
+		String searchCriteria2 = form.getSearchCriteria2();
+
+		List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search(searchCriteria1, searchCriteria2);
+		form.setSearchResult($_gns_var_entity_var_names);
+		
+		return SUCCESS;
 	}
 }
