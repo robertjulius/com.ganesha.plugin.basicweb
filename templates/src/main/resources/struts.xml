@@ -39,24 +39,16 @@
 		<action name="home">
 			<result>/jsp/main/home.jsp</result>
 		</action>
-		
-		<action name="testFirstEntry" class="testFirstEntryAction">
-			<result name="success">/jsp/modules/test/test_maintenance_main.jsp</result>
-		</action>
 
 	</package>
 	
 	<include file="com/ganesha/basicweb/modules/login/login-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/logout/logout-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/resetusersession/resetusersession-struts.xml"></include>
-	
 	<include file="com/ganesha/basicweb/modules/module/modulemaintenance-struts.xml"></include>
-	
 	<include file="com/ganesha/basicweb/modules/usergroupmaintenance/usergroupmaintenance-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/usermaintenance/usermaintenance-struts.xml"></include>
 	
-	
-	
-	
+	<!-- DO NOT DELETE THIS LINE. THIS LINE IS USED BY GANESHA FRAMEWORK TO GENERATE NEW MODULE -->
 
 </struts>

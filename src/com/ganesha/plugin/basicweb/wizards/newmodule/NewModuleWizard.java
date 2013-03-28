@@ -2,15 +2,11 @@ package com.ganesha.plugin.basicweb.wizards.newmodule;
 
 import static com.ganesha.plugin.basicweb.Constants.CLASS_BL_VAR;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -112,6 +108,49 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
+	private void appendRootStrutsXml(IProject project, IProgressMonitor monitor)
+			throws CoreException {
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder
+				.append(properties
+						.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES))
+				.append(".").append(prefixClassName.toLowerCase()).append(".")
+				.append(prefixClassName.toLowerCase());
+
+		String moduleXmlPath = stringBuilder.toString().replace('.',
+				IPath.SEPARATOR)
+				+ "-struts.xml";
+
+		InputStream inputStream = null;
+		try {
+			IFile strutsXml = project.getFile(Constants.RESOURCE
+					+ IPath.SEPARATOR + "struts.xml");
+
+			Map<String, String> map = new HashMap<>();
+
+			String newIncludeLine = "<include file=\"" + moduleXmlPath
+					+ "\"></include>";
+			map.put(Constants.STRUTS_NEW_MODULE_LINE, newIncludeLine + "\n\t"
+					+ Constants.STRUTS_NEW_MODULE_LINE);
+
+			inputStream = Utils.openContentStream(strutsXml, map,
+					this.getClass());
+			createFile(strutsXml, inputStream, monitor);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
 	private void createAction(String modulePath, IProject project,
 			IProgressMonitor monitor) throws CoreException {
 
@@ -128,6 +167,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		{ // base action
 			IFile baseAction = project.getFile(actionPath + IPath.SEPARATOR
 					+ prefixClassName + "Action.java");
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_BASE,
@@ -141,8 +181,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream("template/BaseAction",
-					map);
+			InputStream inputStream = Utils.openContentStream(
+					"template/BaseAction", map, this.getClass(), false);
 			inputStreams.add(inputStream);
 
 			createFile(baseAction, inputStream, monitor);
@@ -167,8 +207,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream("template/MainAction",
-					map);
+			InputStream inputStream = Utils.openContentStream(
+					"template/MainAction", map, this.getClass(), false);
 			inputStreams.add(inputStream);
 
 			createFile(mainAction, inputStream, monitor);
@@ -193,8 +233,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream(
-					"template/CreateAction", map);
+			InputStream inputStream = Utils.openContentStream(
+					"template/CreateAction", map, this.getClass(), false);
 			inputStreams.add(inputStream);
 
 			createFile(createAction, inputStream, monitor);
@@ -219,8 +259,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream(
-					"template/DeleteAction", map);
+			InputStream inputStream = Utils.openContentStream(
+					"template/DeleteAction", map, this.getClass(), false);
 			inputStreams.add(inputStream);
 
 			createFile(deleteAction, inputStream, monitor);
@@ -245,8 +285,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream(
-					"template/UpdateAction", map);
+			InputStream inputStream = Utils.openContentStream(
+					"template/UpdateAction", map, this.getClass(), false);
 			inputStreams.add(inputStream);
 
 			createFile(updateAction, inputStream, monitor);
@@ -286,6 +326,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		try {
 			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
 					+ prefixClassName + "Form.java");
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_FORM_VAR,
@@ -297,7 +338,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			inputStream = openContentStream("template/Form", map);
+			inputStream = Utils.openContentStream("template/Form", map,
+					this.getClass(), false);
 			createFile(businessLogic, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -323,6 +365,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		try {
 			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
 					+ prefixClassName + "BL.java");
+
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(CLASS_BL_VAR, businessLogic.getName().replace(".java", ""));
@@ -333,7 +376,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			inputStream = openContentStream("template/BL", map);
+			inputStream = Utils.openContentStream("template/BL", map,
+					this.getClass(), false);
 			createFile(businessLogic, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -366,8 +410,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		IFolder folder = project.getFolder(modulePath);
 		if (folder.exists()) {
-			Exception e = new Exception("Module '" + moduleName
-					+ "' already exists");
+			Exception e = new Exception("Cannot create module '" + moduleName
+					+ "' because directory " + folder.getFullPath()
+					+ " already exists");
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
 					.getName(), IStatus.OK, e.getMessage(), e);
 			throw new CoreException(status);
@@ -378,10 +423,35 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		createForm(modulePath, project, monitor);
 		createAction(modulePath, project, monitor);
 		createStrutsXml(modulePath, project, monitor);
+		createNLSProperties(modulePath, project, monitor);
 	}
 
-	private void createNLSProperties() {
+	private void createNLSProperties(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
 
+		InputStream inputStream = null;
+		try {
+			IFile packageProperties = project.getFile(modulePath
+					+ IPath.SEPARATOR + "package.properties");
+
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.RESOURCE_PAGE_TITLE, moduleName);
+
+			inputStream = Utils.openContentStream("template/NLS", map,
+					this.getClass(), false);
+			createFile(packageProperties, inputStream, monitor);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
 	}
 
 	private void createStrutsXml(String modulePath, IProject project,
@@ -415,8 +485,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.JSP_CREATE_CONFIRM, prefixJspName
 					+ "_confirm_create.jsp");
 
-			inputStream = openContentStream("template/struts", map);
+			inputStream = Utils.openContentStream("template/struts", map,
+					this.getClass(), false);
 			createFile(strutsXml, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -514,50 +588,5 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		// }
 		// });
 		// monitor.worked(1);
-	}
-
-	private InputStream openContentStream(String filePath,
-			Map<String, String> map) throws CoreException {
-
-		String newLine = System.getProperty("line.separator");
-		StringBuilder sb = new StringBuilder();
-
-		InputStream input = null;
-		BufferedReader reader = null;
-
-		try {
-			input = this.getClass().getResourceAsStream(filePath);
-			reader = new BufferedReader(new InputStreamReader(input));
-
-			String line;
-			while ((line = reader.readLine()) != null) {
-				Iterator<String> iterator = map.keySet().iterator();
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-					String value = map.get(key);
-					line = line.replaceAll("\\" + key, value);
-				}
-				sb.append(line);
-				sb.append(newLine);
-			}
-
-			return new ByteArrayInputStream(sb.toString().getBytes());
-
-		} catch (IOException e) {
-			IStatus status = new Status(IStatus.ERROR, this.getClass()
-					.getName(), IStatus.OK, e.getLocalizedMessage(), e);
-			throw new CoreException(status);
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					IStatus status = new Status(IStatus.ERROR, this.getClass()
-							.getName(), IStatus.OK, e.getLocalizedMessage(),
-							null);
-					throw new CoreException(status);
-				}
-			}
-		}
 	}
 }
