@@ -1,6 +1,6 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
-import static com.ganesha.plugin.basicweb.Constants.BL_VAR;
+import static com.ganesha.plugin.basicweb.Constants.CLASS_BL_VAR;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -118,7 +118,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		String actionPath = modulePath + IPath.SEPARATOR + "action";
 		String packageName = properties
 				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + moduleName.replace(" ", "").toLowerCase();
+				+ "." + prefixClassName.toLowerCase();
 
 		IFolder folder = project.getFolder(actionPath);
 		Utils.createResource(folder, monitor);
@@ -130,10 +130,10 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					+ prefixClassName + "Action.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.BASE_ACTION_VAR,
+			map.put(Constants.CLASS_ACTION_BASE,
 					baseAction.getName().replace(".java", ""));
-			map.put(Constants.FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -155,11 +155,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.MAIN_ACTION_VAR,
+			map.put(Constants.CLASS_ACTION_MAIN,
 					mainAction.getName().replace(".java", ""));
-			map.put(Constants.BASE_ACTION_VAR, baseAction);
-			map.put(Constants.FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_ACTION_BASE, baseAction);
+			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -181,11 +181,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.CREATE_ACTION_VAR, createAction.getName()
+			map.put(Constants.CLASS_ACTION_CREATE, createAction.getName()
 					.replace(".java", ""));
-			map.put(Constants.BASE_ACTION_VAR, baseAction);
-			map.put(Constants.FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_ACTION_BASE, baseAction);
+			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -207,11 +207,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.DELETE_ACTION_VAR, deleteAction.getName()
+			map.put(Constants.CLASS_ACTION_DELETE, deleteAction.getName()
 					.replace(".java", ""));
-			map.put(Constants.BASE_ACTION_VAR, baseAction);
-			map.put(Constants.FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_ACTION_BASE, baseAction);
+			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -233,11 +233,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.UPDATE_ACTION_VAR, updateAction.getName()
+			map.put(Constants.CLASS_ACTION_UPDATE, updateAction.getName()
 					.replace(".java", ""));
-			map.put(Constants.BASE_ACTION_VAR, baseAction);
-			map.put(Constants.FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_ACTION_BASE, baseAction);
+			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
+			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -250,6 +250,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStreams.add(inputStream);
 
 			createFile(updateAction, inputStream, monitor);
+		}
+
+		for (InputStream inputStream : inputStreams) {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
 		}
 	}
 
@@ -267,16 +280,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			IProgressMonitor monitor) throws CoreException {
 		String packageName = properties
 				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + moduleName.replace(" ", "").toLowerCase();
+				+ "." + prefixClassName.toLowerCase();
 
-		List<InputStream> inputStreams = new ArrayList<>();
-
-		{ // business logic class
+		InputStream inputStream = null;
+		try {
 			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
 					+ prefixClassName + "Form.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(Constants.FORM_VAR,
+			map.put(Constants.CLASS_FORM_VAR,
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
@@ -285,10 +297,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream("template/Form", map);
-			inputStreams.add(inputStream);
-
+			inputStream = openContentStream("template/Form", map);
 			createFile(businessLogic, inputStream, monitor);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
 		}
 	}
 
@@ -296,16 +317,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			IProgressMonitor monitor) throws CoreException {
 		String packageName = properties
 				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + moduleName.replace(" ", "").toLowerCase();
+				+ "." + prefixClassName.toLowerCase();
 
-		List<InputStream> inputStreams = new ArrayList<>();
-
-		{ // business logic class
+		InputStream inputStream = null;
+		try {
 			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
 					+ prefixClassName + "BL.java");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
-			map.put(BL_VAR, businessLogic.getName().replace(".java", ""));
+			map.put(CLASS_BL_VAR, businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
@@ -313,10 +333,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = openContentStream("template/BL", map);
-			inputStreams.add(inputStream);
-
+			inputStream = openContentStream("template/BL", map);
 			createFile(businessLogic, inputStream, monitor);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
 		}
 	}
 
@@ -330,26 +359,76 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(basePackage);
-		stringBuilder.append(".").append(
-				moduleName.replace(" ", "").toLowerCase());
+		stringBuilder.append(".").append(prefixClassName.toLowerCase());
 
 		String modulePath = stringBuilder.toString().replace('.',
 				IPath.SEPARATOR);
 
 		IFolder folder = project.getFolder(modulePath);
+		if (folder.exists()) {
+			Exception e = new Exception("Module '" + moduleName
+					+ "' already exists");
+			IStatus status = new Status(IStatus.ERROR, this.getClass()
+					.getName(), IStatus.OK, e.getMessage(), e);
+			throw new CoreException(status);
+		}
 		Utils.createResource(folder, monitor);
 
 		createLogic(modulePath, project, monitor);
 		createForm(modulePath, project, monitor);
 		createAction(modulePath, project, monitor);
+		createStrutsXml(modulePath, project, monitor);
 	}
 
 	private void createNLSProperties() {
 
 	}
 
-	private void createStrutsXml() {
+	private void createStrutsXml(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
 
+		InputStream inputStream = null;
+		try {
+			IFile strutsXml = project.getFile(modulePath + IPath.SEPARATOR
+					+ prefixClassName.toLowerCase() + "-struts.xml");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.GANESHA_MODULES_VAR,
+					properties
+							.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES));
+			map.put(Constants.CLASS_ACTION_MAIN, prefixClassName + "MainAction");
+			map.put(Constants.CLASS_ACTION_CREATE, prefixClassName
+					+ "CreateAction");
+			map.put(Constants.CLASS_ACTION_UPDATE, prefixClassName
+					+ "UpdateAction");
+			map.put(Constants.CLASS_ACTION_DELETE, prefixClassName
+					+ "DeleteAction");
+
+			String prefixJspName = moduleName.replaceAll(" ", "_")
+					.toLowerCase();
+			map.put(Constants.JSP_MAIN, prefixJspName + "_main.jsp");
+			map.put(Constants.JSP_DETAIL, prefixJspName + "_detail.jsp");
+			map.put(Constants.JSP_UPDATE, prefixJspName + "_update.jsp");
+			map.put(Constants.JSP_UPDATE_CONFIRM, prefixJspName
+					+ "_confirm_update.jsp");
+			map.put(Constants.JSP_CREATE, prefixJspName + "_create.jsp");
+			map.put(Constants.JSP_CREATE_CONFIRM, prefixJspName
+					+ "_confirm_create.jsp");
+
+			inputStream = openContentStream("template/struts", map);
+			createFile(strutsXml, inputStream, monitor);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
 	}
 
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
@@ -365,6 +444,16 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			IResource resource = (IResource) ssel.getFirstElement();
 			IProject project = resource.getProject();
 			IFile file = (IFile) project.findMember("/.ganesha");
+			if (file == null) {
+				Exception e = new Exception(
+						"Project '"
+								+ project.getName()
+								+ "' is not a valid Ganesha Basic Web Project. Cannot create '"
+								+ moduleName + "' in this project.");
+				IStatus status = new Status(IStatus.ERROR, this.getClass()
+						.getName(), IStatus.OK, e.getLocalizedMessage(), e);
+				throw new CoreException(status);
+			}
 
 			inputStream = file.getContents();
 
@@ -379,7 +468,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		} catch (IOException e) {
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
-					.getName(), IStatus.OK, e.getLocalizedMessage(), null);
+					.getName(), IStatus.OK, e.getLocalizedMessage(), e);
 			throw new CoreException(status);
 		} finally {
 			if (inputStream != null) {
@@ -456,7 +545,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		} catch (IOException e) {
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
-					.getName(), IStatus.OK, e.getLocalizedMessage(), null);
+					.getName(), IStatus.OK, e.getLocalizedMessage(), e);
 			throw new CoreException(status);
 		} finally {
 			if (reader != null) {

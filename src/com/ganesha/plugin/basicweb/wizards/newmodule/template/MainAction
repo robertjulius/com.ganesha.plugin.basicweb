@@ -3,14 +3,14 @@ package $_gns_var_package.action;
 import java.util.List;
 
 import $_gns_var_entity_full_class;
-import $_gns_var_package.$_gns_var_form_class;
+import $_gns_var_package.$_gns_var_class_form;
 import com.ganesha.core.exception.AppException;
 
-public abstract class $_gns_var_main_action_class extends $_gns_var_base_action_class {
+public abstract class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_main_action_class() throws AppException {
+	public $_gns_var_class_action_main() throws AppException {
 		super();
 	}
 	
@@ -21,7 +21,7 @@ public abstract class $_gns_var_main_action_class extends $_gns_var_base_action_
 	
 	public String prepareDetail() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_form_class form = getForm();
+		$_gns_var_class_form form = getForm();
 		String selectedId = form.getSelectedId();
 
 		$_gns_var_entity_simple_class $_gns_var_entity_var_name = getBL().getDetail(selectedId);
@@ -32,7 +32,7 @@ public abstract class $_gns_var_main_action_class extends $_gns_var_base_action_
 	
 	public String search() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_form_class form = getForm();
+		$_gns_var_class_form form = getForm();
 		
 		String searchCriteria1 = form.getSearchCriteria1();
 		String searchCriteria2 = form.getSearchCriteria2();

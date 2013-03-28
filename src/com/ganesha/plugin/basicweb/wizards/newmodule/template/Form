@@ -7,7 +7,7 @@ import $_gns_var_entity_full_class;
 import com.ganesha.core.exception.AppException;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class $_gns_var_form_class extends FormBean {
+public class $_gns_var_class_form extends FormBean {
 
 	private static final long serialVersionUID = 1L;
 	

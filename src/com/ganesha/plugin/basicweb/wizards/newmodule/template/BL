@@ -14,7 +14,7 @@ import com.ganesha.basicweb.utility.PropertiesConstants;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 
-public class $_gns_var_bl_class extends BusinessLogic {
+public class $_gns_var_class_bl extends BusinessLogic {
 
 	public void create(String createBy, Timestamp createDate)
 			throws AppException {
