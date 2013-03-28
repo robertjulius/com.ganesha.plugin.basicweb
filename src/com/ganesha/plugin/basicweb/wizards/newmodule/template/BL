@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-import com.ganesha.basicweb.model.Trackable;
+import $_gns_var_entity_full_class;
 import com.ganesha.basicweb.modules.BusinessLogic;
 import com.ganesha.basicweb.utility.GeneralConstants;
 import com.ganesha.basicweb.utility.GeneralConstants.ActionType;
@@ -25,12 +25,12 @@ public class $_gns_var_class extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		Trackable entity = null;
-		entity.setUpdateDate(createDate);
-		entity.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);
+		$_gns_var_entity_simple_class $_gns_var_entity_var_name = new $_gns_var_entity_simple_class();
+		$_gns_var_entity_var_name.setUpdateDate(createDate);
+		$_gns_var_entity_var_name.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);
 
-		getSession().save(entity);
-		saveActivityLog(ActionType.CREATE, entity);
+		getSession().save($_gns_var_entity_var_name);
+		saveActivityLog(ActionType.CREATE, $_gns_var_entity_var_name);
 
 		commit();
 	}
@@ -44,18 +44,18 @@ public class $_gns_var_class extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		Trackable entity = (Trackable) getSession().load(Trackable.class, id);
-		entity.setUpdateBy(updateBy);
-		entity.setUpdateDate(updateDate);
-		entity.setRecStatus(GeneralConstants.REC_STATUS_NONACTIVE);
+		$_gns_var_entity_simple_class $_gns_var_entity_var_name = ($_gns_var_entity_simple_class) getSession().load($_gns_var_entity_simple_class.class, id);
+		$_gns_var_entity_var_name.setUpdateBy(updateBy);
+		$_gns_var_entity_var_name.setUpdateDate(updateDate);
+		$_gns_var_entity_var_name.setRecStatus(GeneralConstants.REC_STATUS_NONACTIVE);
 
-		getSession().update(entity);
+		getSession().update($_gns_var_entity_var_name);
 		saveActivityLog(ActionType.DELETE, "Delete YOUR OWN DESCRIPTION with id " + id); // TODO Auto-generated method stub
 
 		commit();
 	}
 	
-	public Trackable getDetail(String id) throws AppException {
+	public $_gns_var_entity_simple_class getDetail(String id) throws AppException {
 		if (id == null || id.trim().isEmpty()) {
 			throw new AppException(
 					PropertiesConstants.ERROR_PRIMARY_KEY_REQUIRED);
@@ -65,15 +65,15 @@ public class $_gns_var_class extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own criteria
 		 */
-		Criteria criteria = getSession().createCriteria(Trackable.class);
+		Criteria criteria = getSession().createCriteria($_gns_var_entity_simple_class.class);
 		criteria.add(Restrictions.eq("id", id));
 		criteria.add(Restrictions.eq("recStatus",
 				GeneralConstants.REC_STATUS_ACTIVE));
 
-		return (Trackable) criteria.uniqueResult();
+		return ($_gns_var_entity_simple_class) criteria.uniqueResult();
 	}
 	
-	public List<Trackable> search(String searchCriteria1, String searchCriteria2,
+	public List<$_gns_var_entity_simple_class> search(String searchCriteria1, String searchCriteria2,
 			String searchCriteria3) throws AppException {
 
 		/*
@@ -81,7 +81,7 @@ public class $_gns_var_class extends BusinessLogic {
 		 * Define your own criteria
 		 */
 
-		Criteria criteria = getSession().createCriteria(Trackable.class);
+		Criteria criteria = getSession().createCriteria($_gns_var_entity_simple_class.class);
 
 		if (searchCriteria1 != null && !searchCriteria1.trim().isEmpty()) {
 			criteria.add(Restrictions.like("searchCriteria1", "%" + searchCriteria1 + "%"));
@@ -100,7 +100,7 @@ public class $_gns_var_class extends BusinessLogic {
 				GeneralConstants.REC_STATUS_ACTIVE));
 
 		@SuppressWarnings("unchecked")
-		List<Trackable> users = criteria.list();
+		List<$_gns_var_entity_simple_class> users = criteria.list();
 		return users;
 	}
 	
@@ -113,12 +113,12 @@ public class $_gns_var_class extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		Trackable entity = (Trackable) getSession().load(Trackable.class, id);
-		entity.setUpdateBy(updateBy);
-		entity.setUpdateDate(updateDate);
+		$_gns_var_entity_simple_class $_gns_var_entity_var_name = ($_gns_var_entity_simple_class) getSession().load($_gns_var_entity_simple_class.class, id);
+		$_gns_var_entity_var_name.setUpdateBy(updateBy);
+		$_gns_var_entity_var_name.setUpdateDate(updateDate);
 
-		getSession().save(entity);
-		saveActivityLog(ActionType.UPDATE, entity);
+		getSession().save($_gns_var_entity_var_name);
+		saveActivityLog(ActionType.UPDATE, $_gns_var_entity_var_name);
 
 		commit();
 	}

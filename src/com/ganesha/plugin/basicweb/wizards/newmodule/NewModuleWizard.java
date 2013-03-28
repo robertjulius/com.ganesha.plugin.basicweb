@@ -134,9 +134,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream("template/BaseAction",
 					map);
 			inputStreams.add(inputStream);
+
 			createFile(baseAction, inputStream, monitor);
 		}
 
@@ -151,9 +157,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream("template/MainAction",
 					map);
 			inputStreams.add(inputStream);
+
 			createFile(mainAction, inputStream, monitor);
 		}
 
@@ -168,9 +180,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream(
 					"template/CreateAction", map);
 			inputStreams.add(inputStream);
+
 			createFile(createAction, inputStream, monitor);
 		}
 
@@ -185,9 +203,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream(
 					"template/DeleteAction", map);
 			inputStreams.add(inputStream);
+
 			createFile(deleteAction, inputStream, monitor);
 		}
 
@@ -202,9 +226,15 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.BL_VAR, prefixClassName + "BL");
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream(
 					"template/UpdateAction", map);
 			inputStreams.add(inputStream);
+
 			createFile(updateAction, inputStream, monitor);
 		}
 	}
@@ -236,8 +266,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream("template/Form", map);
 			inputStreams.add(inputStream);
+
 			createFile(businessLogic, inputStream, monitor);
 		}
 	}
@@ -259,8 +295,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			InputStream inputStream = openContentStream("template/BL", map);
 			inputStreams.add(inputStream);
+
 			createFile(businessLogic, inputStream, monitor);
 		}
 	}
