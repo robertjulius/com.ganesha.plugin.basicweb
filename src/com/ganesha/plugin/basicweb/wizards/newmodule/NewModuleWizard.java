@@ -48,6 +48,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	@Override
 	public void addPages() {
 		addPage(new NewModuleWizardPage());
+		addPage(new BasicCRUDMainPage());
+		addPage(new BasicCRUDDetailPage());
+		addPage(new BasicCRUDModifyPage());
 	}
 
 	@Override

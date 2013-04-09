@@ -10,6 +10,7 @@ import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -80,9 +81,26 @@ public class NewModuleWizardPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				entity = openTypeDialog();
 				txtEntity.setText(entity.getFullyQualifiedName());
+
+				IWizard wizard = NewModuleWizardPage.this.getWizard();
+				BasicCRUDMainPage mainPage = (BasicCRUDMainPage) wizard
+						.getPage(BasicCRUDMainPage.NAME);
+				mainPage.initSearchCriterias();
+				mainPage.initSearchResults();
 			}
 		});
 		btnBrowse.setText("Bro&wse...");
+		new Label(container, SWT.NONE);
+
+		Button btnGenerateBasicCrud = new Button(container, SWT.RADIO);
+		btnGenerateBasicCrud.setSelection(true);
+		btnGenerateBasicCrud.setText("Generate basic CRUD pages");
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+
+		Button btnGenerateBasicWeb = new Button(container, SWT.RADIO);
+		btnGenerateBasicWeb.setText("Generate basic web page");
+		new Label(container, SWT.NONE);
 		txtEntity.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
