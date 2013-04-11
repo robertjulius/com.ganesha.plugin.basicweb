@@ -1,6 +1,7 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -14,9 +15,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
+import com.ganesha.plugin.Utils;
 import com.ganesha.plugin.basicweb.wizards.RowItem;
+import com.ganesha.plugin.basicweb.wizards.newmodule.dialogs.NewSearchCriteriaDialog;
 
 public class BasicCRUDMainPage extends WizardPage {
 
@@ -51,16 +53,16 @@ public class BasicCRUDMainPage extends WizardPage {
 		tableCriterias.setHeaderVisible(true);
 		tableCriterias.setLinesVisible(true);
 
-		TableColumn tblclmnLabel = new TableColumn(tableCriterias, SWT.NONE);
-		tblclmnLabel.setWidth(130);
-		tblclmnLabel.setText("Label");
-
 		TableColumn tblclmnName = new TableColumn(tableCriterias, SWT.NONE);
-		tblclmnName.setWidth(150);
+		tblclmnName.setWidth(140);
 		tblclmnName.setText("Name");
 
+		TableColumn tblclmnLabel = new TableColumn(tableCriterias, SWT.NONE);
+		tblclmnLabel.setWidth(140);
+		tblclmnLabel.setText("Label");
+
 		TableColumn tblclmnType = new TableColumn(tableCriterias, SWT.NONE);
-		tblclmnType.setWidth(160);
+		tblclmnType.setWidth(150);
 		tblclmnType.setText("Type");
 
 		Composite pnlButtonCriterias = new Composite(pnlCriterias, SWT.NONE);
@@ -69,6 +71,12 @@ public class BasicCRUDMainPage extends WizardPage {
 		pnlButtonCriterias.setLayout(new GridLayout(1, false));
 
 		Button btnAdd = new Button(pnlButtonCriterias, SWT.NONE);
+		btnAdd.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openNewDialog();
+			}
+		});
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1));
 		btnAdd.setText("Add");
@@ -91,7 +99,7 @@ public class BasicCRUDMainPage extends WizardPage {
 		btnUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moveRowUp(tableCriterias);
+				Utils.moveRowUp(tableCriterias);
 			}
 		});
 		btnUp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -101,7 +109,7 @@ public class BasicCRUDMainPage extends WizardPage {
 		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moveRowDown(tableCriterias);
+				Utils.moveRowDown(tableCriterias);
 			}
 		});
 		btnDown.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,
@@ -123,13 +131,13 @@ public class BasicCRUDMainPage extends WizardPage {
 		tableResults.setHeaderVisible(true);
 		tableResults.setLinesVisible(true);
 
-		TableColumn tblclmnLabel_1 = new TableColumn(tableResults, SWT.NONE);
-		tblclmnLabel_1.setWidth(130);
-		tblclmnLabel_1.setText("Label");
-
 		TableColumn tblclmnName_1 = new TableColumn(tableResults, SWT.NONE);
-		tblclmnName_1.setWidth(150);
+		tblclmnName_1.setWidth(140);
 		tblclmnName_1.setText("Name");
+
+		TableColumn tblclmnLabel_1 = new TableColumn(tableResults, SWT.NONE);
+		tblclmnLabel_1.setWidth(140);
+		tblclmnLabel_1.setText("Label");
 
 		Composite pnlButtonResults = new Composite(pnlResults, SWT.NONE);
 		pnlButtonResults.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
@@ -159,7 +167,7 @@ public class BasicCRUDMainPage extends WizardPage {
 		btnUp_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moveRowUp(tableResults);
+				Utils.moveRowUp(tableResults);
 			}
 		});
 		btnUp_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,
@@ -170,7 +178,7 @@ public class BasicCRUDMainPage extends WizardPage {
 		btnDown_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moveRowDown(tableResults);
+				Utils.moveRowDown(tableResults);
 			}
 		});
 		btnDown_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
@@ -180,7 +188,7 @@ public class BasicCRUDMainPage extends WizardPage {
 
 	public void initSearchCriterias() {
 		try {
-			IWizard wizard = this.getWizard();
+			IWizard wizard = getWizard();
 
 			NewModuleWizardPage page = (NewModuleWizardPage) wizard
 					.getPage(NewModuleWizardPage.class.getName());
@@ -200,7 +208,7 @@ public class BasicCRUDMainPage extends WizardPage {
 
 	public void initSearchResults() {
 		try {
-			IWizard wizard = this.getWizard();
+			IWizard wizard = getWizard();
 
 			NewModuleWizardPage page = (NewModuleWizardPage) wizard
 					.getPage(NewModuleWizardPage.class.getName());
@@ -218,37 +226,9 @@ public class BasicCRUDMainPage extends WizardPage {
 		}
 	}
 
-	private void moveRowDown(Table table) {
-		int i = table.getSelectionIndex();
-		if (i < table.getItemCount() - 1) {
-			TableItem item1 = table.getItem(i);
-			TableItem item2 = table.getItem(i + 1);
-
-			RowItem rowItem1 = RowItem.createFromTableItem(item1);
-			RowItem rowItem2 = RowItem.createFromTableItem(item2);
-
-			rowItem2.assignToTableItem(item1);
-			rowItem1.assignToTableItem(item2);
-
-			table.setSelection(i + 1);
-			table.setFocus();
-		}
+	private void openNewDialog() {
+		Dialog dialog = new NewSearchCriteriaDialog(getShell());
+		dialog.open();
 	}
 
-	private void moveRowUp(Table table) {
-		int i = table.getSelectionIndex();
-		if (i > 0) {
-			TableItem item1 = table.getItem(i);
-			TableItem item2 = table.getItem(i - 1);
-
-			RowItem rowItem1 = RowItem.createFromTableItem(item1);
-			RowItem rowItem2 = RowItem.createFromTableItem(item2);
-
-			rowItem2.assignToTableItem(item1);
-			rowItem1.assignToTableItem(item2);
-
-			table.setSelection(i - 1);
-			table.setFocus();
-		}
-	}
 }

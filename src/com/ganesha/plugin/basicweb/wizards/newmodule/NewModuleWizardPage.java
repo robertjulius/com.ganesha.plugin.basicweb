@@ -83,10 +83,19 @@ public class NewModuleWizardPage extends WizardPage {
 				txtEntity.setText(entity.getFullyQualifiedName());
 
 				IWizard wizard = NewModuleWizardPage.this.getWizard();
+
 				BasicCRUDMainPage mainPage = (BasicCRUDMainPage) wizard
 						.getPage(BasicCRUDMainPage.NAME);
 				mainPage.initSearchCriterias();
 				mainPage.initSearchResults();
+
+				BasicCRUDDetailPage detailPage = (BasicCRUDDetailPage) wizard
+						.getPage(BasicCRUDDetailPage.NAME);
+				detailPage.initFields();
+
+				BasicCRUDModifyPage modifyPage = (BasicCRUDModifyPage) wizard
+						.getPage(BasicCRUDModifyPage.NAME);
+				modifyPage.initFields();
 			}
 		});
 		btnBrowse.setText("Bro&wse...");
@@ -107,6 +116,8 @@ public class NewModuleWizardPage extends WizardPage {
 				validateInput();
 			}
 		});
+
+		this.txtModuleName.setFocus();
 	}
 
 	public SourceType getEntity() {
