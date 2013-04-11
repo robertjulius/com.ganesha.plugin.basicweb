@@ -434,9 +434,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream(
 					"template/jsp_confirm_create", map, this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -465,9 +462,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream(
 					"template/jsp_confirm_update", map, this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -496,9 +490,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream("template/jsp_create", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -527,9 +518,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream("template/jsp_detail", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -558,9 +546,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream("template/jsp_main", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -589,9 +574,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			inputStream = Utils.openContentStream("template/jsp_update", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
-
-			appendRootStrutsXml(project, monitor);
-
 		} finally {
 			if (inputStream != null) {
 				try {

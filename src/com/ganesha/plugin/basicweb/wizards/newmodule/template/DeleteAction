@@ -6,7 +6,7 @@ import com.ganesha.basicweb.utility.CommonUtils;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 
-public abstract class $_gns_var_class_action_delete extends $_gns_var_class_action_base {
+public class $_gns_var_class_action_delete extends $_gns_var_class_action_base {
 
 	private static final long serialVersionUID = 1L;
 

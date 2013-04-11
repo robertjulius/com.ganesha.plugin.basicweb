@@ -5,7 +5,7 @@ import $_gns_var_package.$_gns_var_class_form;
 import com.ganesha.basicweb.utility.CommonUtils;
 import com.ganesha.core.exception.AppException;
 
-public abstract class $_gns_var_class_action_create extends $_gns_var_class_action_base {
+public class $_gns_var_class_action_create extends $_gns_var_class_action_base {
 
 	private static final long serialVersionUID = 1L;
 

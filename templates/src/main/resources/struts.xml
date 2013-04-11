@@ -49,6 +49,6 @@
 	<include file="com/ganesha/basicweb/modules/usergroupmaintenance/usergroupmaintenance-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/usermaintenance/usermaintenance-struts.xml"></include>
 	
-	<!-- DO NOT DELETE THIS LINE. THIS LINE IS USED BY GANESHA FRAMEWORK TO GENERATE NEW MODULE -->
+	<!-- DO NOT DELETE OR EDIT THIS LINE. THIS LINE IS USED BY GANESHA FRAMEWORK TO GENERATE NEW MODULE -->
 
 </struts>

@@ -3,6 +3,7 @@ package $_gns_var_package;
 import java.util.List;
 
 import com.ganesha.basicweb.model.FormBean;
+import com.ganesha.basicweb.model.Pagination;
 import $_gns_var_entity_full_class;
 import com.ganesha.core.exception.AppException;
 import com.opensymphony.xwork2.ActionSupport;
@@ -13,12 +14,11 @@ public class $_gns_var_class_form extends FormBean {
 	
 	// TODO Auto-generated fields, you need to define setter and getter manually
 	$_gns_var_list_of_search_criteria
-	
+	private Pagination pagination;
 	private List<$_gns_var_entity_simple_class> searchResult;
 	
 	private String selectedId;
 	private $_gns_var_entity_simple_class old;
-	
 	// TODO Auto-generated fields, you need to define setter and getter manually
 	$_gns_var_list_of_modify_field
 	
@@ -42,8 +42,16 @@ public class $_gns_var_class_form extends FormBean {
 		this.old = old;
 	}
 	
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
+	}
+	
 	public $_gns_var_entity_simple_class getOld() {
 		return old;
+	}
+	
+	public Pagination getPagination() {
+		return pagination;
 	}
 
 	@Override

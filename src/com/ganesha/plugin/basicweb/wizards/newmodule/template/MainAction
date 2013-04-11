@@ -6,7 +6,7 @@ import $_gns_var_entity_full_class;
 import $_gns_var_package.$_gns_var_class_form;
 import com.ganesha.core.exception.AppException;
 
-public abstract class $_gns_var_class_action_main extends $_gns_var_class_action_base {
+public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +38,9 @@ public abstract class $_gns_var_class_action_main extends $_gns_var_class_action
 		// String searchCriteria1 = form.getSearchCriteria1();
 		// String searchCriteria2 = form.getSearchCriteria2();
 
-		List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search(searchCriteria1, searchCriteria2);
-		form.setSearchResult($_gns_var_entity_var_names);
+		// TODO fix this searchCriteria
+		// List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search(searchCriteria1, searchCriteria2);
+		// form.setSearchResult($_gns_var_entity_var_names);
 		
 		return SUCCESS;
 	}
