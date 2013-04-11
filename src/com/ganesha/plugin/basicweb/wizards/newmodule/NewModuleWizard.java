@@ -388,6 +388,224 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 	}
 
+	private void createJsp(String webApp, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		String basePackage = webApp + IPath.SEPARATOR + "jsp" + IPath.SEPARATOR
+				+ "modules";
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(basePackage);
+		stringBuilder.append(".").append(prefixClassName.toLowerCase());
+
+		String modulePath = stringBuilder.toString().replace('.',
+				IPath.SEPARATOR);
+
+		IFolder folder = project.getFolder(modulePath);
+		if (folder.exists()) {
+			Exception e = new Exception("Cannot create module '" + moduleName
+					+ "' because directory " + folder.getFullPath()
+					+ " already exists");
+			IStatus status = new Status(IStatus.ERROR, this.getClass()
+					.getName(), IStatus.OK, e.getMessage(), e);
+			throw new CoreException(status);
+		}
+		Utils.createResource(folder, monitor);
+
+		createJspMain(modulePath, project, monitor);
+		createJspDetail(modulePath, project, monitor);
+		createJspCreate(modulePath, project, monitor);
+		createJspConfirmCreate(modulePath, project, monitor);
+		createJspUpdate(modulePath, project, monitor);
+		createJspConfirmUpdate(modulePath, project, monitor);
+	}
+
+	private void createJspConfirmCreate(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_confirm_create.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream(
+					"template/jsp_confirm_create", map, this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
+	private void createJspConfirmUpdate(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_confirm_update.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream(
+					"template/jsp_confirm_update", map, this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
+	private void createJspCreate(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_create.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream("template/jsp_create", map,
+					this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
+	private void createJspDetail(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_detail.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream("template/jsp_detail", map,
+					this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
+	private void createJspMain(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_main.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream("template/jsp_main", map,
+					this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
+	private void createJspUpdate(String modulePath, IProject project,
+			IProgressMonitor monitor) throws CoreException {
+
+		InputStream inputStream = null;
+		try {
+			IFile jspFile = project.getFile(modulePath
+					+ IPath.SEPARATOR
+					+ Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_') + "_update.jsp");
+			Map<String, String> map = new HashMap<>();
+			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			inputStream = Utils.openContentStream("template/jsp_update", map,
+					this.getClass(), false);
+			createFile(jspFile, inputStream, monitor);
+
+			appendRootStrutsXml(project, monitor);
+
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					IStatus status = new Status(IStatus.ERROR, this.getClass()
+							.getName(), IStatus.OK, e.getLocalizedMessage(),
+							null);
+					throw new CoreException(status);
+				}
+			}
+		}
+	}
+
 	private void createLogic(String modulePath, IProject project,
 			IProgressMonitor monitor) throws CoreException {
 		String packageName = properties
@@ -572,6 +790,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			properties.load(inputStream);
 
 			createModule(Constants.JAVA_SOURCE, project, monitor);
+			createJsp(Constants.WEBAPP, project, monitor);
 
 		} catch (IOException e) {
 			IStatus status = new Status(IStatus.ERROR, this.getClass()

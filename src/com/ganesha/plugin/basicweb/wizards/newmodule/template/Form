@@ -11,6 +11,7 @@ public class $_gns_var_class_form extends FormBean {
 
 	private static final long serialVersionUID = 1L;
 	
+	// TODO Auto-generated fields, you need to define setter and getter manually
 	$_gns_var_list_of_search_criteria
 	
 	private List<$_gns_var_entity_simple_class> searchResult;
@@ -18,6 +19,7 @@ public class $_gns_var_class_form extends FormBean {
 	private String selectedId;
 	private $_gns_var_entity_simple_class old;
 	
+	// TODO Auto-generated fields, you need to define setter and getter manually
 	$_gns_var_list_of_modify_field
 	
 	public void setSearchResult(List<$_gns_var_entity_simple_class> searchResult) {
