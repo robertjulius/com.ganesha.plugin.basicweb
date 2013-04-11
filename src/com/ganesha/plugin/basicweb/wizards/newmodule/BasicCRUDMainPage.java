@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.Signature;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
@@ -218,7 +219,12 @@ public class BasicCRUDMainPage extends WizardPage {
 				if (fields[i].getElementName().equals("serialVersionUID")) {
 					continue;
 				}
-				rowItems.add(new RowItem(fields[i]));
+				String name = fields[i].getElementName();
+				name = "search" + name.substring(0, 1).toUpperCase()
+						+ name.substring(1);
+				String label = Utils.camelToHuman(name);
+				String type = Signature.toString(fields[i].getTypeSignature());
+				rowItems.add(new RowItem(name, label, type, null));
 			}
 			tableCriterias.setItemCount(rowItems.size());
 			for (int i = 0; i < rowItems.size(); ++i) {

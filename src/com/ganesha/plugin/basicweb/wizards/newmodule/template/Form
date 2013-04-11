@@ -18,23 +18,7 @@ public class $_gns_var_class_form extends FormBean {
 	private String selectedId;
 	private $_gns_var_entity_simple_class old;
 	
-	// $gns_var_list_of_new_field
-	
-	public void setSearchCriteria1(String searchCriteria1) {
-		this.searchCriteria1 = searchCriteria1;
-	}
-	
-	public String getSearchCriteria1() {
-		return searchCriteria1;
-	}
-	
-	public void setSearchCriteria2(String searchCriteria2) {
-		this.searchCriteria2 = searchCriteria2;
-	}
-	
-	public String getSearchCriteria2() {
-		return searchCriteria2;
-	}
+	$_gns_var_list_of_modify_field
 	
 	public void setSearchResult(List<$_gns_var_entity_simple_class> searchResult) {
 		this.searchResult = searchResult;

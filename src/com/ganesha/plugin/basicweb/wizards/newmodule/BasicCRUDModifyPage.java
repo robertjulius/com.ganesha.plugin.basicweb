@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.Signature;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -99,6 +100,14 @@ public class BasicCRUDModifyPage extends WizardPage {
 		btnDown.setText("Down");
 	}
 
+	public List<RowItem> getModifyFields() {
+		List<RowItem> rowItems = new ArrayList<>();
+		for (int i = 0; i < table.getItemCount(); ++i) {
+			rowItems.add(RowItem.createFromTableItem(table.getItem(i)));
+		}
+		return rowItems;
+	}
+
 	public void initFields() {
 		try {
 			IWizard wizard = getWizard();
@@ -112,7 +121,12 @@ public class BasicCRUDModifyPage extends WizardPage {
 				if (fields[i].getElementName().equals("serialVersionUID")) {
 					continue;
 				}
-				rowItems.add(new RowItem(fields[i]));
+				String name = fields[i].getElementName();
+				name = "new" + name.substring(0, 1).toUpperCase()
+						+ name.substring(1);
+				String label = Utils.camelToHuman(name);
+				String type = Signature.toString(fields[i].getTypeSignature());
+				rowItems.add(new RowItem(name, label, type, null));
 			}
 			table.setItemCount(rowItems.size());
 			for (int i = 0; i < rowItems.size(); ++i) {

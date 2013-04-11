@@ -31,9 +31,9 @@ public class RowItem implements Serializable {
 		this.type = Signature.toString(field.getTypeSignature());
 	}
 
-	public RowItem(String label, String name, String type, String format) {
-		this.label = label;
+	public RowItem(String name, String label, String type, String format) {
 		this.name = name;
+		this.label = label;
 		this.type = type;
 		this.format = format;
 	}

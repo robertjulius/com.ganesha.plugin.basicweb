@@ -41,6 +41,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private String entitySimpleName;
 	private String entityFullName;
 	private List<RowItem> criterias;
+	private List<RowItem> modifyFields;
 
 	public NewModuleWizard() {
 		super();
@@ -88,6 +89,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		BasicCRUDMainPage mainPage = (BasicCRUDMainPage) getPage(BasicCRUDMainPage.NAME);
 		this.criterias = mainPage.getSearchCriterias();
+
+		BasicCRUDModifyPage modifyPage = (BasicCRUDModifyPage) getPage(BasicCRUDModifyPage.NAME);
+		this.modifyFields = modifyPage.getModifyFields();
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
@@ -349,6 +353,17 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(rowItem.getName()).append(";").append("\n");
 				}
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
+						.toString().replaceFirst("\t", ""));
+			}
+
+			{ // Create modify fields
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					stringBuilder.append("\tprivate").append(" ")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(";").append("\n");
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD, stringBuilder
 						.toString().replaceFirst("\t", ""));
 			}
 
