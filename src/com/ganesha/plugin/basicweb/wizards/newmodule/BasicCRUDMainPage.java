@@ -1,5 +1,8 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -186,20 +189,40 @@ public class BasicCRUDMainPage extends WizardPage {
 		btnDown_1.setText("Down");
 	}
 
+	public List<RowItem> getSearchCriterias() {
+		List<RowItem> rowItems = new ArrayList<>();
+		for (int i = 0; i < tableCriterias.getItemCount(); ++i) {
+			rowItems.add(RowItem.createFromTableItem(tableCriterias.getItem(i)));
+		}
+		return rowItems;
+	}
+
+	public List<RowItem> getSearchResult() {
+		List<RowItem> rowItems = new ArrayList<>();
+		for (int i = 0; i < tableResults.getItemCount(); ++i) {
+			rowItems.add(RowItem.createFromTableItem(tableResults.getItem(i)));
+		}
+		return rowItems;
+	}
+
 	public void initSearchCriterias() {
 		try {
 			IWizard wizard = getWizard();
-
 			NewModuleWizardPage page = (NewModuleWizardPage) wizard
 					.getPage(NewModuleWizardPage.class.getName());
 
 			@SuppressWarnings("restriction")
 			IField fields[] = page.getEntity().getFields();
-			tableCriterias.setItemCount(fields.length);
-
+			List<RowItem> rowItems = new ArrayList<>();
 			for (int i = 0; i < fields.length; ++i) {
-				RowItem rowItem = new RowItem(fields[i]);
-				rowItem.assignToTableItem(tableCriterias.getItem(i));
+				if (fields[i].getElementName().equals("serialVersionUID")) {
+					continue;
+				}
+				rowItems.add(new RowItem(fields[i]));
+			}
+			tableCriterias.setItemCount(rowItems.size());
+			for (int i = 0; i < rowItems.size(); ++i) {
+				rowItems.get(i).assignToTableItem(tableCriterias.getItem(i));
 			}
 		} catch (Exception e) {
 			MessageDialog.openError(getShell(), "Error", e.getMessage());
@@ -209,17 +232,21 @@ public class BasicCRUDMainPage extends WizardPage {
 	public void initSearchResults() {
 		try {
 			IWizard wizard = getWizard();
-
 			NewModuleWizardPage page = (NewModuleWizardPage) wizard
 					.getPage(NewModuleWizardPage.class.getName());
 
 			@SuppressWarnings("restriction")
 			IField fields[] = page.getEntity().getFields();
-			tableResults.setItemCount(fields.length);
-
+			List<RowItem> rowItems = new ArrayList<>();
 			for (int i = 0; i < fields.length; ++i) {
-				RowItem rowItem = new RowItem(fields[i]);
-				rowItem.assignToTableItem(tableResults.getItem(i));
+				if (fields[i].getElementName().equals("serialVersionUID")) {
+					continue;
+				}
+				rowItems.add(new RowItem(fields[i]));
+			}
+			tableResults.setItemCount(rowItems.size());
+			for (int i = 0; i < rowItems.size(); ++i) {
+				rowItems.get(i).assignToTableItem(tableResults.getItem(i));
 			}
 		} catch (Exception e) {
 			MessageDialog.openError(getShell(), "Error", e.getMessage());
@@ -230,5 +257,4 @@ public class BasicCRUDMainPage extends WizardPage {
 		Dialog dialog = new NewSearchCriteriaDialog(getShell());
 		dialog.open();
 	}
-
 }

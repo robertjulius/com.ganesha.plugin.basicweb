@@ -1,5 +1,8 @@
 package com.ganesha.plugin.basicweb.wizards.newmodule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
@@ -95,17 +98,21 @@ public class BasicCRUDDetailPage extends WizardPage {
 	public void initFields() {
 		try {
 			IWizard wizard = getWizard();
-
 			NewModuleWizardPage page = (NewModuleWizardPage) wizard
 					.getPage(NewModuleWizardPage.class.getName());
 
 			@SuppressWarnings("restriction")
 			IField fields[] = page.getEntity().getFields();
-			table.setItemCount(fields.length);
-
+			List<RowItem> rowItems = new ArrayList<>();
 			for (int i = 0; i < fields.length; ++i) {
-				RowItem rowItem = new RowItem(fields[i]);
-				rowItem.assignToTableItem(table.getItem(i));
+				if (fields[i].getElementName().equals("serialVersionUID")) {
+					continue;
+				}
+				rowItems.add(new RowItem(fields[i]));
+			}
+			table.setItemCount(rowItems.size());
+			for (int i = 0; i < rowItems.size(); ++i) {
+				rowItems.get(i).assignToTableItem(table.getItem(i));
 			}
 		} catch (Exception e) {
 			MessageDialog.openError(getShell(), "Error", e.getMessage());

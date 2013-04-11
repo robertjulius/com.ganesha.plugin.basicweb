@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbench;
 
 import com.ganesha.plugin.Utils;
 import com.ganesha.plugin.basicweb.Constants;
+import com.ganesha.plugin.basicweb.wizards.RowItem;
 
 public class NewModuleWizard extends Wizard implements INewWizard {
 	private ISelection selection;
@@ -39,6 +40,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private Properties properties;
 	private String entitySimpleName;
 	private String entityFullName;
+	private List<RowItem> criterias;
 
 	public NewModuleWizard() {
 		super();
@@ -64,7 +66,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				.getName());
 
 		moduleName = page.getModuleName();
-
 		while (moduleName.contains("  ")) {
 			moduleName = moduleName.replaceAll("  ", " ");
 		}
@@ -84,6 +85,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		@SuppressWarnings("restriction")
 		String elementName = page.getEntity().getElementName();
 		entitySimpleName = elementName;
+
+		BasicCRUDMainPage mainPage = (BasicCRUDMainPage) getPage(BasicCRUDMainPage.NAME);
+		this.criterias = mainPage.getSearchCriterias();
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
@@ -336,6 +340,17 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			{ // Create search criterias
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : criterias) {
+					stringBuilder.append("\tprivate").append(" ")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(";").append("\n");
+				}
+				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
+						.toString().replaceFirst("\t", ""));
+			}
 
 			String entityVarName = entitySimpleName.substring(0, 1)
 					.toLowerCase() + entitySimpleName.substring(1);

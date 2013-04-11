@@ -11,16 +11,14 @@ public class $_gns_var_class_form extends FormBean {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String searchCriteria1;
-	private String searchCriteria2;
+	$_gns_var_list_of_search_criteria
 	
 	private List<$_gns_var_entity_simple_class> searchResult;
 	
 	private String selectedId;
 	private $_gns_var_entity_simple_class old;
 	
-	private String newField1;
-	private String newField2;
+	// $gns_var_list_of_new_field
 	
 	public void setSearchCriteria1(String searchCriteria1) {
 		this.searchCriteria1 = searchCriteria1;
