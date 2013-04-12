@@ -39,11 +39,11 @@ public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 		// TODO Auto-generated method stub
 		$_gns_var_class_form form = getForm();
 		
-		// TODO fix this searchCriteria
-		$_gns_var_list_of_search_criteria
-		// TODO fix this searchCriteria
-		// List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search(searchCriteria1, searchCriteria2);
-		// form.setSearchResult($_gns_var_entity_var_names);
+$_gns_var_list_of_search_criteria
+
+		Pagination pagination = getForm().getPagination();
+		List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search($_gns_var_list_of_parameter_search_criteria, pagination);
+		form.setSearchResult($_gns_var_entity_var_names);
 		
 		return SUCCESS;
 	}

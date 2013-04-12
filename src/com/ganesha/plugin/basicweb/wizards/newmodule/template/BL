@@ -4,9 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import $_gns_var_entity_full_class;
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.modules.BusinessLogic;
 import com.ganesha.basicweb.utility.GeneralConstants;
 import com.ganesha.basicweb.utility.GeneralConstants.ActionType;
@@ -73,29 +75,29 @@ public class $_gns_var_class_bl extends BusinessLogic {
 		return ($_gns_var_entity_simple_class) criteria.uniqueResult();
 	}
 	
-	public List<$_gns_var_entity_simple_class> search(String searchCriteria1, String searchCriteria2) throws AppException {
-
-		/*
-		 * TODO Auto-generated method stub
-		 * Define your own criteria
-		 */
-
+	public List<$_gns_var_entity_simple_class> search($_gns_var_list_of_parameter_search_criteria, Pagination pagination) throws AppException {
+		// TODO Auto-generated method stub
 		Criteria criteria = getSession().createCriteria($_gns_var_entity_simple_class.class);
 
-		if (searchCriteria1 != null && !searchCriteria1.trim().isEmpty()) {
-			criteria.add(Restrictions.like("searchCriteria1", "%" + searchCriteria1 + "%"));
-		}
+$_gns_var_list_of_search_criteria
 
-		if (searchCriteria2 != null && !searchCriteria2.trim().isEmpty()) {
-			criteria.add(Restrictions.like("searchCriteria2", "%" + searchCriteria2 + "%"));
-		}
+		criteria.setFirstResult((pagination.getPageNumber() - 1)
+				* pagination.getRowsPerPage());
+		criteria.setMaxResults(pagination.getRowsPerPage());
 
 		criteria.add(Restrictions.eq("recStatus",
 				GeneralConstants.REC_STATUS_ACTIVE));
 
 		@SuppressWarnings("unchecked")
-		List<$_gns_var_entity_simple_class> users = criteria.list();
-		return users;
+		List<$_gns_var_entity_simple_class> list = criteria.list();
+		
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(1);
+		int rowCount = (int) criteria.setProjection(Projections.rowCount())
+				.uniqueResult();
+		pagination.setRowCount(rowCount);
+		
+		return list;
 	}
 	
 	public void update(String id, String updateBy, Timestamp updateDate)

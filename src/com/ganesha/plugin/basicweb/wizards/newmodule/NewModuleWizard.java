@@ -215,19 +215,26 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
 			{ // Create search criterias
-				StringBuilder stringBuilder = new StringBuilder();
+				StringBuilder builderForIfConditions = new StringBuilder();
+				StringBuilder builderForParameters = new StringBuilder();
 				for (RowItem rowItem : criterias) {
 					String getter = rowItem.getName();
 					getter = new StringBuilder("get")
 							.append(getter.substring(0, 1).toUpperCase())
 							.append(getter.substring(1)).append("()")
 							.toString();
-					stringBuilder.append("\t\t").append(rowItem.getType())
-							.append(" ").append(rowItem.getName())
-							.append(" = form.").append(getter).append(";\n");
+					builderForIfConditions.append("\n\t\t")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(" = form.")
+							.append(getter).append(";");
+					builderForParameters.append(", ").append(rowItem.getName());
 				}
-				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
-						.toString().replaceFirst("\t\t", ""));
+				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
+						builderForIfConditions.toString()
+								.replaceFirst("\n", ""));
+
+				map.put(Constants.LIST_OF_PARAMETER_SEARCH_CRITERIA,
+						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
 			String entityVarName = entitySimpleName.substring(0, 1)
@@ -364,12 +371,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			{ // Create search criterias
 				StringBuilder stringBuilder = new StringBuilder();
 				for (RowItem rowItem : criterias) {
-					stringBuilder.append("\tprivate").append(" ")
+					stringBuilder.append("\n\tprivate").append(" ")
 							.append(rowItem.getType()).append(" ")
-							.append(rowItem.getName()).append(";").append("\n");
+							.append(rowItem.getName()).append(";");
 				}
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
-						.toString().replaceFirst("\t", ""));
+						.toString().replaceFirst("\n", ""));
 			}
 
 			{ // Create getter setter for search criterias
@@ -386,32 +393,32 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(setter.substring(1)).append("(")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(")").toString();
-					stringBuilder.append("\tpublic").append(" ")
+					stringBuilder.append("\n\n\tpublic").append(" ")
 							.append(rowItem.getType()).append(" ")
 							.append(getter).append(" ").append("{\n")
 							.append("\t\t").append("return").append(" ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}\n\n");
-					stringBuilder.append("\tpublic void").append(" ")
+							.append("\t}");
+					stringBuilder.append("\n\n\tpublic void").append(" ")
 							.append(setter).append(" ").append("{\n")
 							.append("\t\t").append("this.")
 							.append(rowItem.getName()).append(" = ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}\n\n");
+							.append("\t}");
 				}
 				map.put(Constants.LIST_OF_GETTER_SETTER_SEARCH_CRITERIA,
-						stringBuilder.toString().replaceFirst("\t", ""));
+						stringBuilder.toString().replaceFirst("\n\n", ""));
 			}
 
 			{ // Create modify fields
 				StringBuilder stringBuilder = new StringBuilder();
 				for (RowItem rowItem : modifyFields) {
-					stringBuilder.append("\tprivate").append(" ")
+					stringBuilder.append("\n\tprivate").append(" ")
 							.append(rowItem.getType()).append(" ")
-							.append(rowItem.getName()).append(";").append("\n");
+							.append(rowItem.getName()).append(";");
 				}
 				map.put(Constants.LIST_OF_MODIFY_FIELD, stringBuilder
-						.toString().replaceFirst("\t", ""));
+						.toString().replaceFirst("\n", ""));
 			}
 
 			{ // Create getter setter for modify fields
@@ -428,21 +435,21 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(setter.substring(1)).append("(")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(")").toString();
-					stringBuilder.append("\tpublic").append(" ")
+					stringBuilder.append("\n\n\tpublic").append(" ")
 							.append(rowItem.getType()).append(" ")
 							.append(getter).append(" ").append("{\n")
 							.append("\t\t").append("return").append(" ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}\n\n");
-					stringBuilder.append("\tpublic void").append(" ")
+							.append("\t}");
+					stringBuilder.append("\n\n\tpublic void").append(" ")
 							.append(setter).append(" ").append("{\n")
 							.append("\t\t").append("this.")
 							.append(rowItem.getName()).append(" = ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}\n\n");
+							.append("\t}");
 				}
 				map.put(Constants.LIST_OF_GETTER_SETTER_MODIFY_FIELD,
-						stringBuilder.toString().replaceFirst("\t", ""));
+						stringBuilder.toString().replaceFirst("\n\n", ""));
 			}
 
 			String entityVarName = entitySimpleName.substring(0, 1)
@@ -682,6 +689,29 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(CLASS_BL_VAR, businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			{ // Create search criterias
+				StringBuilder builderForIfConditions = new StringBuilder();
+				StringBuilder builderForParameters = new StringBuilder();
+				for (RowItem rowItem : criterias) {
+					builderForIfConditions.append("\n\n\t\tif (")
+							.append(rowItem.getName()).append(" != null && !")
+							.append(rowItem.getName())
+							.append(".trim().isEmpty()) {\n\t\t\t")
+							.append("criteria.add(Restrictions.like(\"")
+							.append(rowItem.getName()).append("\", \"%\" + ")
+							.append(rowItem.getName())
+							.append(" + \"%\"));\n\t\t}");
+					builderForParameters.append(", ").append(rowItem.getType())
+							.append(" ").append(rowItem.getName());
+				}
+				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
+						builderForIfConditions.toString().replaceFirst("\n\n",
+								""));
+
+				map.put(Constants.LIST_OF_PARAMETER_SEARCH_CRITERIA,
+						builderForParameters.toString().replaceFirst(", ", ""));
+			}
 
 			String entityVarName = entitySimpleName.substring(0, 1)
 					.toLowerCase() + entitySimpleName.substring(1);
