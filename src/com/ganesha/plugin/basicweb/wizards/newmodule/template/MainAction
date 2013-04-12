@@ -2,6 +2,7 @@ package $_gns_var_package.action;
 
 import java.util.List;
 
+import com.ganesha.basicweb.model.Pagination;
 import $_gns_var_entity_full_class;
 import $_gns_var_package.$_gns_var_class_form;
 import com.ganesha.core.exception.AppException;
@@ -16,6 +17,10 @@ public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 	
 	public String initial() throws AppException {
 		// TODO Auto-generated method stub
+		$_gns_var_class_form form = getForm();
+		
+		form.setPagination(new Pagination());
+		
 		return SUCCESS;
 	}
 	
