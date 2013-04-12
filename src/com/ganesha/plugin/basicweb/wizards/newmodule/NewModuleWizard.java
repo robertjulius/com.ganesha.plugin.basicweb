@@ -214,6 +214,22 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 
+			{ // Create search criterias
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : criterias) {
+					String getter = rowItem.getName();
+					getter = new StringBuilder("get")
+							.append(getter.substring(0, 1).toUpperCase())
+							.append(getter.substring(1)).append("()")
+							.toString();
+					stringBuilder.append("\t\t").append(rowItem.getType())
+							.append(" ").append(rowItem.getName())
+							.append(" = form.").append(getter).append(";\n");
+				}
+				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
+						.toString().replaceFirst("\t\t", ""));
+			}
+
 			String entityVarName = entitySimpleName.substring(0, 1)
 					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
@@ -356,6 +372,37 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\t", ""));
 			}
 
+			{ // Create getter setter for search criterias
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : criterias) {
+					String getter = rowItem.getName();
+					getter = new StringBuilder("get")
+							.append(getter.substring(0, 1).toUpperCase())
+							.append(getter.substring(1)).append("()")
+							.toString();
+					String setter = rowItem.getName();
+					setter = new StringBuilder("set")
+							.append(setter.substring(0, 1).toUpperCase())
+							.append(setter.substring(1)).append("(")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(")").toString();
+					stringBuilder.append("\tpublic").append(" ")
+							.append(rowItem.getType()).append(" ")
+							.append(getter).append(" ").append("{\n")
+							.append("\t\t").append("return").append(" ")
+							.append(rowItem.getName()).append(";\n")
+							.append("\t}\n\n");
+					stringBuilder.append("\tpublic void").append(" ")
+							.append(setter).append(" ").append("{\n")
+							.append("\t\t").append("this.")
+							.append(rowItem.getName()).append(" = ")
+							.append(rowItem.getName()).append(";\n")
+							.append("\t}\n\n");
+				}
+				map.put(Constants.LIST_OF_GETTER_SETTER_SEARCH_CRITERIA,
+						stringBuilder.toString().replaceFirst("\t", ""));
+			}
+
 			{ // Create modify fields
 				StringBuilder stringBuilder = new StringBuilder();
 				for (RowItem rowItem : modifyFields) {
@@ -365,6 +412,37 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				}
 				map.put(Constants.LIST_OF_MODIFY_FIELD, stringBuilder
 						.toString().replaceFirst("\t", ""));
+			}
+
+			{ // Create getter setter for modify fields
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String getter = rowItem.getName();
+					getter = new StringBuilder("get")
+							.append(getter.substring(0, 1).toUpperCase())
+							.append(getter.substring(1)).append("()")
+							.toString();
+					String setter = rowItem.getName();
+					setter = new StringBuilder("set")
+							.append(setter.substring(0, 1).toUpperCase())
+							.append(setter.substring(1)).append("(")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(")").toString();
+					stringBuilder.append("\tpublic").append(" ")
+							.append(rowItem.getType()).append(" ")
+							.append(getter).append(" ").append("{\n")
+							.append("\t\t").append("return").append(" ")
+							.append(rowItem.getName()).append(";\n")
+							.append("\t}\n\n");
+					stringBuilder.append("\tpublic void").append(" ")
+							.append(setter).append(" ").append("{\n")
+							.append("\t\t").append("this.")
+							.append(rowItem.getName()).append(" = ")
+							.append(rowItem.getName()).append(";\n")
+							.append("\t}\n\n");
+				}
+				map.put(Constants.LIST_OF_GETTER_SETTER_MODIFY_FIELD,
+						stringBuilder.toString().replaceFirst("\t", ""));
 			}
 
 			String entityVarName = entitySimpleName.substring(0, 1)

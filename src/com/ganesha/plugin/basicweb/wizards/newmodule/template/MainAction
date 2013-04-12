@@ -40,9 +40,7 @@ public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 		$_gns_var_class_form form = getForm();
 		
 		// TODO fix this searchCriteria
-		// String searchCriteria1 = form.getSearchCriteria1();
-		// String searchCriteria2 = form.getSearchCriteria2();
-
+		$_gns_var_list_of_search_criteria
 		// TODO fix this searchCriteria
 		// List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search(searchCriteria1, searchCriteria2);
 		// form.setSearchResult($_gns_var_entity_var_names);

@@ -19,8 +19,15 @@ public class $_gns_var_class_form extends FormBean {
 	
 	private String selectedId;
 	private $_gns_var_entity_simple_class old;
+	
 	// TODO Auto-generated fields, you need to define setter and getter manually
 	$_gns_var_list_of_modify_field
+	
+	// TODO Auto-generated getter setter for search criterias
+	$_gns_var_list_of_getter_setter_search_criteria
+	
+	// TODO Auto-generated getter setter for modify fields
+	$_gns_var_list_of_getter_setter_modify_field
 	
 	public void setSearchResult(List<$_gns_var_entity_simple_class> searchResult) {
 		this.searchResult = searchResult;
