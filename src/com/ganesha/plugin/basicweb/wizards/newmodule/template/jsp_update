@@ -20,7 +20,7 @@
 			</td>
 		</tr>
 	</table>
-	<s:form action="/modules/$_gns_var_struts_package/validateUpdate.action" theme="simple">
+	<s:form action="/modules/$gns{struts_package}/validateUpdate.action" theme="simple">
 		<s:if test="hasActionErrors()">
 			<table>
 				<s:actionerror />
@@ -92,7 +92,7 @@
 						<tr>
 							<td><input type="button"
 								value="<s:text name="resource.cancel"/>"
-								onclick="if (!confirmCancel()) {return;} $(this).closest('form').attr('action', '<%=request.getContextPath()%>/modules/$_gns_var_struts_package/detail.action'); $(this).closest('form').submit();" /></td>
+								onclick="if (!confirmCancel()) {return;} $(this).closest('form').attr('action', '<%=request.getContextPath()%>/modules/$gns{struts_package}/detail.action'); $(this).closest('form').submit();" /></td>
 							<td><input type="button"
 								value="<s:text name="resource.submit"/>"
 								onclick="if (confirmAction()) {$(this).closest('form').submit();}" /></td>

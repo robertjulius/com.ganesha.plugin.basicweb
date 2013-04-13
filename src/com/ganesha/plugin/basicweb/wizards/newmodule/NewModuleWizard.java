@@ -41,7 +41,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private String entitySimpleName;
 	private String entityFullName;
 	private List<RowItem> criterias;
+	private List<RowItem> searchResults;
 	private List<RowItem> modifyFields;
+	private List<RowItem> detailFields;
 
 	public NewModuleWizard() {
 		super();
@@ -89,9 +91,13 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		BasicCRUDMainPage mainPage = (BasicCRUDMainPage) getPage(BasicCRUDMainPage.NAME);
 		this.criterias = mainPage.getSearchCriterias();
+		this.searchResults = mainPage.getSearchResult();
 
 		BasicCRUDModifyPage modifyPage = (BasicCRUDModifyPage) getPage(BasicCRUDModifyPage.NAME);
-		this.modifyFields = modifyPage.getModifyFields();
+		this.modifyFields = modifyPage.getFields();
+
+		BasicCRUDDetailPage detailPage = (BasicCRUDDetailPage) getPage(BasicCRUDDetailPage.NAME);
+		this.detailFields = detailPage.getFields();
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
@@ -223,7 +229,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(getter.substring(0, 1).toUpperCase())
 							.append(getter.substring(1)).append("()")
 							.toString();
-					builderForIfConditions.append("\n\t\t")
+					builderForIfConditions.append("\n")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(" = form.")
 							.append(getter).append(";");
@@ -232,7 +238,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
 						builderForIfConditions.toString()
 								.replaceFirst("\n", ""));
-
 				map.put(Constants.LIST_OF_PARAMETER_SEARCH_CRITERIA,
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
@@ -371,7 +376,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			{ // Create search criterias
 				StringBuilder stringBuilder = new StringBuilder();
 				for (RowItem rowItem : criterias) {
-					stringBuilder.append("\n\tprivate").append(" ")
+					stringBuilder.append("\nprivate ")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(";");
 				}
@@ -393,18 +398,16 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(setter.substring(1)).append("(")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(")").toString();
-					stringBuilder.append("\n\n\tpublic").append(" ")
+					stringBuilder.append("\n\npublic ")
 							.append(rowItem.getType()).append(" ")
-							.append(getter).append(" ").append("{\n")
-							.append("\t\t").append("return").append(" ")
-							.append(rowItem.getName()).append(";\n")
-							.append("\t}");
-					stringBuilder.append("\n\n\tpublic void").append(" ")
-							.append(setter).append(" ").append("{\n")
-							.append("\t\t").append("this.")
+							.append(getter).append(" {\n").append("\t")
+							.append("return ").append(rowItem.getName())
+							.append(";\n").append("}");
+					stringBuilder.append("\n\npublic void ").append(setter)
+							.append(" {\n").append("\t").append("this.")
 							.append(rowItem.getName()).append(" = ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}");
+							.append("}");
 				}
 				map.put(Constants.LIST_OF_GETTER_SETTER_SEARCH_CRITERIA,
 						stringBuilder.toString().replaceFirst("\n\n", ""));
@@ -413,7 +416,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			{ // Create modify fields
 				StringBuilder stringBuilder = new StringBuilder();
 				for (RowItem rowItem : modifyFields) {
-					stringBuilder.append("\n\tprivate").append(" ")
+					stringBuilder.append("\nprivate ")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(";");
 				}
@@ -435,18 +438,16 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(setter.substring(1)).append("(")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(")").toString();
-					stringBuilder.append("\n\n\tpublic").append(" ")
+					stringBuilder.append("\n\npublic ")
 							.append(rowItem.getType()).append(" ")
-							.append(getter).append(" ").append("{\n")
-							.append("\t\t").append("return").append(" ")
-							.append(rowItem.getName()).append(";\n")
-							.append("\t}");
-					stringBuilder.append("\n\n\tpublic void").append(" ")
-							.append(setter).append(" ").append("{\n")
-							.append("\t\t").append("this.")
+							.append(getter).append(" {\n").append("\t")
+							.append("return ").append(rowItem.getName())
+							.append(";\n").append("}");
+					stringBuilder.append("\n\npublic void ").append(setter)
+							.append(" {\n").append("\t").append("this.")
 							.append(rowItem.getName()).append(" = ")
 							.append(rowItem.getName()).append(";\n")
-							.append("\t}");
+							.append("}");
 				}
 				map.put(Constants.LIST_OF_GETTER_SETTER_MODIFY_FIELD,
 						stringBuilder.toString().replaceFirst("\n\n", ""));
@@ -600,6 +601,28 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.replace(' ', '_') + "_detail.jsp");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+
+			{ // Create search criterias
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : detailFields) {
+					stringBuilder.append("\n<tr>");
+					stringBuilder
+							.append("\n\t")
+							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append(rowItem.getName()).append("\" /></td>");
+					stringBuilder.append("\n\t")
+							.append("<td align=\"left\"><s:label name=\"old.")
+							.append(rowItem.getName()).append("\" /></td>");
+					stringBuilder.append("\n</tr>");
+				}
+				map.put(Constants.LIST_OF_DETAIL_FIELDS, stringBuilder
+						.toString().replaceFirst("\n", ""));
+			}
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
 			inputStream = Utils.openContentStream("template/jsp_detail", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -628,6 +651,39 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.replace(' ', '_') + "_main.jsp");
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+
+			{ // Create search criterias
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : criterias) {
+					String searchCriteria = rowItem.getName();
+					String originName = searchCriteria.replaceFirst("search",
+							"");
+					originName = originName.substring(0, 1).toLowerCase()
+							+ originName.substring(1);
+					stringBuilder.append("\n<s:textfield key=\"resource.")
+							.append(originName).append("\" name=\"")
+							.append(searchCriteria).append("\" />");
+				}
+				map.put(Constants.LIST_OF_SEARCH_CRITERIA, stringBuilder
+						.toString().replaceFirst("\n", ""));
+			}
+
+			{ // Create search results
+				StringBuilder resultsColumnTitle = new StringBuilder();
+				StringBuilder resultsColumnBody = new StringBuilder();
+				for (RowItem rowItem : searchResults) {
+					resultsColumnTitle
+							.append("\n<td width=\"150\"><s:text name=\"resource.")
+							.append(rowItem.getName()).append("\" /></td>");
+					resultsColumnBody.append("\n<td><s:property value=\"")
+							.append(rowItem.getName()).append("\" /></td>");
+				}
+				map.put(Constants.LIST_OF_SEARCH_RESULT_COLUMN_TITLES,
+						resultsColumnTitle.toString().replaceFirst("\n", ""));
+				map.put(Constants.LIST_OF_SEARCH_RESULTS, resultsColumnBody
+						.toString().replaceFirst("\n", ""));
+			}
+
 			inputStream = Utils.openContentStream("template/jsp_main", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -694,21 +750,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				StringBuilder builderForIfConditions = new StringBuilder();
 				StringBuilder builderForParameters = new StringBuilder();
 				for (RowItem rowItem : criterias) {
-					builderForIfConditions.append("\n\n\t\tif (")
+					builderForIfConditions.append("\n\nif (")
 							.append(rowItem.getName()).append(" != null && !")
 							.append(rowItem.getName())
-							.append(".trim().isEmpty()) {\n\t\t\t")
+							.append(".trim().isEmpty()) {\n\t")
 							.append("criteria.add(Restrictions.like(\"")
 							.append(rowItem.getName()).append("\", \"%\" + ")
-							.append(rowItem.getName())
-							.append(" + \"%\"));\n\t\t}");
+							.append(rowItem.getName()).append(" + \"%\"));\n}");
 					builderForParameters.append(", ").append(rowItem.getType())
 							.append(" ").append(rowItem.getName());
 				}
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
 						builderForIfConditions.toString().replaceFirst("\n\n",
 								""));
-
 				map.put(Constants.LIST_OF_PARAMETER_SEARCH_CRITERIA,
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
@@ -777,6 +831,23 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.RESOURCE_PAGE_TITLE, moduleName);
+
+			{ // Create properties
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : detailFields) {
+					stringBuilder.append("\nresource.")
+							.append(rowItem.getName()).append("=")
+							.append(Utils.camelToHuman(rowItem.getName()));
+				}
+				map.put(Constants.LIST_OF_DETAIL_FIELDS, stringBuilder
+						.toString().replaceFirst("\n", ""));
+			}
+
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+
+			String entityVarName = entitySimpleName.substring(0, 1)
+					.toLowerCase() + entitySimpleName.substring(1);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			inputStream = Utils.openContentStream("template/NLS", map,
 					this.getClass(), false);

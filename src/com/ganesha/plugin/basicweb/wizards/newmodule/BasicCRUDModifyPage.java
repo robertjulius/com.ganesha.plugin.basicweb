@@ -100,7 +100,7 @@ public class BasicCRUDModifyPage extends WizardPage {
 		btnDown.setText("Down");
 	}
 
-	public List<RowItem> getModifyFields() {
+	public List<RowItem> getFields() {
 		List<RowItem> rowItems = new ArrayList<>();
 		for (int i = 0; i < table.getItemCount(); ++i) {
 			rowItems.add(RowItem.createFromTableItem(table.getItem(i)));

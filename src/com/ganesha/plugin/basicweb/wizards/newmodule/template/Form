@@ -1,36 +1,36 @@
-package $_gns_var_package;
+package $gns{package};
 
 import java.util.List;
 
 import com.ganesha.basicweb.model.FormBean;
 import com.ganesha.basicweb.model.Pagination;
-import $_gns_var_entity_full_class;
+import $gns{entity_full_class};
 import com.ganesha.core.exception.AppException;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class $_gns_var_class_form extends FormBean {
+public class $gns{class_form} extends FormBean {
 
 	private static final long serialVersionUID = 1L;
 	
-$_gns_var_list_of_search_criteria
+	$gns{list_of_search_criteria}
 	
 	private Pagination pagination;
-	private List<$_gns_var_entity_simple_class> searchResult;
+	private List<$gns{entity_simple_class}> searchResult;
 	
 	private String selectedId;
-	private $_gns_var_entity_simple_class old;
+	private $gns{entity_simple_class} old;
 	
-$_gns_var_list_of_modify_field
+	$gns{list_of_modify_field}
 	
-$_gns_var_list_of_getter_setter_search_criteria
+	$gns{list_of_getter_setter_search_criteria}
 	
-$_gns_var_list_of_getter_setter_modify_field
+	$gns{list_of_getter_setter_modify_field}
 	
-	public void setSearchResult(List<$_gns_var_entity_simple_class> searchResult) {
+	public void setSearchResult(List<$gns{entity_simple_class}> searchResult) {
 		this.searchResult = searchResult;
 	}
 
-	public List<$_gns_var_entity_simple_class> getSearchResult() {
+	public List<$gns{entity_simple_class}> getSearchResult() {
 		return searchResult;
 	}
 	
@@ -42,7 +42,7 @@ $_gns_var_list_of_getter_setter_modify_field
 		return selectedId;
 	}
 	
-	public void setOld($_gns_var_entity_simple_class old) {
+	public void setOld($gns{entity_simple_class} old) {
 		this.old = old;
 	}
 	
@@ -50,7 +50,7 @@ $_gns_var_list_of_getter_setter_modify_field
 		this.pagination = pagination;
 	}
 	
-	public $_gns_var_entity_simple_class getOld() {
+	public $gns{entity_simple_class} getOld() {
 		return old;
 	}
 	

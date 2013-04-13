@@ -1,16 +1,16 @@
-package $_gns_var_package.action;
+package $gns{package}.action;
 
-import $_gns_var_package.$_gns_var_class_bl;
-import $_gns_var_package.$_gns_var_class_form;
+import $gns{package}.$gns{class_bl};
+import $gns{package}.$gns{class_form};
 import com.ganesha.core.exception.AppException;
 import com.ganesha.struts2.FormAction;
 
-public class $_gns_var_class_action_base extends
-		FormAction<$_gns_var_class_form, $_gns_var_class_bl> {
+public class $gns{class_action_base} extends
+		FormAction<$gns{class_form}, $gns{class_bl}> {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_class_action_base() throws AppException {
-		super($_gns_var_class_form.class, $_gns_var_class_bl.class);
+	public $gns{class_action_base}() throws AppException {
+		super($gns{class_form}.class, $gns{class_bl}.class);
 	}
 }

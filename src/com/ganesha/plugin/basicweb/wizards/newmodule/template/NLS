@@ -1,1 +1,3 @@
-resource.page.title=$_gns_var_resource_page_title
+resource.page.title=$gns{resource_page_title}
+resource.$gns{entity_var_name}Information=$gns{entity_simple_class} Information
+$gns{list_of_detail_fields}

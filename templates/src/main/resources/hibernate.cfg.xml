@@ -5,9 +5,9 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-		<property name="hibernate.connection.password">$_gns_var_db_password</property>
-		<property name="hibernate.connection.url">$_gns_var_db_url</property>
-		<property name="hibernate.connection.username">$_gns_var_db_username</property>
+		<property name="hibernate.connection.password">$gns{db_password}</property>
+		<property name="hibernate.connection.url">$gns{db_url}</property>
+		<property name="hibernate.connection.username">$gns{db_username}</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>

@@ -5,181 +5,181 @@
 
 <struts>
 
-	<package name="$_gns_var_struts_package" extends="basicweb"
-		namespace="/modules/$_gns_var_struts_package">
+	<package name="$gns{struts_package}" extends="basicweb"
+		namespace="/modules/$gns{struts_package}">
 
 		<!-- =================================== -->
-		<!-- $_gns_var_class_action_main : BEGIN -->
+		<!-- $gns{class_action_main} : BEGIN -->
 		<!-- =================================== -->
 		<action name="initial"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="initial">
 			<result name="success" type="chain">main
 			</result>
 		</action>
 
 		<action name="main"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_main
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_main}
 			</result>
 		</action>
 
 		<action name="search"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="search">
 			<result name="success" type="chain">searchResult
 			</result>
 		</action>
 
 		<action name="searchResult"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_main
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_main}
 			</result>
 		</action>
 
 		<action name="prepareDetail"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="prepareDetail">
 			<result name="success" type="chain">detail
 			</result>
 		</action>
 
 		<action name="detail"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_main"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_detail
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_detail}
 			</result>
 		</action>
 		<!-- ================================= -->
-		<!-- $_gns_var_class_action_main : END -->
+		<!-- $gns{class_action_main} : END -->
 		<!-- ================================= -->
 
 		<!-- ===================================== -->
-		<!-- $_gns_var_class_action_update : BEGIN -->
+		<!-- $gns{class_action_update} : BEGIN -->
 		<!-- ===================================== -->
 		<action name="prepareUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="prepareUpdate">
 			<result name="success" type="chain">formUpdate
 			</result>
 		</action>
 
 		<action name="formUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_update
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_update}
 			</result>
 		</action>
 
 		<action name="validateUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="validateUpdate">
 			<result name="success" type="chain">confirmUpdate
 			</result>
-			<result name="error">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_update
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_update}
 			</result>
 		</action>
 
 		<action name="confirmUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_update_confirm
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_update_confirm}
 			</result>
 		</action>
 
 		<action name="executeUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="executeUpdate">
 			<result name="success" type="chain">summaryUpdate
 			</result>
-			<result name="error">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_update_confirm
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_update_confirm}
 			</result>
 		</action>
 
 		<action name="summaryUpdate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_update"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_main
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_main}
 			</result>
 		</action>
 		<!-- =================================== -->
-		<!-- $_gns_var_class_action_update : END -->
+		<!-- $gns{class_action_update} : END -->
 		<!-- =================================== -->
 
 		<!-- ===================================== -->
-		<!-- $_gns_var_class_action_create : BEGIN -->
+		<!-- $gns{class_action_create} : BEGIN -->
 		<!-- ===================================== -->
 		<action name="prepareCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="prepareCreate">
 			<result name="success" type="chain">formCreate
 			</result>
 		</action>
 
 		<action name="formCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_create
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_create}
 			</result>
 		</action>
 
 		<action name="validateCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="validateCreate">
 			<result name="success" type="chain">confirmCreate
 			</result>
-			<result name="error">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_create
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_create}
 			</result>
 		</action>
 
 		<action name="confirmCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_create_confirm
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_create_confirm}
 			</result>
 		</action>
 
 		<action name="executeCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="executeCreate">
 			<result name="success" type="chain">summaryCreate
 			</result>
-			<result name="error">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_create_confirm
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_create_confirm}
 			</result>
 		</action>
 
 		<action name="summaryCreate"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_create"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_create}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_main
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_main}
 			</result>
 		</action>
 		<!-- =================================== -->
-		<!-- $_gns_var_class_action_create : END -->
+		<!-- $gns{class_action_create} : END -->
 		<!-- =================================== -->
 
 		<!-- ===================================== -->
-		<!-- $_gns_var_class_action_delete : BEGIN -->
+		<!-- $gns{class_action_delete} : BEGIN -->
 		<!-- ===================================== -->
 		<action name="executeDelete"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_delete"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_delete}"
 			method="executeDelete">
 			<result name="success" type="chain">summaryDelete
 			</result>
-			<result name="error">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_detail
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_detail}
 			</result>
 		</action>
 
 		<action name="summaryDelete"
-			class="$_gns_var_ganesha_modules.$_gns_var_struts_package.action.$_gns_var_class_action_delete"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_delete}"
 			method="chainAction">
-			<result name="success">/jsp/modules/$_gns_var_struts_package/$_gns_var_jsp_main
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_main}
 			</result>
 		</action>
 		<!-- =================================== -->
-		<!-- $_gns_var_class_action_delete : END -->
+		<!-- $gns{class_action_delete} : END -->
 		<!-- =================================== -->
 
 	</package>

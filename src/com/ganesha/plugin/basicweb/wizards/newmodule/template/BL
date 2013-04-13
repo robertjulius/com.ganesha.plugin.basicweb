@@ -1,4 +1,4 @@
-package $_gns_var_package;
+package $gns{package};
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import $_gns_var_entity_full_class;
+import $gns{entity_full_class};
 import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.modules.BusinessLogic;
 import com.ganesha.basicweb.utility.GeneralConstants;
@@ -16,7 +16,7 @@ import com.ganesha.basicweb.utility.PropertiesConstants;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 
-public class $_gns_var_class_bl extends BusinessLogic {
+public class $gns{class_bl} extends BusinessLogic {
 
 	public void create(String createBy, Timestamp createDate)
 			throws AppException {
@@ -27,12 +27,12 @@ public class $_gns_var_class_bl extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		$_gns_var_entity_simple_class $_gns_var_entity_var_name = new $_gns_var_entity_simple_class();
-		$_gns_var_entity_var_name.setUpdateDate(createDate);
-		$_gns_var_entity_var_name.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);
+		$gns{entity_simple_class} $gns{entity_var_name} = new $gns{entity_simple_class}();
+		$gns{entity_var_name}.setUpdateDate(createDate);
+		$gns{entity_var_name}.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);
 
-		getSession().save($_gns_var_entity_var_name);
-		saveActivityLog(ActionType.CREATE, $_gns_var_entity_var_name);
+		getSession().save($gns{entity_var_name});
+		saveActivityLog(ActionType.CREATE, $gns{entity_var_name});
 
 		commit();
 	}
@@ -46,18 +46,18 @@ public class $_gns_var_class_bl extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		$_gns_var_entity_simple_class $_gns_var_entity_var_name = ($_gns_var_entity_simple_class) getSession().load($_gns_var_entity_simple_class.class, id);
-		$_gns_var_entity_var_name.setUpdateBy(updateBy);
-		$_gns_var_entity_var_name.setUpdateDate(updateDate);
-		$_gns_var_entity_var_name.setRecStatus(GeneralConstants.REC_STATUS_NONACTIVE);
+		$gns{entity_simple_class} $gns{entity_var_name} = ($gns{entity_simple_class}) getSession().load($gns{entity_simple_class}.class, id);
+		$gns{entity_var_name}.setUpdateBy(updateBy);
+		$gns{entity_var_name}.setUpdateDate(updateDate);
+		$gns{entity_var_name}.setRecStatus(GeneralConstants.REC_STATUS_NONACTIVE);
 
-		getSession().update($_gns_var_entity_var_name);
+		getSession().update($gns{entity_var_name});
 		saveActivityLog(ActionType.DELETE, "Delete YOUR OWN DESCRIPTION with id " + id); // TODO Auto-generated method stub
 
 		commit();
 	}
 	
-	public $_gns_var_entity_simple_class getDetail(String id) throws AppException {
+	public $gns{entity_simple_class} getDetail(String id) throws AppException {
 		if (id == null || id.trim().isEmpty()) {
 			throw new AppException(
 					PropertiesConstants.ERROR_PRIMARY_KEY_REQUIRED);
@@ -67,19 +67,19 @@ public class $_gns_var_class_bl extends BusinessLogic {
 		 * TODO Auto-generated method stub
 		 * Define your own criteria
 		 */
-		Criteria criteria = getSession().createCriteria($_gns_var_entity_simple_class.class);
+		Criteria criteria = getSession().createCriteria($gns{entity_simple_class}.class);
 		criteria.add(Restrictions.eq("id", id));
 		criteria.add(Restrictions.eq("recStatus",
 				GeneralConstants.REC_STATUS_ACTIVE));
 
-		return ($_gns_var_entity_simple_class) criteria.uniqueResult();
+		return ($gns{entity_simple_class}) criteria.uniqueResult();
 	}
 	
-	public List<$_gns_var_entity_simple_class> search($_gns_var_list_of_parameter_search_criteria, Pagination pagination) throws AppException {
+	public List<$gns{entity_simple_class}> search($gns{list_of_parameter_search_criteria}, Pagination pagination) throws AppException {
 		// TODO Auto-generated method stub
-		Criteria criteria = getSession().createCriteria($_gns_var_entity_simple_class.class);
+		Criteria criteria = getSession().createCriteria($gns{entity_simple_class}.class);
 
-$_gns_var_list_of_search_criteria
+		$gns{list_of_search_criteria}
 
 		criteria.setFirstResult((pagination.getPageNumber() - 1)
 				* pagination.getRowsPerPage());
@@ -89,7 +89,7 @@ $_gns_var_list_of_search_criteria
 				GeneralConstants.REC_STATUS_ACTIVE));
 
 		@SuppressWarnings("unchecked")
-		List<$_gns_var_entity_simple_class> list = criteria.list();
+		List<$gns{entity_simple_class}> $gns{entity_var_name}s = criteria.list();
 		
 		criteria.setFirstResult(0);
 		criteria.setMaxResults(1);
@@ -97,7 +97,7 @@ $_gns_var_list_of_search_criteria
 				.uniqueResult();
 		pagination.setRowCount(rowCount);
 		
-		return list;
+		return $gns{entity_var_name}s;
 	}
 	
 	public void update(String id, String updateBy, Timestamp updateDate)
@@ -109,12 +109,12 @@ $_gns_var_list_of_search_criteria
 		 * TODO Auto-generated method stub
 		 * Define your own object
 		 */
-		$_gns_var_entity_simple_class $_gns_var_entity_var_name = ($_gns_var_entity_simple_class) getSession().load($_gns_var_entity_simple_class.class, id);
-		$_gns_var_entity_var_name.setUpdateBy(updateBy);
-		$_gns_var_entity_var_name.setUpdateDate(updateDate);
+		$gns{entity_simple_class} $gns{entity_var_name} = ($gns{entity_simple_class}) getSession().load($gns{entity_simple_class}.class, id);
+		$gns{entity_var_name}.setUpdateBy(updateBy);
+		$gns{entity_var_name}.setUpdateDate(updateDate);
 
-		getSession().save($_gns_var_entity_var_name);
-		saveActivityLog(ActionType.UPDATE, $_gns_var_entity_var_name);
+		getSession().save($gns{entity_var_name});
+		saveActivityLog(ActionType.UPDATE, $gns{entity_var_name});
 
 		commit();
 	}

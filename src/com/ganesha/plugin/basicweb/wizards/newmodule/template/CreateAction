@@ -1,15 +1,15 @@
-package $_gns_var_package.action;
+package $gns{package}.action;
 
 import com.ganesha.basicweb.model.user.SimpleUser;
-import $_gns_var_package.$_gns_var_class_form;
+import $gns{package}.$gns{class_form};
 import com.ganesha.basicweb.utility.CommonUtils;
 import com.ganesha.core.exception.AppException;
 
-public class $_gns_var_class_action_create extends $_gns_var_class_action_base {
+public class $gns{class_action_create} extends $gns{class_action_base} {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_class_action_create() throws AppException {
+	public $gns{class_action_create}() throws AppException {
 		super();
 	}
 	
@@ -17,7 +17,7 @@ public class $_gns_var_class_action_create extends $_gns_var_class_action_base {
 		// TODO Auto-generated method stub
 		SimpleUser user = (SimpleUser) getUserSession().getUser();
 
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		getBL().create(user.getId(), CommonUtils.getCurrentTimestamp());
 
 		return SUCCESS;
@@ -25,7 +25,7 @@ public class $_gns_var_class_action_create extends $_gns_var_class_action_base {
 	
 	public String prepareCreate() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		form.clearForm("new");
 		
 		form.setSelectedId(null);

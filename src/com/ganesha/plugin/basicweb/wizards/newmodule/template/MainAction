@@ -1,23 +1,23 @@
-package $_gns_var_package.action;
+package $gns{package}.action;
 
 import java.util.List;
 
 import com.ganesha.basicweb.model.Pagination;
-import $_gns_var_entity_full_class;
-import $_gns_var_package.$_gns_var_class_form;
+import $gns{entity_full_class};
+import $gns{package}.$gns{class_form};
 import com.ganesha.core.exception.AppException;
 
-public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
+public class $gns{class_action_main} extends $gns{class_action_base} {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_class_action_main() throws AppException {
+	public $gns{class_action_main}() throws AppException {
 		super();
 	}
 	
 	public String initial() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		
 		form.setPagination(new Pagination());
 		
@@ -26,24 +26,24 @@ public class $_gns_var_class_action_main extends $_gns_var_class_action_base {
 	
 	public String prepareDetail() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		String selectedId = form.getSelectedId();
 
-		$_gns_var_entity_simple_class $_gns_var_entity_var_name = getBL().getDetail(selectedId);
-		form.setOld($_gns_var_entity_var_name);
+		$gns{entity_simple_class} $gns{entity_var_name} = getBL().getDetail(selectedId);
+		form.setOld($gns{entity_var_name});
 
 		return SUCCESS;
 	}
 	
 	public String search() throws AppException {
 		// TODO Auto-generated method stub
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		
-$_gns_var_list_of_search_criteria
+		$gns{list_of_search_criteria}
 
 		Pagination pagination = getForm().getPagination();
-		List<$_gns_var_entity_simple_class> $_gns_var_entity_var_names = getBL().search($_gns_var_list_of_parameter_search_criteria, pagination);
-		form.setSearchResult($_gns_var_entity_var_names);
+		List<$gns{entity_simple_class}> $gns{entity_var_name}s = getBL().search($gns{list_of_parameter_search_criteria}, pagination);
+		form.setSearchResult($gns{entity_var_name}s);
 		
 		return SUCCESS;
 	}

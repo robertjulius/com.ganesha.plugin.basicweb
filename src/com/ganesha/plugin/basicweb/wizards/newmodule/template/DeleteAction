@@ -1,23 +1,23 @@
-package $_gns_var_package.action;
+package $gns{package}.action;
 
 import com.ganesha.basicweb.model.user.SimpleUser;
-import $_gns_var_package.$_gns_var_class_form;
+import $gns{package}.$gns{class_form};
 import com.ganesha.basicweb.utility.CommonUtils;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
 
-public class $_gns_var_class_action_delete extends $_gns_var_class_action_base {
+public class $gns{class_action_delete} extends $gns{class_action_base} {
 
 	private static final long serialVersionUID = 1L;
 
-	public $_gns_var_class_action_delete() throws AppException {
+	public $gns{class_action_delete}() throws AppException {
 		super();
 	}
 	
 	public String executeDelete() throws AppException {
 		// TODO Auto-generated method stub
 		SimpleUser user = (SimpleUser) getUserSession().getUser();
-		$_gns_var_class_form form = getForm();
+		$gns{class_form} form = getForm();
 		try {
 			getBL().delete(form.getSelectedId(), user.getId(),
 					CommonUtils.getCurrentTimestamp());
