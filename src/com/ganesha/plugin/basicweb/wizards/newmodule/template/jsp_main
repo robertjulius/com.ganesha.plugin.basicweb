@@ -15,9 +15,7 @@
 			<td>
 				<table>
 					<tr>
-						<td>
-							<h1><s:text name="resource.page.title" /></h1>
-						</td>
+						<td><h1><s:text name="resource.page.title" /></h1></td>
 					</tr>
 				</table>
 			</td>

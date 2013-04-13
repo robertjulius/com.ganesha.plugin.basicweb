@@ -18,7 +18,8 @@ public class $gns{class_action_create} extends $gns{class_action_base} {
 		SimpleUser user = (SimpleUser) getUserSession().getUser();
 
 		$gns{class_form} form = getForm();
-		getBL().create(user.getId(), CommonUtils.getCurrentTimestamp());
+		$gns{list_of_modify_field}
+		getBL().create($gns{list_of_parameter_modify_fields}, user.getId(), CommonUtils.getCurrentTimestamp());
 
 		return SUCCESS;
 	}

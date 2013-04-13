@@ -5,7 +5,7 @@ import $gns{package}.$gns{class_form};
 import com.ganesha.basicweb.utility.CommonUtils;
 import com.ganesha.core.exception.AppException;
 
-public abstract class $gns{class_action_update} extends $gns{class_action_base} {
+public class $gns{class_action_update} extends $gns{class_action_base} {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,8 @@ public abstract class $gns{class_action_update} extends $gns{class_action_base} 
 		SimpleUser user = (SimpleUser) getUserSession().getUser();
 
 		$gns{class_form} form = getForm();
-		getBL().update(form.getSelectedId(), user.getId(), CommonUtils.getCurrentTimestamp());
+		$gns{list_of_modify_field}
+		getBL().update(form.getSelectedId(), $gns{list_of_parameter_modify_fields}, user.getId(), CommonUtils.getCurrentTimestamp());
 
 		return SUCCESS;
 	}

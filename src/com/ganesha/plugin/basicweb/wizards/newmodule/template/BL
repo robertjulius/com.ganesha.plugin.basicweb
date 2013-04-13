@@ -18,7 +18,7 @@ import com.ganesha.core.exception.UserException;
 
 public class $gns{class_bl} extends BusinessLogic {
 
-	public void create(String createBy, Timestamp createDate)
+	public void create($gns{list_of_parameter_modify_fields}, String createBy, Timestamp createDate)
 			throws AppException {
 
 		beginTransaction();
@@ -28,8 +28,12 @@ public class $gns{class_bl} extends BusinessLogic {
 		 * Define your own object
 		 */
 		$gns{entity_simple_class} $gns{entity_var_name} = new $gns{entity_simple_class}();
+		$gns{list_of_modify_field}
+		$gns{entity_var_name}.setCreateBy(createBy);
+		$gns{entity_var_name}.setCreateDate(createDate);
+		$gns{entity_var_name}.setUpdateBy(createBy);
 		$gns{entity_var_name}.setUpdateDate(createDate);
-		$gns{entity_var_name}.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);
+		$gns{entity_var_name}.setRecStatus(GeneralConstants.REC_STATUS_ACTIVE);		
 
 		getSession().save($gns{entity_var_name});
 		saveActivityLog(ActionType.CREATE, $gns{entity_var_name});
@@ -52,7 +56,7 @@ public class $gns{class_bl} extends BusinessLogic {
 		$gns{entity_var_name}.setRecStatus(GeneralConstants.REC_STATUS_NONACTIVE);
 
 		getSession().update($gns{entity_var_name});
-		saveActivityLog(ActionType.DELETE, "Delete YOUR OWN DESCRIPTION with id " + id); // TODO Auto-generated method stub
+		saveActivityLog(ActionType.DELETE, "Delete $gns{entity_full_class} with id " + id); // TODO Define your own description
 
 		commit();
 	}
@@ -100,7 +104,7 @@ public class $gns{class_bl} extends BusinessLogic {
 		return $gns{entity_var_name}s;
 	}
 	
-	public void update(String id, String updateBy, Timestamp updateDate)
+	public void update(String id, $gns{list_of_parameter_modify_fields}, String updateBy, Timestamp updateDate)
 			throws AppException {
 
 		beginTransaction();
@@ -110,6 +114,7 @@ public class $gns{class_bl} extends BusinessLogic {
 		 * Define your own object
 		 */
 		$gns{entity_simple_class} $gns{entity_var_name} = ($gns{entity_simple_class}) getSession().load($gns{entity_simple_class}.class, id);
+		$gns{list_of_modify_field}
 		$gns{entity_var_name}.setUpdateBy(updateBy);
 		$gns{entity_var_name}.setUpdateDate(updateDate);
 

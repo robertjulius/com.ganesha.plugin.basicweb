@@ -39,6 +39,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private String prefixClassName;
 	private Properties properties;
 	private String entitySimpleName;
+	private String entityVarName;
 	private String entityFullName;
 	private List<RowItem> criterias;
 	private List<RowItem> searchResults;
@@ -89,6 +90,10 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		String elementName = page.getEntity().getElementName();
 		entitySimpleName = elementName;
 
+		entityVarName = new StringBuilder(entitySimpleName.substring(0, 1)
+				.toLowerCase()).append(entitySimpleName.substring(1))
+				.toString();
+
 		BasicCRUDMainPage mainPage = (BasicCRUDMainPage) getPage(BasicCRUDMainPage.NAME);
 		this.criterias = mainPage.getSearchCriterias();
 		this.searchResults = mainPage.getSearchResult();
@@ -135,21 +140,24 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				.append(".").append(prefixClassName.toLowerCase()).append(".")
 				.append(prefixClassName.toLowerCase());
 
-		String moduleXmlPath = stringBuilder.toString().replace('.',
-				IPath.SEPARATOR)
-				+ "-struts.xml";
+		String moduleXmlPath = new StringBuilder(stringBuilder.toString()
+				.replace('.', IPath.SEPARATOR)).append("-struts.xml")
+				.toString();
 
 		InputStream inputStream = null;
 		try {
-			IFile strutsXml = project.getFile(Constants.RESOURCE
-					+ IPath.SEPARATOR + "struts.xml");
+			IFile strutsXml = project.getFile(new StringBuilder(
+					Constants.RESOURCE).append(IPath.SEPARATOR)
+					.append("struts.xml").toString());
 
 			Map<String, String> map = new HashMap<>();
 
-			String newIncludeLine = "<include file=\"" + moduleXmlPath
-					+ "\"></include>";
-			map.put(Constants.STRUTS_NEW_MODULE_LINE, newIncludeLine + "\n\t"
-					+ Constants.STRUTS_NEW_MODULE_LINE);
+			String newIncludeLine = new StringBuilder("<include file=\"")
+					.append(moduleXmlPath).append("\"></include>").toString();
+			map.put(Constants.STRUTS_NEW_MODULE_LINE,
+					new StringBuilder(newIncludeLine).append("\n\t")
+							.append(Constants.STRUTS_NEW_MODULE_LINE)
+							.toString());
 
 			inputStream = Utils.openContentStream(strutsXml, map,
 					this.getClass());
@@ -171,10 +179,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private void createAction(String modulePath, IProject project,
 			IProgressMonitor monitor) throws CoreException {
 
-		String actionPath = modulePath + IPath.SEPARATOR + "action";
-		String packageName = properties
-				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + prefixClassName.toLowerCase();
+		String actionPath = new StringBuilder(modulePath)
+				.append(IPath.SEPARATOR).append("action").toString();
+		String packageName = new StringBuilder(
+				properties
+						.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES))
+				.append(".").append(prefixClassName.toLowerCase()).toString();
 
 		IFolder folder = project.getFolder(actionPath);
 		Utils.createResource(folder, monitor);
@@ -182,20 +192,21 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		List<InputStream> inputStreams = new ArrayList<>();
 
 		{ // base action
-			IFile baseAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "Action.java");
+			IFile baseAction = project.getFile(new StringBuilder(actionPath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("Action.java").toString());
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_BASE,
 					baseAction.getName().replace(".java", ""));
-			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR,
+					new StringBuilder(prefixClassName).append("Form")
+							.toString());
+			map.put(Constants.CLASS_BL_VAR, new StringBuilder(prefixClassName)
+					.append("BL").toString());
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			InputStream inputStream = Utils.openContentStream(
@@ -206,22 +217,28 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 
 		{ // main action
-			IFile mainAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "MainAction.java");
-			String baseAction = prefixClassName + "Action";
+			IFile mainAction = project.getFile(new StringBuilder(actionPath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("MainAction.java").toString());
+			String baseAction = new StringBuilder(prefixClassName).append(
+					"Action").toString();
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_MAIN,
 					mainAction.getName().replace(".java", ""));
 			map.put(Constants.CLASS_ACTION_BASE, baseAction);
-			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR,
+					new StringBuilder(prefixClassName).append("Form")
+							.toString());
+			map.put(Constants.CLASS_BL_VAR, new StringBuilder(prefixClassName)
+					.append("BL").toString());
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			{ // Create search criterias
-				StringBuilder builderForIfConditions = new StringBuilder();
+				StringBuilder builderForInputFields = new StringBuilder();
 				StringBuilder builderForParameters = new StringBuilder();
 				for (RowItem rowItem : criterias) {
 					String getter = rowItem.getName();
@@ -229,22 +246,17 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(getter.substring(0, 1).toUpperCase())
 							.append(getter.substring(1)).append("()")
 							.toString();
-					builderForIfConditions.append("\n")
+					builderForInputFields.append("\n")
 							.append(rowItem.getType()).append(" ")
 							.append(rowItem.getName()).append(" = form.")
 							.append(getter).append(";");
 					builderForParameters.append(", ").append(rowItem.getName());
 				}
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
-						builderForIfConditions.toString()
-								.replaceFirst("\n", ""));
+						builderForInputFields.toString().replaceFirst("\n", ""));
 				map.put(Constants.LIST_OF_PARAMETER_SEARCH_CRITERIA,
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
-			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			InputStream inputStream = Utils.openContentStream(
 					"template/MainAction", map, this.getClass(), false);
@@ -254,23 +266,46 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 
 		{ // create action
-			IFile createAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "CreateAction.java");
-			String baseAction = prefixClassName + "Action";
+			IFile createAction = project.getFile(new StringBuilder(actionPath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("CreateAction.java").toString());
+			String baseAction = new StringBuilder(prefixClassName).append(
+					"Action").toString();
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_CREATE, createAction.getName()
 					.replace(".java", ""));
 			map.put(Constants.CLASS_ACTION_BASE, baseAction);
-			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR,
+					new StringBuilder(prefixClassName).append("Form")
+							.toString());
+			map.put(Constants.CLASS_BL_VAR, new StringBuilder(prefixClassName)
+					.append("BL").toString());
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder builderForInputFields = new StringBuilder();
+				StringBuilder builderForParameters = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String getter = rowItem.getName();
+					getter = new StringBuilder("get")
+							.append(getter.substring(0, 1).toUpperCase())
+							.append(getter.substring(1)).append("()")
+							.toString();
+					builderForInputFields.append("\n")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(" = form.")
+							.append(getter).append(";");
+					builderForParameters.append(", ").append(rowItem.getName());
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD, builderForInputFields
+						.toString().replaceFirst("\n", ""));
+				map.put(Constants.LIST_OF_PARAMETER_MODIFY_FIELDS,
+						builderForParameters.toString().replaceFirst(", ", ""));
+			}
 
 			InputStream inputStream = Utils.openContentStream(
 					"template/CreateAction", map, this.getClass(), false);
@@ -280,22 +315,24 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 
 		{ // delete action
-			IFile deleteAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "DeleteAction.java");
-			String baseAction = prefixClassName + "Action";
+			IFile deleteAction = project.getFile(new StringBuilder(actionPath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("DeleteAction.java").toString());
+			String baseAction = new StringBuilder(prefixClassName).append(
+					"Action").toString();
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_DELETE, deleteAction.getName()
 					.replace(".java", ""));
 			map.put(Constants.CLASS_ACTION_BASE, baseAction);
-			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR,
+					new StringBuilder(prefixClassName).append("Form")
+							.toString());
+			map.put(Constants.CLASS_BL_VAR, new StringBuilder(prefixClassName)
+					.append("BL").toString());
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			InputStream inputStream = Utils.openContentStream(
@@ -306,23 +343,46 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		}
 
 		{ // update action
-			IFile updateAction = project.getFile(actionPath + IPath.SEPARATOR
-					+ prefixClassName + "UpdateAction.java");
-			String baseAction = prefixClassName + "Action";
+			IFile updateAction = project.getFile(new StringBuilder(actionPath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("UpdateAction.java").toString());
+			String baseAction = new StringBuilder(prefixClassName).append(
+					"Action").toString();
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(Constants.CLASS_ACTION_UPDATE, updateAction.getName()
 					.replace(".java", ""));
 			map.put(Constants.CLASS_ACTION_BASE, baseAction);
-			map.put(Constants.CLASS_FORM_VAR, prefixClassName + "Form");
-			map.put(Constants.CLASS_BL_VAR, prefixClassName + "BL");
+			map.put(Constants.CLASS_FORM_VAR,
+					new StringBuilder(prefixClassName).append("Form")
+							.toString());
+			map.put(Constants.CLASS_BL_VAR, new StringBuilder(prefixClassName)
+					.append("BL").toString());
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder builderForInputFields = new StringBuilder();
+				StringBuilder builderForParameters = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String getter = rowItem.getName();
+					getter = new StringBuilder("get")
+							.append(getter.substring(0, 1).toUpperCase())
+							.append(getter.substring(1)).append("()")
+							.toString();
+					builderForInputFields.append("\n")
+							.append(rowItem.getType()).append(" ")
+							.append(rowItem.getName()).append(" = form.")
+							.append(getter).append(";");
+					builderForParameters.append(", ").append(rowItem.getName());
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD, builderForInputFields
+						.toString().replaceFirst("\n", ""));
+				map.put(Constants.LIST_OF_PARAMETER_MODIFY_FIELDS,
+						builderForParameters.toString().replaceFirst(", ", ""));
+			}
 
 			InputStream inputStream = Utils.openContentStream(
 					"template/UpdateAction", map, this.getClass(), false);
@@ -357,14 +417,16 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 	private void createForm(String modulePath, IProject project,
 			IProgressMonitor monitor) throws CoreException {
-		String packageName = properties
-				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + prefixClassName.toLowerCase();
+		String packageName = new StringBuilder(
+				properties
+						.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES))
+				.append(".").append(prefixClassName).toString().toLowerCase();
 
 		InputStream inputStream = null;
 		try {
-			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
-					+ prefixClassName + "Form.java");
+			IFile businessLogic = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("Form.java").toString());
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
@@ -372,6 +434,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			{ // Create search criterias
 				StringBuilder stringBuilder = new StringBuilder();
@@ -453,10 +516,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						stringBuilder.toString().replaceFirst("\n\n", ""));
 			}
 
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
-			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
-
 			inputStream = Utils.openContentStream("template/Form", map,
 					this.getClass(), false);
 			createFile(businessLogic, inputStream, monitor);
@@ -477,8 +536,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private void createJsp(String webApp, IProject project,
 			IProgressMonitor monitor) throws CoreException {
 
-		String basePackage = webApp + IPath.SEPARATOR + "jsp" + IPath.SEPARATOR
-				+ "modules";
+		String basePackage = new StringBuilder(webApp).append(IPath.SEPARATOR)
+				.append("jsp").append(IPath.SEPARATOR).append("modules")
+				.toString();
 
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(basePackage);
@@ -489,9 +549,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		IFolder folder = project.getFolder(modulePath);
 		if (folder.exists()) {
-			Exception e = new Exception("Cannot create module '" + moduleName
-					+ "' because directory " + folder.getFullPath()
-					+ " already exists");
+			Exception e = new Exception(new StringBuilder(
+					"Cannot create module '").append(moduleName)
+					.append("' because directory ")
+					.append(folder.getFullPath()).append(" already exists")
+					.toString());
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
 					.getName(), IStatus.OK, e.getMessage(), e);
 			throw new CoreException(status);
@@ -511,12 +573,38 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_confirm_create.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_confirm_create.jsp")
+					.toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder builderForNewValue = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String newValueName = rowItem.getName();
+					String originName = newValueName.replaceFirst("new", "");
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
+					builderForNewValue.append("\n<tr>");
+					builderForNewValue
+							.append("\n\t")
+							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append(originName).append("\" /></td>");
+					builderForNewValue.append("\n\t")
+							.append("<td align=\"left\"><s:label name=\"")
+							.append(newValueName).append("\" /></td>");
+					builderForNewValue.append("\n</tr>");
+				}
+
+				map.put(Constants.LIST_OF_MODIFY_FIELD, builderForNewValue
+						.toString().replaceFirst("\n", ""));
+			}
+
 			inputStream = Utils.openContentStream(
 					"template/jsp_confirm_create", map, this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -539,12 +627,50 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_confirm_update.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_confirm_update.jsp")
+					.toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder builderForOldValue = new StringBuilder();
+				StringBuilder builderForNewValue = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String newValueName = rowItem.getName();
+					String originName = newValueName.replaceFirst("new", "");
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
+					builderForOldValue.append("\n<tr>");
+					builderForOldValue
+							.append("\n\t")
+							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append(originName).append("\" /></td>");
+					builderForOldValue.append("\n\t")
+							.append("<td align=\"left\"><s:label name=\"old.")
+							.append(originName).append("\" /></td>");
+					builderForOldValue.append("\n</tr>");
+					builderForNewValue.append("\n<tr>");
+					builderForNewValue
+							.append("\n\t")
+							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append(originName).append("\" /></td>");
+					builderForNewValue.append("\n\t")
+							.append("<td align=\"left\"><s:label name=\"")
+							.append(newValueName).append("\" /></td>");
+					builderForNewValue.append("\n</tr>");
+				}
+
+				map.put(Constants.LIST_OF_MODIFY_FIELD, builderForNewValue
+						.toString().replaceFirst("\n", ""));
+				map.put(Constants.LIST_OF_OLD_FIELD, builderForOldValue
+						.toString().replaceFirst("\n", ""));
+			}
+
 			inputStream = Utils.openContentStream(
 					"template/jsp_confirm_update", map, this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -567,12 +693,32 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_create.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_create.jsp")
+					.toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String newValueName = rowItem.getName();
+					String originName = newValueName.replaceFirst("new", "");
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
+					stringBuilder.append("\n<s:textfield key=\"resource.")
+							.append(originName).append("\" name=\"")
+							.append(newValueName)
+							.append("\" theme=\"xhtml\" size=\"30px\" />");
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD, stringBuilder
+						.toString().replaceFirst("\n", ""));
+			}
+
 			inputStream = Utils.openContentStream("template/jsp_create", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -595,12 +741,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_detail.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_detail.jsp")
+					.toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			{ // Create search criterias
 				StringBuilder stringBuilder = new StringBuilder();
@@ -618,10 +766,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				map.put(Constants.LIST_OF_DETAIL_FIELDS, stringBuilder
 						.toString().replaceFirst("\n", ""));
 			}
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
-			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			inputStream = Utils.openContentStream("template/jsp_detail", map,
 					this.getClass(), false);
@@ -645,10 +789,10 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_main.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_main.jsp").toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
 
@@ -658,8 +802,9 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					String searchCriteria = rowItem.getName();
 					String originName = searchCriteria.replaceFirst("search",
 							"");
-					originName = originName.substring(0, 1).toLowerCase()
-							+ originName.substring(1);
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
 					stringBuilder.append("\n<s:textfield key=\"resource.")
 							.append(originName).append("\" name=\"")
 							.append(searchCriteria).append("\" />");
@@ -706,12 +851,35 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile jspFile = project.getFile(modulePath
-					+ IPath.SEPARATOR
-					+ Utils.camelToHuman(prefixClassName).toLowerCase()
-							.replace(' ', '_') + "_update.jsp");
+			IFile jspFile = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(Utils.camelToHuman(prefixClassName).toLowerCase()
+							.replace(' ', '_')).append("_update.jsp")
+					.toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+
+			{ // Create modify fields
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String newValueName = rowItem.getName();
+					String originName = newValueName.replaceFirst("new", "");
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
+					stringBuilder.append("\n<s:textfield key=\"resource.")
+							.append(originName).append("\" name=\"")
+							.append(newValueName)
+							.append("\" theme=\"xhtml\" size=\"30px\" />");
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD, stringBuilder
+						.toString().replaceFirst("\n", ""));
+			}
+
+			inputStream = Utils.openContentStream("template/jsp_detail", map,
+					this.getClass(), false);
+
 			inputStream = Utils.openContentStream("template/jsp_update", map,
 					this.getClass(), false);
 			createFile(jspFile, inputStream, monitor);
@@ -731,34 +899,42 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 	private void createLogic(String modulePath, IProject project,
 			IProgressMonitor monitor) throws CoreException {
-		String packageName = properties
-				.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES)
-				+ "." + prefixClassName.toLowerCase();
+		String packageName = new StringBuilder(
+				properties
+						.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES))
+				.append(".").append(prefixClassName).toString().toLowerCase();
 
 		InputStream inputStream = null;
 		try {
-			IFile businessLogic = project.getFile(modulePath + IPath.SEPARATOR
-					+ prefixClassName + "BL.java");
+			IFile businessLogic = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR).append(prefixClassName)
+					.append("BL.java").toString());
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.PACKAGE_VAR, packageName);
 			map.put(CLASS_BL_VAR, businessLogic.getName().replace(".java", ""));
 			map.put(Constants.ENTITY_FULL_VAR, entityFullName);
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			{ // Create search criterias
 				StringBuilder builderForIfConditions = new StringBuilder();
 				StringBuilder builderForParameters = new StringBuilder();
 				for (RowItem rowItem : criterias) {
+					String criteriaName = rowItem.getName();
+					String originName = criteriaName.replaceFirst("search", "");
+					originName = new StringBuilder(originName.substring(0, 1)
+							.toLowerCase()).append(originName.substring(1))
+							.toString();
 					builderForIfConditions.append("\n\nif (")
-							.append(rowItem.getName()).append(" != null && !")
-							.append(rowItem.getName())
+							.append(criteriaName).append(" != null && !")
+							.append(criteriaName)
 							.append(".trim().isEmpty()) {\n\t")
 							.append("criteria.add(Restrictions.like(\"")
-							.append(rowItem.getName()).append("\", \"%\" + ")
-							.append(rowItem.getName()).append(" + \"%\"));\n}");
+							.append(originName).append("\", \"%\" + ")
+							.append(criteriaName).append(" + \"%\"));\n}");
 					builderForParameters.append(", ").append(rowItem.getType())
-							.append(" ").append(rowItem.getName());
+							.append(" ").append(criteriaName);
 				}
 				map.put(Constants.LIST_OF_SEARCH_CRITERIA,
 						builderForIfConditions.toString().replaceFirst("\n\n",
@@ -767,9 +943,24 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
-			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
+			{ // Create modify fields
+				StringBuilder builderForEntityAssignment = new StringBuilder();
+				StringBuilder builderForParameters = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					String setter = rowItem.getName()
+							.replaceFirst("new", "set");
+					builderForEntityAssignment.append("\n")
+							.append(entityVarName).append(".").append(setter)
+							.append("(").append(rowItem.getName()).append(");");
+					builderForParameters.append(", ").append(rowItem.getType())
+							.append(" ").append(rowItem.getName());
+				}
+				map.put(Constants.LIST_OF_MODIFY_FIELD,
+						builderForEntityAssignment.toString().replaceFirst(
+								"\n", ""));
+				map.put(Constants.LIST_OF_PARAMETER_MODIFY_FIELDS,
+						builderForParameters.toString().replaceFirst(", ", ""));
+			}
 
 			inputStream = Utils.openContentStream("template/BL", map,
 					this.getClass(), false);
@@ -791,10 +982,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private void createModule(String javaSource, IProject project,
 			IProgressMonitor monitor) throws CoreException {
 
-		String basePackage = javaSource
-				+ IPath.SEPARATOR
-				+ (String) properties
-						.get(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES);
+		String basePackage = new StringBuilder(javaSource)
+				.append(IPath.SEPARATOR)
+				.append((String) properties
+						.get(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES))
+				.toString();
 
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(basePackage);
@@ -805,9 +997,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		IFolder folder = project.getFolder(modulePath);
 		if (folder.exists()) {
-			Exception e = new Exception("Cannot create module '" + moduleName
-					+ "' because directory " + folder.getFullPath()
-					+ " already exists");
+			Exception e = new Exception(new StringBuilder(
+					"Cannot create module '").append(moduleName)
+					.append("' because directory ")
+					.append(folder.getFullPath()).append(" already exists")
+					.toString());
 			IStatus status = new Status(IStatus.ERROR, this.getClass()
 					.getName(), IStatus.OK, e.getMessage(), e);
 			throw new CoreException(status);
@@ -826,11 +1020,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile packageProperties = project.getFile(modulePath
-					+ IPath.SEPARATOR + "package.properties");
+			IFile packageProperties = project.getFile(new StringBuilder(
+					modulePath).append(IPath.SEPARATOR)
+					.append("package.properties").toString());
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.RESOURCE_PAGE_TITLE, moduleName);
+			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
+			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			{ // Create properties
 				StringBuilder stringBuilder = new StringBuilder();
@@ -842,12 +1039,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				map.put(Constants.LIST_OF_DETAIL_FIELDS, stringBuilder
 						.toString().replaceFirst("\n", ""));
 			}
-
-			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
-
-			String entityVarName = entitySimpleName.substring(0, 1)
-					.toLowerCase() + entitySimpleName.substring(1);
-			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
 			inputStream = Utils.openContentStream("template/NLS", map,
 					this.getClass(), false);
@@ -871,31 +1062,38 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 
 		InputStream inputStream = null;
 		try {
-			IFile strutsXml = project.getFile(modulePath + IPath.SEPARATOR
-					+ prefixClassName.toLowerCase() + "-struts.xml");
+			IFile strutsXml = project.getFile(new StringBuilder(modulePath)
+					.append(IPath.SEPARATOR)
+					.append(prefixClassName.toLowerCase())
+					.append("-struts.xml").toString());
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.STRUTS_PACKAGE_VAR, prefixClassName.toLowerCase());
 			map.put(Constants.GANESHA_MODULES_VAR,
 					properties
 							.getProperty(Constants.COM_GANESHA_CLIENT_BASEPACKAGE_MODULES));
-			map.put(Constants.CLASS_ACTION_MAIN, prefixClassName + "MainAction");
-			map.put(Constants.CLASS_ACTION_CREATE, prefixClassName
-					+ "CreateAction");
-			map.put(Constants.CLASS_ACTION_UPDATE, prefixClassName
-					+ "UpdateAction");
-			map.put(Constants.CLASS_ACTION_DELETE, prefixClassName
-					+ "DeleteAction");
+			map.put(Constants.CLASS_ACTION_MAIN, new StringBuilder(
+					prefixClassName).append("MainAction").toString());
+			map.put(Constants.CLASS_ACTION_CREATE, new StringBuilder(
+					prefixClassName).append("CreateAction").toString());
+			map.put(Constants.CLASS_ACTION_UPDATE, new StringBuilder(
+					prefixClassName).append("UpdateAction").toString());
+			map.put(Constants.CLASS_ACTION_DELETE, new StringBuilder(
+					prefixClassName).append("DeleteAction").toString());
 
 			String prefixJspName = moduleName.replaceAll(" ", "_")
 					.toLowerCase();
-			map.put(Constants.JSP_MAIN, prefixJspName + "_main.jsp");
-			map.put(Constants.JSP_DETAIL, prefixJspName + "_detail.jsp");
-			map.put(Constants.JSP_UPDATE, prefixJspName + "_update.jsp");
-			map.put(Constants.JSP_UPDATE_CONFIRM, prefixJspName
-					+ "_confirm_update.jsp");
-			map.put(Constants.JSP_CREATE, prefixJspName + "_create.jsp");
-			map.put(Constants.JSP_CREATE_CONFIRM, prefixJspName
-					+ "_confirm_create.jsp");
+			map.put(Constants.JSP_MAIN, new StringBuilder(prefixJspName)
+					.append("_main.jsp").toString());
+			map.put(Constants.JSP_DETAIL, new StringBuilder(prefixJspName)
+					.append("_detail.jsp").toString());
+			map.put(Constants.JSP_UPDATE, new StringBuilder(prefixJspName)
+					.append("_update.jsp").toString());
+			map.put(Constants.JSP_UPDATE_CONFIRM, new StringBuilder(
+					prefixJspName).append("_confirm_update.jsp").toString());
+			map.put(Constants.JSP_CREATE, new StringBuilder(prefixJspName)
+					.append("_create.jsp").toString());
+			map.put(Constants.JSP_CREATE_CONFIRM, new StringBuilder(
+					prefixJspName).append("_confirm_create.jsp").toString());
 
 			inputStream = Utils.openContentStream("template/struts", map,
 					this.getClass(), false);
@@ -932,10 +1130,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			IFile file = (IFile) project.findMember("/.ganesha");
 			if (file == null) {
 				Exception e = new Exception(
-						"Project '"
-								+ project.getName()
-								+ "' is not a valid Ganesha Basic Web Project. Cannot create '"
-								+ moduleName + "' in this project.");
+						new StringBuilder("Project '")
+								.append(project.getName())
+								.append("' is not a valid Ganesha Basic Web Project. Cannot create '")
+								.append(moduleName)
+								.append("' in this project.").toString());
 				IStatus status = new Status(IStatus.ERROR, this.getClass()
 						.getName(), IStatus.OK, e.getLocalizedMessage(), e);
 				throw new CoreException(status);
@@ -969,37 +1168,5 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				}
 			}
 		}
-
-		// IResource resource = root.findMember(new Path(moduleName));
-		// if (!resource.exists() || !(resource instanceof IContainer)) {
-		// throwCoreException("Container \"" + moduleName
-		// + "\" does not exist.");
-		// }
-		// IContainer container = (IContainer) resource;
-		// final IFile file = container.getFile(new Path(fileName));
-		// try {
-		// InputStream stream = openContentStream();
-		// if (file.exists()) {
-		// file.setContents(stream, true, true, monitor);
-		// } else {
-		// file.create(stream, true, monitor);
-		// }
-		// stream.close();
-		// } catch (IOException e) {
-		// }
-		// monitor.worked(1);
-		// monitor.setTaskName("Opening file for editing...");
-		// getShell().getDisplay().asyncExec(new Runnable() {
-		// @Override
-		// public void run() {
-		// IWorkbenchPage page = PlatformUI.getWorkbench()
-		// .getActiveWorkbenchWindow().getActivePage();
-		// try {
-		// IDE.openEditor(page, file, true);
-		// } catch (PartInitException e) {
-		// }
-		// }
-		// });
-		// monitor.worked(1);
 	}
 }
