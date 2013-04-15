@@ -1,18 +1,17 @@
 package com.ganesha.basicweb.model.accesspath;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ganesha.basicweb.model.TableEntity;
 import com.ganesha.basicweb.model.module.Module;
 
 @Entity
 @Table(name = "ms_access_path")
-public class AccessPath implements Serializable {
+public class AccessPath implements TableEntity {
 
 	private static final long serialVersionUID = -2855686542697649307L;
 

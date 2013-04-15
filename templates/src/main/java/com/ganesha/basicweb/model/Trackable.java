@@ -1,13 +1,12 @@
 package com.ganesha.basicweb.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Trackable implements Serializable {
+public abstract class Trackable implements TableEntity {
 
 	private static final long serialVersionUID = -490441473844263342L;
 

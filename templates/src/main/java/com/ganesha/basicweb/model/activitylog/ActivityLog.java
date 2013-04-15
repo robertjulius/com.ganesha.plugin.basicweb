@@ -1,6 +1,5 @@
 package com.ganesha.basicweb.model.activitylog;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -8,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ganesha.basicweb.model.TableEntity;
+
 @Entity
 @Table(name = "lg_activity")
-public class ActivityLog implements Serializable {
+public class ActivityLog implements TableEntity {
 
 	private static final long serialVersionUID = 2343345295596584661L;;
 
