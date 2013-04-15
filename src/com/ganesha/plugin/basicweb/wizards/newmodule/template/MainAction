@@ -19,7 +19,7 @@ public class $gns{class_action_main} extends $gns{class_action_base} {
 		// TODO Auto-generated method stub
 		$gns{class_form} form = getForm();
 		
-		form.setPagination(new Pagination());
+		form.setPagination(new Pagination(10));
 		
 		return SUCCESS;
 	}

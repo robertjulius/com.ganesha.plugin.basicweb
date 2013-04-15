@@ -11,6 +11,13 @@ public class Pagination implements Serializable {
 	private Integer rowCount;
 	private int[] availableRowsPerPage = new int[] { 2, 5, 10, 20, 50, 100 };
 
+	public Pagination() {
+	}
+
+	public Pagination(int rowsPerPage) {
+		this.rowsPerPage = rowsPerPage;
+	}
+
 	public int[] getAvailableRowsPerPage() {
 		return availableRowsPerPage;
 	}
