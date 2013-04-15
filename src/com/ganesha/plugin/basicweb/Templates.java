@@ -26,6 +26,7 @@ public class Templates {
 		files.add("src/main/java/com/ganesha/basicweb/model/Item.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/module/Module.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/Pagination.java");
+		files.add("src/main/java/com/ganesha/basicweb/model/TableEntity.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/Trackable.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/user/SimpleUser.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/usergroup/UserGroup.java");

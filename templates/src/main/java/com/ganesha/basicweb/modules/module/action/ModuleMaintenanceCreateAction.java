@@ -39,6 +39,27 @@ public class ModuleMaintenanceCreateAction extends ModuleMaintenanceAction {
 			form.getNewURLs().clear();
 		}
 
+		form.getNewURLs().add("/modules/modulename/initial.action");
+		form.getNewURLs().add("/modules/modulename/main.action");
+		form.getNewURLs().add("/modules/modulename/search.action");
+		form.getNewURLs().add("/modules/modulename/searchResult.action");
+		form.getNewURLs().add("/modules/modulename/prepareDetail.action");
+		form.getNewURLs().add("/modules/modulename/detail.action");
+		form.getNewURLs().add("/modules/modulename/prepareUpdate.action");
+		form.getNewURLs().add("/modules/modulename/formUpdate.action");
+		form.getNewURLs().add("/modules/modulename/validateUpdate.action");
+		form.getNewURLs().add("/modules/modulename/confirmUpdate.action");
+		form.getNewURLs().add("/modules/modulename/executeUpdate.action");
+		form.getNewURLs().add("/modules/modulename/summaryUpdate.action");
+		form.getNewURLs().add("/modules/modulename/prepareCreate.action");
+		form.getNewURLs().add("/modules/modulename/formCreate.action");
+		form.getNewURLs().add("/modules/modulename/validateCreate.action");
+		form.getNewURLs().add("/modules/modulename/confirmCreate.action");
+		form.getNewURLs().add("/modules/modulename/executeCreate.action");
+		form.getNewURLs().add("/modules/modulename/summaryCreate.action");
+		form.getNewURLs().add("/modules/modulename/executeDelete.action");
+		form.getNewURLs().add("/modules/modulename/summaryDelete.action");
+
 		form.setSelectedId(null);
 
 		return SUCCESS;
