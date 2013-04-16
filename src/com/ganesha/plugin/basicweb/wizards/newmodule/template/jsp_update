@@ -11,7 +11,10 @@
 <body>
 	<table>
 		<tr>
-			<td><h1><s:text name="resource.page.title" /></h1></td>
+			<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+		</tr>
+		<tr>
+			<td class="pageTitle2"><s:text name="resource.page.title2.update" /></td>
 		</tr>
 	</table>
 	<s:form action="/modules/$gns{struts_package}/validateUpdate.action" theme="simple">

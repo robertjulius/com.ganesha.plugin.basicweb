@@ -593,10 +593,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					builderForNewValue.append("\n<tr>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
 							.append(originName).append("\" /></td>");
-					builderForNewValue.append("\n\t")
-							.append("<td align=\"left\"><s:label name=\"")
+					builderForNewValue
+							.append("\n\t")
+							.append("<td align=\"left\" width=\"300px\"><s:label name=\"")
 							.append(newValueName).append("\" /></td>");
 					builderForNewValue.append("\n</tr>");
 				}
@@ -648,19 +649,21 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					builderForOldValue.append("\n<tr>");
 					builderForOldValue
 							.append("\n\t")
-							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
 							.append(originName).append("\" /></td>");
-					builderForOldValue.append("\n\t")
-							.append("<td align=\"left\"><s:label name=\"old.")
+					builderForOldValue
+							.append("\n\t")
+							.append("<td align=\"left\" width=\"300px\"><s:label name=\"old.")
 							.append(originName).append("\" /></td>");
 					builderForOldValue.append("\n</tr>");
 					builderForNewValue.append("\n<tr>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
 							.append(originName).append("\" /></td>");
-					builderForNewValue.append("\n\t")
-							.append("<td align=\"left\"><s:label name=\"")
+					builderForNewValue
+							.append("\n\t")
+							.append("<td align=\"left\" width=\"300px\"><s:label name=\"")
 							.append(newValueName).append("\" /></td>");
 					builderForNewValue.append("\n</tr>");
 				}
@@ -756,10 +759,11 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					stringBuilder.append("\n<tr>");
 					stringBuilder
 							.append("\n\t")
-							.append("<td align=\"right\"><s:text name=\"resource.")
+							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
 							.append(rowItem.getName()).append("\" /></td>");
-					stringBuilder.append("\n\t")
-							.append("<td align=\"left\"><s:label name=\"old.")
+					stringBuilder
+							.append("\n\t")
+							.append("<td align=\"left\" width=\"300px\"><s:label name=\"old.")
 							.append(rowItem.getName()).append("\" /></td>");
 					stringBuilder.append("\n</tr>");
 				}

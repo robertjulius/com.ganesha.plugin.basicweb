@@ -91,7 +91,7 @@ public class DatabaseSettingPage extends WizardPage {
 	}
 
 	private void initialize() {
-		txtUrl.setText("jdbc:mysql://localhost:3306/iseng");
+		txtUrl.setText("jdbc:mysql://localhost:3306/basicweb");
 		txtUserName.setText("root");
 		txtPassword.setText("root");
 	}

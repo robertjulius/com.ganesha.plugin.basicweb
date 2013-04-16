@@ -33,3 +33,17 @@ a {
 a:HOVER {
 	color: red;
 }
+
+.pageTitle1 {
+	font-size: x-large;
+	font-weight: bold;
+	color: black;
+	padding-top: 20px;
+}
+
+.pageTitle2 {
+	font-size: larger;
+	font-weight: bold;
+	color: gray;
+	padding-bottom: 20px;
+}
