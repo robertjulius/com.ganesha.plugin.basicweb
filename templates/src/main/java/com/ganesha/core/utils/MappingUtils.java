@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ganesha.basicweb.utility.PropertiesConstants;
 import com.ganesha.core.exception.AppException;
 
 public class MappingUtils {
@@ -24,8 +23,9 @@ public class MappingUtils {
 					}
 
 					if (method.getParameterTypes().length != 0) {
-						throw new AppException(
-								PropertiesConstants.ERROR_REFLECTION);
+						throw new AppException(buildReflectionException(object
+								.getClass().getName(), method.getName(),
+								method.getParameterTypes(), new Object[] {}));
 					}
 
 					String name = method.getName().substring(3, 4)
@@ -76,14 +76,17 @@ public class MappingUtils {
 			Method[] methods = pojo.getClass().getMethods();
 			for (Method method : methods) {
 				if (method.getName().startsWith("set")) {
-					if (method.getParameterTypes().length != 1) {
-						throw new AppException(
-								PropertiesConstants.ERROR_REFLECTION);
-					}
 
 					String name = method.getName().substring(3, 4)
 							.toLowerCase()
 							+ method.getName().substring(4);
+
+					if (method.getParameterTypes().length != 1) {
+						throw new AppException(buildReflectionException(pojo
+								.getClass().getName(), method.getName(),
+								method.getParameterTypes(),
+								new Object[] { map.get(name) }));
+					}
 
 					if (map.containsKey(name)) {
 						Object value = map.get(name);
@@ -126,8 +129,9 @@ public class MappingUtils {
 			for (Method method : methods) {
 				if (method.getName().startsWith("get")) {
 					if (method.getParameterTypes().length != 0) {
-						throw new AppException(
-								PropertiesConstants.ERROR_REFLECTION);
+						throw new AppException(buildReflectionException(pojo
+								.getClass().getName(), method.getName(),
+								method.getParameterTypes(), new Object[] {}));
 					}
 
 					Object value = method.invoke(pojo);
@@ -145,5 +149,28 @@ public class MappingUtils {
 		} catch (InvocationTargetException e) {
 			throw new AppException(e);
 		}
+	}
+
+	private static String buildReflectionException(String fullClassName,
+			String methodName, Object[] parameters, Object[] arguments) {
+		String parameterString = " (";
+		for (Object object : parameters) {
+			parameterString += ", " + object.getClass().getSimpleName();
+		}
+		parameterString = parameterString.replaceFirst(", ", "") + ") ";
+
+		String argumentString = " (";
+		for (Object object : arguments) {
+			argumentString += ", " + object.getClass().getSimpleName();
+		}
+		argumentString = argumentString.replaceFirst(", ", "") + ") ";
+
+		StringBuilder builder = new StringBuilder("The method ")
+				.append(methodName).append(parameterString)
+				.append("in the type ").append(fullClassName)
+				.append(" is not applicable for the arguments ")
+				.append(argumentString);
+
+		return builder.toString();
 	}
 }
