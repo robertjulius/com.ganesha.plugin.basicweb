@@ -19,6 +19,9 @@ public class Templates {
 		files.add(".settings/org.eclipse.wst.jsdt.core.prefs");
 		files.add(".settings/org.eclipse.wst.jsdt.ui.superType.container");
 		files.add(".settings/org.eclipse.wst.jsdt.ui.superType.name");
+		files.add("database/DML MS_ACCESS_PATH.sql");
+		files.add("database/DML.sql");
+		files.add("logs/ganesha-log.txt");
 		files.add("pom.xml");
 		files.add("src/main/java/com/ganesha/basicweb/model/accesspath/AccessPath.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/activitylog/ActivityLog.java");
