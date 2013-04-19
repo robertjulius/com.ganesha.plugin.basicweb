@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.model.module.Module;
 import com.ganesha.basicweb.model.usergroup.UserGroup;
 import com.ganesha.basicweb.modules.login.Privilege;
@@ -21,6 +22,8 @@ public class UserGroupMaintenanceMainAction extends UserGroupMaintenanceAction {
 
 	public String initial() throws AppException {
 
+		UserGroupMaintenanceForm form = getForm();
+
 		List<Module> rootModules = getBL().getRootModules();
 
 		List<Module> modules = getBL().getChildModules();
@@ -31,8 +34,10 @@ public class UserGroupMaintenanceMainAction extends UserGroupMaintenanceAction {
 		TreeMap<String, Privilege> treeMap = PrivilegeUtils.generateTree(
 				privilegeIds.toArray(new String[] {}), rootModules);
 
-		getForm().setTreeMap(treeMap);
+		form.setTreeMap(treeMap);
 		getModuleSession().put("rootModules", rootModules);
+
+		form.setPagination(new Pagination(10));
 
 		return SUCCESS;
 	}
@@ -61,11 +66,16 @@ public class UserGroupMaintenanceMainAction extends UserGroupMaintenanceAction {
 	}
 
 	public String search() throws AppException {
-		String name = getForm().getSearchName();
-		String description = getForm().getSearchDescription();
+		UserGroupMaintenanceForm form = getForm();
 
-		List<UserGroup> userGroups = getBL().search(name, description);
-		getForm().setSearchResult(userGroups);
+		String name = form.getSearchName();
+		String description = form.getSearchDescription();
+
+		Pagination pagination = getForm().getPagination();
+		List<UserGroup> userGroups = getBL().search(name, description,
+				pagination);
+		form.setSearchResult(userGroups);
+
 		return SUCCESS;
 	}
 }
