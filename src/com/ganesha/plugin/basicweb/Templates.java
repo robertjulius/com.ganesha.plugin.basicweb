@@ -29,6 +29,7 @@ public class Templates {
 		files.add("src/main/java/com/ganesha/basicweb/model/Item.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/module/Module.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/Pagination.java");
+		files.add("src/main/java/com/ganesha/basicweb/model/systemsetting/SystemSetting.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/TableEntity.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/Trackable.java");
 		files.add("src/main/java/com/ganesha/basicweb/model/user/SimpleUser.java");
@@ -98,6 +99,7 @@ public class Templates {
 		files.add("src/main/java/com/ganesha/core/User.java");
 		files.add("src/main/java/com/ganesha/core/UserSession.java");
 		files.add("src/main/java/com/ganesha/core/utils/MappingUtils.java");
+		files.add("src/main/java/com/ganesha/hibernate/HibernateUtil.java");
 		files.add("src/main/java/com/ganesha/struts2/BaseAction.java");
 		files.add("src/main/java/com/ganesha/struts2/components/Component/Pagination.java");
 		files.add("src/main/java/com/ganesha/struts2/FormAction.java");
