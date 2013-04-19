@@ -8,9 +8,9 @@
 	<package name="usergroupmaintenance" extends="basicweb"
 		namespace="/modules/usergroupmaintenance">
 
-		<!-- ====================================== -->
+		<!-- =================================== -->
 		<!-- UserGroupMaintenanceMainAction : BEGIN -->
-		<!-- ====================================== -->
+		<!-- =================================== -->
 		<action name="initial"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceMainAction"
 			method="initial">
@@ -35,7 +35,7 @@
 		<action name="searchResult"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceMainAction"
 			method="chainAction">
-			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_search.jsp
+			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_main.jsp
 			</result>
 		</action>
 
@@ -52,13 +52,13 @@
 			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_detail.jsp
 			</result>
 		</action>
-		<!-- ==================================== -->
+		<!-- ================================= -->
 		<!-- UserGroupMaintenanceMainAction : END -->
-		<!-- ==================================== -->
+		<!-- ================================= -->
 
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<!-- UserGroupMaintenanceUpdateAction : BEGIN -->
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<action name="prepareUpdate"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceUpdateAction"
 			method="prepareUpdate">
@@ -101,16 +101,16 @@
 		<action name="summaryUpdate"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceUpdateAction"
 			method="chainAction">
-			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_main.jsp
+			<result name="success" type="chain">search
 			</result>
 		</action>
-		<!-- ====================================== -->
+		<!-- =================================== -->
 		<!-- UserGroupMaintenanceUpdateAction : END -->
-		<!-- ====================================== -->
+		<!-- =================================== -->
 
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<!-- UserGroupMaintenanceCreateAction : BEGIN -->
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<action name="prepareCreate"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceCreateAction"
 			method="prepareCreate">
@@ -153,16 +153,16 @@
 		<action name="summaryCreate"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceCreateAction"
 			method="chainAction">
-			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_main.jsp
+			<result name="success" type="chain">search
 			</result>
 		</action>
-		<!-- ====================================== -->
+		<!-- =================================== -->
 		<!-- UserGroupMaintenanceCreateAction : END -->
-		<!-- ====================================== -->
+		<!-- =================================== -->
 
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<!-- UserGroupMaintenanceDeleteAction : BEGIN -->
-		<!-- ======================================== -->
+		<!-- ===================================== -->
 		<action name="executeDelete"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceDeleteAction"
 			method="executeDelete">
@@ -175,12 +175,12 @@
 		<action name="summaryDelete"
 			class="com.ganesha.basicweb.modules.usergroupmaintenance.action.UserGroupMaintenanceDeleteAction"
 			method="chainAction">
-			<result name="success">/jsp/modules/usergroupmaintenance/usergroup_maintenance_main.jsp
+			<result name="success" type="chain">search
 			</result>
 		</action>
-		<!-- ====================================== -->
+		<!-- =================================== -->
 		<!-- UserGroupMaintenanceDeleteAction : END -->
-		<!-- ====================================== -->
+		<!-- =================================== -->
 
 	</package>
 

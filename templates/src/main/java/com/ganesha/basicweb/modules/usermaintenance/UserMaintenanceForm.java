@@ -3,6 +3,7 @@ package com.ganesha.basicweb.modules.usermaintenance;
 import java.util.List;
 
 import com.ganesha.basicweb.model.FormBean;
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.model.user.SimpleUser;
 import com.ganesha.basicweb.model.usergroup.UserGroup;
 
@@ -13,17 +14,20 @@ public class UserMaintenanceForm extends FormBean {
 	private String searchUserId;
 	private String searchUserName;
 	private String searchUserGroupName;
-	private String selectedId;
+	private Pagination pagination;
+
 	private List<SimpleUser> searchResult;
+
+	private String selectedId;
 
 	private SimpleUser old;
 
 	private String newUserId;
 	private String newName;
+
 	private String newPassword;
 	private String newUserGroupId;
 	private String newUserGroupName;
-
 	private List<UserGroup> selectListUserGroup;
 
 	public String getNewName() {
@@ -48,6 +52,10 @@ public class UserMaintenanceForm extends FormBean {
 
 	public SimpleUser getOld() {
 		return old;
+	}
+
+	public Pagination getPagination() {
+		return pagination;
 	}
 
 	public List<SimpleUser> getSearchResult() {
@@ -96,6 +104,10 @@ public class UserMaintenanceForm extends FormBean {
 
 	public void setOld(SimpleUser old) {
 		this.old = old;
+	}
+
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
 	}
 
 	public void setSearchResult(List<SimpleUser> searchResult) {

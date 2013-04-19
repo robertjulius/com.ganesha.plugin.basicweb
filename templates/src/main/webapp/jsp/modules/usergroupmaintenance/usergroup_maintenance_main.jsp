@@ -1,46 +1,90 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ taglib prefix="g" uri="/ganesha-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <s:head />
+<sj:head />
 </head>
 <body>
-
 	<table>
 		<tr>
-			<td><h1>
-					<s:text name="resource.page.title" />
-				</h1></td>
-		</tr>
-	</table>
-	<table class="form">
-		<tr>
 			<td>
-				<ul>
-					<li><a
-						href="<%=request.getContextPath()%>/modules/usergroupmaintenance/prepareCreate.action">
-							<b><s:text name="resource.create.new" /></b>
-					</a></li>
-				</ul>
+				<table>
+					<tr>
+						<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+					</tr>
+					<tr>
+						<td class="pageTitle2"><s:text name="resource.page.title2.main" /></td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 		<tr>
-			<td><hr /></td>
+			<td>
+				<table class="form">
+					<tr>
+						<td>
+							<ul>
+								<li>
+									<a href="<%=request.getContextPath()%>/modules/usergroupmaintenance/prepareCreate.action"><b><s:text name="resource.create.new" /></b></a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td><hr /></td>
+					</tr>
+					<tr>
+						<td>
+							<s:form action="/modules/usergroupmaintenance/search.action" method="post">
+								<s:actionerror />
+								<s:fielderror />
+								<s:textfield key="resource.userGroupName" name="searchName" />
+								<s:textfield key="resource.description" name="searchDescription" />
+								<s:select key="resource.rowsPerPage" list="pagination.availableRowsPerPage" name="pagination.rowsPerPage" />
+								<s:hidden name="pagination.pageNumber" value="1" />
+								<s:submit key="resource.search" name="%{resource.search}" />
+							</s:form>
+						</td>
+					</tr>
+					<tr>
+						<td><hr /></td>
+					</tr>
+				</table>
+			</td>
 		</tr>
-		<tr>
-			<td><s:form action="/modules/usergroupmaintenance/search.action"
-					method="post">
-					<s:actionerror />
-					<s:fielderror />
-					<s:textfield key="resource.userGroupName" name="searchName" />
-					<s:textfield key="resource.description" name="searchDescription" />
-					<s:submit key="resource.search" name="%{resource.search}" />
-				</s:form></td>
-		</tr>
+		<s:if test="pagination.pageNumber != null">
+			<tr>
+				<td>
+					<s:form action="/modules/usergroupmaintenance/prepareDetail.action" theme="simple">
+						<s:hidden name="selectedId" />
+						<table class="grid">
+							<thead>
+								<tr align="center">								
+									<td width="150"><s:text name="resource.userGroupName" /></td>
+									<td width="200"><s:text name="resource.description" /></td>
+								</tr>
+							</thead>
+							<tbody class="selectable">
+								<s:iterator value="searchResult" status="rowstatus">
+									<tr onclick="$(this).closest('form').find('input#prepareDetail_selectedId').val('<s:property value="id" />'); $(this).closest('form').submit();" class="<s:if test='#rowstatus.odd == true'>rowOdd</s:if><s:else>rowEven</s:else>">
+										<td><s:property value="name" /></td>
+										<td><s:property value="description" /></td>
+									</tr>
+								</s:iterator>
+							</tbody>
+						</table>
+					</s:form>
+				</td>
+			</tr>
+			<tr>
+				<td><g:pagination formAction="/modules/usergroupmaintenance/search.action" /></td>
+			</tr>
+		</s:if>
 	</table>
 </body>
 </html>

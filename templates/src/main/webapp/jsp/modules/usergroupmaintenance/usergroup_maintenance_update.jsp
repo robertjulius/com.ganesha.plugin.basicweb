@@ -1,11 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.TreeMap"%>
 <%@page import="com.ganesha.basicweb.modules.login.Privilege"%>
-<%@page
-	import="com.ganesha.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
+<%@page import="com.ganesha.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
 <%@page import="com.ganesha.basicweb.utility.GeneralConstants"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,15 +25,13 @@ ul {
 <body>
 	<table>
 		<tr>
-			<td>
-				<h1>
-					<s:text name="resource.page.title" />
-				</h1>
-			</td>
+			<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+		</tr>
+		<tr>
+			<td class="pageTitle2"><s:text name="resource.page.title2.update" /></td>
 		</tr>
 	</table>
-	<s:form action="/modules/usergroupmaintenance/validateUpdate.action"
-		theme="simple">
+	<s:form action="/modules/usergroupmaintenance/validateUpdate.action" theme="simple">
 		<s:if test="hasActionErrors()">
 			<table>
 				<s:actionerror />
@@ -46,10 +42,8 @@ ul {
 			<tr>
 				<td>
 					<table>
-						<s:textfield key="resource.userGroupName" name="newName"
-							theme="xhtml" />
-						<s:textfield key="resource.description" name="newDescription"
-							theme="xhtml" />
+						<s:textfield key="resource.userGroupName" name="newName" theme="xhtml" size="30px"  />
+						<s:textfield key="resource.description" name="newDescription" theme="xhtml" size="30px" />
 					</table>
 				</td>
 			</tr>
@@ -70,17 +64,13 @@ ul {
 									<ul>
 										<%
 											@SuppressWarnings("unchecked")
-												List<String> newModuleIds = (List<String>) request
-														.getAttribute("newModuleIds");
+											List<String> newModuleIds = (List<String>) request.getAttribute("newModuleIds");
 
-												@SuppressWarnings("unchecked")
-												TreeMap<String, Privilege> treeMap = (TreeMap<String, Privilege>) request
-														.getAttribute("treeMap");
+											@SuppressWarnings("unchecked")
+											TreeMap<String, Privilege> treeMap = (TreeMap<String, Privilege>) request.getAttribute("treeMap");
 
-												String html = HtmlPrivilegeTreeGenerator.generateHtmlCheckBox(
-														treeMap, newModuleIds);
-
-												out.write(html);
+											String html = HtmlPrivilegeTreeGenerator.generateHtmlCheckBox(treeMap, newModuleIds);
+											out.write(html);
 										%>
 									</ul>
 								</td>
@@ -98,11 +88,9 @@ ul {
 					</table>
 					<table>
 						<tr>
-							<td><input type="button"
-								value="<s:text name="resource.cancel"/>"
+							<td><input type="button" value="<s:text name="resource.cancel"/>"
 								onclick="if (!confirmCancel()) {return;} $(this).closest('form').attr('action', '<%=request.getContextPath()%>/modules/usergroupmaintenance/detail.action'); $(this).closest('form').submit();" /></td>
-							<td><input type="button"
-								value="<s:text name="resource.submit"/>"
+							<td><input type="button" value="<s:text name="resource.submit"/>"
 								onclick="if (confirmAction()) {$(this).closest('form').submit();}" /></td>
 						</tr>
 					</table>

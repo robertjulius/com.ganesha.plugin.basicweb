@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.model.module.Module;
 import com.ganesha.basicweb.model.usergroup.UserGroup;
 import com.ganesha.basicweb.modules.BusinessLogic;
@@ -103,8 +105,8 @@ public class UserGroupMaintenanceBL extends BusinessLogic {
 		return modules;
 	}
 
-	public List<UserGroup> search(String name, String description)
-			throws AppException {
+	public List<UserGroup> search(String name, String description,
+			Pagination pagination) throws AppException {
 
 		Criteria criteria = getSession().createCriteria(UserGroup.class);
 
@@ -117,11 +119,22 @@ public class UserGroupMaintenanceBL extends BusinessLogic {
 					+ "%"));
 		}
 
+		criteria.setFirstResult((pagination.getPageNumber() - 1)
+				* pagination.getRowsPerPage());
+		criteria.setMaxResults(pagination.getRowsPerPage());
+
 		criteria.add(Restrictions.eq("recStatus",
 				GeneralConstants.REC_STATUS_ACTIVE));
 
 		@SuppressWarnings("unchecked")
 		List<UserGroup> userGroups = criteria.list();
+
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(1);
+		int rowCount = (int) criteria.setProjection(Projections.rowCount())
+				.uniqueResult();
+		pagination.setRowCount(rowCount);
+
 		return userGroups;
 	}
 

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <%@ taglib prefix="g" uri="/ganesha-tags"%>
@@ -16,9 +15,10 @@
 			<td>
 				<table>
 					<tr>
-						<td><h1>
-								<s:text name="resource.page.title" />
-							</h1></td>
+						<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+					</tr>
+					<tr>
+						<td class="pageTitle2"><s:text name="resource.page.title2.main" /></td>
 					</tr>
 				</table>
 			</td>
@@ -29,10 +29,9 @@
 					<tr>
 						<td>
 							<ul>
-								<li><a
-									href="<%=request.getContextPath()%>/modules/module/prepareCreate.action">
-										<b><s:text name="resource.create.new" /></b>
-								</a></li>
+								<li>
+									<a href="<%=request.getContextPath()%>/modules/module/prepareCreate.action"><b><s:text name="resource.create.new" /></b></a>
+								</li>
 							</ul>
 						</td>
 					</tr>
@@ -40,19 +39,19 @@
 						<td><hr /></td>
 					</tr>
 					<tr>
-						<td><s:form action="/modules/module/search.action"
+						<td>
+							<s:form action="/modules/module/search.action"
 								method="post">
 								<s:actionerror />
 								<s:fielderror />
 								<s:textfield key="resource.moduleName" name="searchName" />
 								<s:textfield key="resource.firstEntry" name="searchFirstEntry" />
 								<s:textfield key="resource.parent" name="searchParentId" />
-								<s:select key="resource.rowsPerPage"
-									list="pagination.availableRowsPerPage"
-									name="pagination.rowsPerPage" />
+								<s:select key="resource.rowsPerPage" list="pagination.availableRowsPerPage" name="pagination.rowsPerPage" />
 								<s:hidden name="pagination.pageNumber" value="1" />
 								<s:submit key="resource.search" name="%{resource.search}" />
-							</s:form></td>
+							</s:form>
+						</td>
 					</tr>
 					<tr>
 						<td><hr /></td>
@@ -62,8 +61,8 @@
 		</tr>
 		<s:if test="pagination.pageNumber != null">
 			<tr>
-				<td><s:form action="/modules/module/prepareDetail.action"
-						theme="simple">
+				<td>
+					<s:form action="/modules/module/prepareDetail.action" theme="simple">
 						<s:hidden name="selectedId" />
 						<table class="grid">
 							<thead>
@@ -75,9 +74,7 @@
 							</thead>
 							<tbody class="selectable">
 								<s:iterator value="searchResult" status="rowstatus">
-									<tr
-										onclick="$(this).closest('form').find('input#prepareDetail_selectedId').val('<s:property value="id" />'); $(this).closest('form').submit();"
-										class="<s:if test='#rowstatus.odd == true'>rowOdd</s:if><s:else>rowEven</s:else>">
+									<tr onclick="$(this).closest('form').find('input#prepareDetail_selectedId').val('<s:property value="id" />'); $(this).closest('form').submit();" class="<s:if test='#rowstatus.odd == true'>rowOdd</s:if><s:else>rowEven</s:else>">
 										<td><s:property value="name" /></td>
 										<td><s:property value="firstEntry" /></td>
 										<td><s:property value="parent.name" /></td>
@@ -85,14 +82,13 @@
 								</s:iterator>
 							</tbody>
 						</table>
-					</s:form></td>
+					</s:form>
+				</td>
 			</tr>
 			<tr>
 				<td><g:pagination formAction="/modules/module/search.action" /></td>
 			</tr>
-
 		</s:if>
-
 	</table>
 </body>
 </html>

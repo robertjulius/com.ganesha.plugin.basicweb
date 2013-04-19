@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,15 +11,13 @@
 <body>
 	<table>
 		<tr>
-			<td>
-				<h1>
-					<s:text name="resource.page.title" />
-				</h1>
-			</td>
+			<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+		</tr>
+		<tr>
+			<td class="pageTitle2"><s:text name="resource.page.title2.confirmUpdate" /></td>
 		</tr>
 	</table>
-	<s:form action="/modules/usermaintenance/executeUpdate.action"
-		theme="simple">
+	<s:form action="/modules/usermaintenance/executeUpdate.action" theme="simple">
 		<s:if test="hasActionErrors()">
 			<table>
 				<s:actionerror />
@@ -33,21 +30,21 @@
 					<table class="grid" id="grid1">
 						<thead>
 							<tr>
-								<td colspan="2"><s:text name="resource.userInformation" /></td>
+								<td colspan="2"><s:text name="resource.oldValue" /></td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td align="right"><s:text name="resource.userId" /></td>
-								<td align="left"><s:label name="old.userId" /></td>
+								<td align="right" width="100px"><s:text name="resource.userId" /></td>
+								<td align="left" width="300px"><s:label name="old.userId" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.userName" /></td>
-								<td align="left"><s:label name="old.name" /></td>
+								<td align="right" width="100px"><s:text name="resource.userName" /></td>
+								<td align="left" width="300px"><s:label name="old.name" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.userGroup" /></td>
-								<td align="left"><s:label name="old.userGroup.name" /></td>
+								<td align="right" width="100px"><s:text name="resource.userGroup" /></td>
+								<td align="left" width="300px"><s:label name="old.userGroup.name" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -58,21 +55,21 @@
 					<table class="grid" id="grid2">
 						<thead>
 							<tr>
-								<td colspan="2"><s:text name="resource.userInformation" /></td>
+								<td colspan="2"><s:text name="resource.newValue" /></td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td align="right"><s:text name="resource.userId" /></td>
-								<td align="left"><s:label name="newUserId" /></td>
+								<td align="right" width="100px"><s:text name="resource.userId" /></td>
+								<td align="left" width="300px"><s:label name="newUserId" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.userName" /></td>
-								<td align="left"><s:label name="newName" /></td>
+								<td align="right" width="100px"><s:text name="resource.userName" /></td>
+								<td align="left" width="300px"><s:label name="newName" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.userGroup" /></td>
-								<td align="left"><s:label name="newUserGroupName" /></td>
+								<td align="right" width="100px"><s:text name="resource.userGroup" /></td>
+								<td align="left" width="300px"><s:label name="newUserGroupName" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -82,11 +79,9 @@
 				<td>
 					<table>
 						<tr>
-							<td><input type="button"
-								value="<s:text name="resource.back"/>"
+							<td><input type="button" value="<s:text name="resource.back"/>"
 								onclick="$(this).closest('form').attr('action', '<%=request.getContextPath()%>/modules/usermaintenance/formUpdate.action'); $(this).closest('form').submit();" /></td>
-							<td><input type="button"
-								value="<s:text name="resource.submit"/>"
+							<td><input type="button" value="<s:text name="resource.submit"/>"
 								onclick="$(this).closest('form').submit();" /></td>
 						</tr>
 					</table>

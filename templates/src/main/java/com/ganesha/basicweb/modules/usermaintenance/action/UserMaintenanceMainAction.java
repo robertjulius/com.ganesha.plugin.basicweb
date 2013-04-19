@@ -2,6 +2,7 @@ package com.ganesha.basicweb.modules.usermaintenance.action;
 
 import java.util.List;
 
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.model.user.SimpleUser;
 import com.ganesha.basicweb.model.usergroup.UserGroup;
 import com.ganesha.basicweb.modules.usermaintenance.UserMaintenanceForm;
@@ -20,6 +21,7 @@ public class UserMaintenanceMainAction extends UserMaintenanceAction {
 		List<UserGroup> userGroups = getBL().getAllUserGroup();
 		userGroups.add(0, new UserGroup());
 		form.setSelectListUserGroup(userGroups);
+		form.setPagination(new Pagination(10));
 		return SUCCESS;
 	}
 
@@ -34,12 +36,17 @@ public class UserMaintenanceMainAction extends UserMaintenanceAction {
 	}
 
 	public String search() throws AppException {
-		String userId = getForm().getSearchUserId();
-		String name = getForm().getSearchUserName();
-		String userGroupName = getForm().getSearchUserGroupName();
+		UserMaintenanceForm form = getForm();
 
-		List<SimpleUser> users = getBL().search(userId, name, userGroupName);
-		getForm().setSearchResult(users);
+		String userId = form.getSearchUserId();
+		String name = form.getSearchUserName();
+		String userGroupName = form.getSearchUserGroupName();
+
+		Pagination pagination = getForm().getPagination();
+		List<SimpleUser> users = getBL().search(userId, name, userGroupName,
+				pagination);
+		form.setSearchResult(users);
+
 		return SUCCESS;
 	}
 }

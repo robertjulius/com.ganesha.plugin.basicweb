@@ -22,7 +22,7 @@ public class ModuleMaintenanceMainAction extends ModuleMaintenanceAction {
 		modules.add(0, new Module());
 		form.setSelectListParent(modules);
 
-		form.setPagination(new Pagination());
+		form.setPagination(new Pagination(10));
 
 		return SUCCESS;
 	}

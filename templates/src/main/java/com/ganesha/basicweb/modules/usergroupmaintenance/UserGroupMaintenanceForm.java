@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.ganesha.basicweb.model.FormBean;
+import com.ganesha.basicweb.model.Pagination;
 import com.ganesha.basicweb.model.usergroup.UserGroup;
 import com.ganesha.basicweb.modules.login.Privilege;
 
@@ -14,16 +15,19 @@ public class UserGroupMaintenanceForm extends FormBean {
 	private String searchId;
 	private String searchName;
 	private String searchDescription;
-	private String selectedId;
+
+	private Pagination pagination;
 	private List<UserGroup> searchResult;
+
+	private String selectedId;
 
 	private UserGroup old;
 
 	private String newId;
 	private String newName;
+
 	private String newDescription;
 	private List<String> newModuleIds;
-
 	private TreeMap<String, Privilege> treeMap;
 	private TreeMap<String, Privilege> oldTreeMap;
 
@@ -49,6 +53,10 @@ public class UserGroupMaintenanceForm extends FormBean {
 
 	public TreeMap<String, Privilege> getOldTreeMap() {
 		return oldTreeMap;
+	}
+
+	public Pagination getPagination() {
+		return pagination;
 	}
 
 	public String getSearchDescription() {
@@ -97,6 +105,10 @@ public class UserGroupMaintenanceForm extends FormBean {
 
 	public void setOldTreeMap(TreeMap<String, Privilege> oldTreeMap) {
 		this.oldTreeMap = oldTreeMap;
+	}
+
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
 	}
 
 	public void setSearchDescription(String searchDescription) {

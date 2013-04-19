@@ -1,9 +1,7 @@
 <%@page import="java.util.TreeMap"%>
 <%@page import="com.ganesha.basicweb.modules.login.Privilege"%>
-<%@page
-	import="com.ganesha.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@page import="com.ganesha.basicweb.modules.usergroupmaintenance.HtmlPrivilegeTreeGenerator"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,15 +23,13 @@ ul {
 <body>
 	<table>
 		<tr>
-			<td>
-				<h1>
-					<s:text name="resource.page.title" />
-				</h1>
-			</td>
+			<td class="pageTitle1"><s:text name="resource.page.title" /></td> 
+		</tr>
+		<tr>
+			<td class="pageTitle2"><s:text name="resource.page.title2.confirmUpdate" /></td>
 		</tr>
 	</table>
-	<s:form action="/modules/usergroupmaintenance/executeUpdate.action"
-		theme="simple">
+	<s:form action="/modules/usergroupmaintenance/executeUpdate.action" theme="simple">
 		<s:if test="hasActionErrors()">
 			<table>
 				<s:actionerror />
@@ -46,26 +42,25 @@ ul {
 					<table class="grid" id="grid1">
 						<thead>
 							<tr>
-								<td colspan="2"><s:text
-										name="resource.userGroupInformation" /></td>
+								<td colspan="2"><s:text name="resource.oldValue" /></td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td align="right"><s:text name="resource.userGroupName" /></td>
-								<td align="left"><s:label name="old.name" /></td>
+								<td align="right" width="100px"><s:text name="resource.userGroupName" /></td>
+								<td align="left" width="300px"><s:label name="old.name" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.description" /></td>
-								<td align="left"><s:label name="old.description" /></td>
+								<td align="right" width="100px"><s:text name="resource.description" /></td>
+								<td align="left" width="300px"><s:label name="old.description" /></td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<ul>
 										<%
-												@SuppressWarnings("unchecked")
-												TreeMap<String, Privilege> oldTreeMap = (TreeMap<String, Privilege>) request.getAttribute("oldTreeMap");
-												out.write(HtmlPrivilegeTreeGenerator.generateHtmlTree(oldTreeMap));
+											@SuppressWarnings("unchecked")
+											TreeMap<String, Privilege> oldTreeMap = (TreeMap<String, Privilege>) request.getAttribute("oldTreeMap");
+											out.write(HtmlPrivilegeTreeGenerator.generateHtmlTree(oldTreeMap));
 										%>
 									</ul>
 								</td>
@@ -79,26 +74,25 @@ ul {
 					<table class="grid" id="grid2">
 						<thead>
 							<tr>
-								<td colspan="2"><s:text
-										name="resource.userGroupInformation" /></td>
+								<td colspan="2"><s:text name="resource.newValue" /></td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td align="right"><s:text name="resource.userGroupName" /></td>
-								<td align="left"><s:label name="newName" /></td>
+								<td align="right" width="100px"><s:text name="resource.userGroupName" /></td>
+								<td align="left" width="300px"><s:label name="newName" /></td>
 							</tr>
 							<tr>
-								<td align="right"><s:text name="resource.description" /></td>
-								<td align="left"><s:label name="newDescription" /></td>
+								<td align="right" width="100px"><s:text name="resource.description" /></td>
+								<td align="left" width="300px"><s:label name="newDescription" /></td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<ul>
 										<%
-												@SuppressWarnings("unchecked")
-												TreeMap<String, Privilege> newTreeMap = (TreeMap<String, Privilege>) request.getAttribute("newTreeMap");
-												out.write(HtmlPrivilegeTreeGenerator.generateHtmlTree(newTreeMap));
+											@SuppressWarnings("unchecked")
+											TreeMap<String, Privilege> newTreeMap = (TreeMap<String, Privilege>) request.getAttribute("newTreeMap");
+											out.write(HtmlPrivilegeTreeGenerator.generateHtmlTree(newTreeMap));
 										%>
 									</ul>
 								</td>
@@ -111,11 +105,9 @@ ul {
 				<td>
 					<table>
 						<tr>
-							<td><input type="button"
-								value="<s:text name="resource.back"/>"
+							<td><input type="button" value="<s:text name="resource.back"/>"
 								onclick="$(this).closest('form').attr('action', '<%=request.getContextPath()%>/modules/usergroupmaintenance/formUpdate.action'); $(this).closest('form').submit();" /></td>
-							<td><input type="button"
-								value="<s:text name="resource.submit"/>"
+							<td><input type="button" value="<s:text name="resource.submit"/>"
 								onclick="$(this).closest('form').submit();" /></td>
 						</tr>
 					</table>
