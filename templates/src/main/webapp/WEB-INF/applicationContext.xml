@@ -46,6 +46,7 @@
 				<value>/main/topFrame.action</value>
 				<value>/main/home.action</value>
 				<value>/modules/logout/executeLogout.action</value>
+				<value>/resources/images.action</value>
 			</list>
 		</property>
 	</bean>

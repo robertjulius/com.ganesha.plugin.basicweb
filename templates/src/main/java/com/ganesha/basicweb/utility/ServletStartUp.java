@@ -73,13 +73,12 @@ public class ServletStartUp extends HttpServlet {
 			session.beginTransaction();
 			Field[] fields = PropertiesConstants.class.getDeclaredFields();
 			for (Field field : fields) {
-				if (!SystemSetting.containsId(field.getName())) {
+				String id = (String) field.get(null);
+				if (!SystemSetting.containsId(id)) {
 					if (Modifier.isStatic(field.getModifiers())
 							&& Modifier.isFinal(field.getModifiers())
 							&& field.getName().equals(
 									field.getName().toUpperCase())) {
-
-						String id = (String) field.get(null);
 
 						SystemSetting systemSetting = new SystemSetting();
 						systemSetting.setId(id);

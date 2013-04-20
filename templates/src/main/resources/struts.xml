@@ -7,7 +7,7 @@
 
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="global" />
-	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.action.extension" value="action"/>
 	<constant name="struts.multipart.maxSize" value="10000000" />
 
 	<package name="basicweb" extends="hibernate-default" namespace="/main">
@@ -49,6 +49,7 @@
 	<include file="com/ganesha/basicweb/modules/module/modulemaintenance-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/usergroupmaintenance/usergroupmaintenance-struts.xml"></include>
 	<include file="com/ganesha/basicweb/modules/usermaintenance/usermaintenance-struts.xml"></include>
+	<include file="com/ganesha/struts2/resourcesaction/resources-struts.xml"></include>
 	
 	<!-- DO NOT DELETE OR EDIT THIS LINE. THIS LINE IS USED BY GANESHA FRAMEWORK TO GENERATE NEW MODULE -->
 
