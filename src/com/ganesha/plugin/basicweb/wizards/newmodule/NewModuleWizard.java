@@ -597,7 +597,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(originName).append("\" /></td>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"left\" width=\"300px\"><s:label name=\"")
+							.append("<td align=\"left\" width=\"300px\"><s:property value=\"")
 							.append(newValueName).append("\" /></td>");
 					builderForNewValue.append("\n</tr>");
 				}
@@ -653,7 +653,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(originName).append("\" /></td>");
 					builderForOldValue
 							.append("\n\t")
-							.append("<td align=\"left\" width=\"300px\"><s:label name=\"old.")
+							.append("<td align=\"left\" width=\"300px\"><s:property value=\"old.")
 							.append(originName).append("\" /></td>");
 					builderForOldValue.append("\n</tr>");
 					builderForNewValue.append("\n<tr>");
@@ -663,7 +663,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(originName).append("\" /></td>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"left\" width=\"300px\"><s:label name=\"")
+							.append("<td align=\"left\" width=\"300px\"><s:property value=\"")
 							.append(newValueName).append("\" /></td>");
 					builderForNewValue.append("\n</tr>");
 				}
@@ -763,7 +763,7 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 							.append(rowItem.getName()).append("\" /></td>");
 					stringBuilder
 							.append("\n\t")
-							.append("<td align=\"left\" width=\"300px\"><s:label name=\"old.")
+							.append("<td align=\"left\" width=\"300px\"><s:property value=\"old.")
 							.append(rowItem.getName()).append("\" /></td>");
 					stringBuilder.append("\n</tr>");
 				}

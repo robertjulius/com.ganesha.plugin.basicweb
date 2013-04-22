@@ -48,11 +48,11 @@ ul {
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userGroupName" /></td>
-								<td align="left" width="300px"><s:label name="newName" /></td>
+								<td align="left" width="300px"><s:property value="newName" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.description" /></td>
-								<td align="left" width="300px"><s:label name="newDescription" /></td>
+								<td align="left" width="300px"><s:property value="newDescription" /></td>
 							</tr>
 							<tr>
 								<td colspan="2">

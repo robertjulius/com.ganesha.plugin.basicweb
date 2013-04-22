@@ -39,11 +39,11 @@
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userGroupName" /></td>
-								<td align="left" width="300px"><s:label name="old.name" /></td>
+								<td align="left" width="300px"><s:property value="old.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.description" /></td>
-								<td align="left" width="300px"><s:label name="old.description" /></td>
+								<td align="left" width="300px"><s:property value="old.description" /></td>
 							</tr>
 						</tbody>
 					</table>

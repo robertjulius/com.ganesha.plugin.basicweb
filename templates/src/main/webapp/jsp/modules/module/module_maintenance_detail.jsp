@@ -36,19 +36,19 @@
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.moduleName" /></td>
-								<td align="left" width="300px"><s:label name="old.name" /></td>
+								<td align="left" width="300px"><s:property value="old.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.description" /></td>
-								<td align="left" width="300px"><s:label name="old.description" /></td>
+								<td align="left" width="300px"><s:property value="old.description" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.firstEntry" /></td>
-								<td align="left" width="300px"><s:label name="old.firstEntry" /></td>
+								<td align="left" width="300px"><s:property value="old.firstEntry" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.parent" /></td>
-								<td align="left" width="300px"><s:label name="old.parent.name" /></td>
+								<td align="left" width="300px"><s:property value="old.parent.name" /></td>
 							</tr>
 							<tr>
 								<td align="left" colspan="2">

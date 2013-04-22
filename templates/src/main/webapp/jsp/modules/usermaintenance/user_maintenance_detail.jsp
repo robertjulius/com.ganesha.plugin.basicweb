@@ -36,15 +36,15 @@
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userId" /></td>
-								<td align="left" width="300px"><s:label name="old.name" /></td>
+								<td align="left" width="300px"><s:property value="old.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userName" /></td>
-								<td align="left" width="300px"><s:label name="old.name" /></td>
+								<td align="left" width="300px"><s:property value="old.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userGroup" /></td>
-								<td align="left" width="300px"><s:label name="old.userGroup.name" /></td>
+								<td align="left" width="300px"><s:property value="old.userGroup.name" /></td>
 							</tr>
 						</tbody>
 					</table>

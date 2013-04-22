@@ -36,19 +36,19 @@
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userId" /></td>
-								<td align="left" width="300px"><s:label name="newUserId" /></td>
+								<td align="left" width="300px"><s:property value="newUserId" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userName" /></td>
-								<td align="left" width="300px"><s:label name="newName" /></td>
+								<td align="left" width="300px"><s:property value="newName" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.password" /></td>
-								<td align="left" width="300px"><s:label name="newPassword" /></td>
+								<td align="left" width="300px"><s:property value="newPassword" /></td>
 							</tr>
 							<tr>
 								<td align="right"><s:text name="resource.userGroup" /></td>
-								<td align="left"><s:label name="newUserGroupName" /></td>
+								<td align="left"><s:property value="newUserGroupName" /></td>
 							</tr>
 						</tbody>
 					</table>

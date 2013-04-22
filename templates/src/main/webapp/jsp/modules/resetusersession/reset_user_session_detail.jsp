@@ -36,26 +36,26 @@
 						<tbody>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userId" /></td>
-								<td align="left" width="300px"><s:label name="tobeReset.user.userId" /></td>
+								<td align="left" width="300px"><s:property value="tobeReset.user.userId" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userName" /></td>
-								<td align="left" width="300px"><s:label name="tobeReset.user.name" /></td>
+								<td align="left" width="300px"><s:property value="tobeReset.user.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userGroupName" /></td>
-								<td align="left" width="300px"><s:label name="tobeReset.user.userGroup.name" /></td>
+								<td align="left" width="300px"><s:property value="tobeReset.user.userGroup.name" /></td>
 							</tr>
 							<tr>
 								<td align="right" width="100px"><s:text name="resource.userGroupDescription" /></td>
-								<td align="left" width="300px"><s:label name="tobeReset.user.userGroup.description" /></td>
+								<td align="left" width="300px"><s:property value="tobeReset.user.userGroup.description" /></td>
 							</tr>
 							<tr>
 								<s:set var="login">
 									<s:date name="tobeReset.loginTime" format="dd-MMM-yyyy HH:mm:ss" />
 								</s:set>
 								<td align="right"><s:text name="resource.loginTime" /></td>
-								<td align="left"><s:label name="tobeReset.loginTime" value="%{login}" /></td>
+								<td align="left"><s:property value="%{login}" /></td>
 							</tr>
 						</tbody>
 					</table>
