@@ -64,7 +64,8 @@
 						<s:hidden name="selectedId" />
 						<table class="grid">
 							<thead>
-								<tr align="center">								
+								<tr align="center">
+									<td></td>
 									<td width="150"><s:text name="resource.userGroupName" /></td>
 									<td width="200"><s:text name="resource.description" /></td>
 								</tr>
@@ -72,6 +73,7 @@
 							<tbody class="selectable">
 								<s:iterator value="searchResult" status="rowstatus">
 									<tr onclick="$(this).closest('form').find('input#prepareDetail_selectedId').val('<s:property value="id" />'); $(this).closest('form').submit();" class="<s:if test='#rowstatus.odd == true'>rowOdd</s:if><s:else>rowEven</s:else>">
+										<td align="right"><s:property value="(pagination.pageNumber - 1) * pagination.rowsPerPage + #rowstatus.index + 1" /></td>
 										<td><s:property value="name" /></td>
 										<td><s:property value="description" /></td>
 									</tr>
