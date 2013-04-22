@@ -10,6 +10,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <s:head />
 <sj:head />
+
+<style type="text/css">
+ul {
+	list-style-type: none;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+</style>
+
 </head>
 <body>
 	<table>
