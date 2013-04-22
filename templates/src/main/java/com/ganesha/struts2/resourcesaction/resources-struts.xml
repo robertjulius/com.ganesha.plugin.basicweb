@@ -7,7 +7,7 @@
 
 	<package name="resources" extends="basicweb" namespace="/resources">
 	
-		<action name="images" class="com.ganesha.struts2.resourcesaction.ImageAction">
+		<action name="resource" class="com.ganesha.struts2.resourcesaction.ResourceAction">
 		</action>
 		
 	</package>
