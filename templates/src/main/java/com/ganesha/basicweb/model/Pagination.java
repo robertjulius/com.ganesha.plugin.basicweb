@@ -12,10 +12,12 @@ public class Pagination implements Serializable {
 	private int[] availableRowsPerPage = new int[] { 2, 5, 10, 20, 50, 100 };
 
 	public Pagination() {
+		this(0);
 	}
 
 	public Pagination(int rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
+		this.pageNumber = 1;
 	}
 
 	public int[] getAvailableRowsPerPage() {

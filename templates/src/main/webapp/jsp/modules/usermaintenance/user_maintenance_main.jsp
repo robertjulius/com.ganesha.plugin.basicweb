@@ -59,7 +59,7 @@
 				</table>
 			</td>
 		</tr>
-		<s:if test="pagination.pageNumber != null">
+		<s:if test="searchResult != null">
 			<tr>
 				<td>
 					<s:form action="/modules/usermaintenance/prepareDetail.action" theme="simple">

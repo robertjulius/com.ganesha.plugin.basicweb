@@ -57,7 +57,7 @@
 				</table>
 			</td>
 		</tr>
-		<s:if test="pagination.pageNumber != null">
+		<s:if test="searchResult != null">
 			<tr>
 				<td>
 					<s:form action="/modules/usergroupmaintenance/prepareDetail.action" theme="simple">
