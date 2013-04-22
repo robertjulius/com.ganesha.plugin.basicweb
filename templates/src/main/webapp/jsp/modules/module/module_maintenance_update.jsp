@@ -83,4 +83,26 @@
 		</table>
 	</s:form>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$('#newParentId').change(
+				function() {
+					$('#newParentName').val(
+							$(this).children("option").filter(":selected")
+									.text());
+				});
+	});
+
+	function removeRow(button) {
+		button.closest('tr').remove();
+	}
+
+	var rowSize = <s:property value="newURLs.size"/>;
+	function addRow(table) {
+		var td1 = '<td><input type="text" name="listAccessPaths[' + rowSize + ']" size="50px" /></td>';
+		var td2 = '<td><input type="button" value="Remove" onclick="removeRow($(this))" />';
+		table.find('tbody:last').append('<tr>' + td1 + td2 + '</tr>');
+		++rowSize;
+	}
+</script>
 </html>
