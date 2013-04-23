@@ -35,19 +35,19 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td align="right" width="100px"><s:text name="resource.moduleName" /></td>
+								<td align="right" width="100px"><b><s:text name="resource.moduleName" /></b></td>
 								<td align="left" width="300px"><s:property value="old.name" /></td>
 							</tr>
 							<tr>
-								<td align="right" width="100px"><s:text name="resource.description" /></td>
+								<td align="right" width="100px"><b><s:text name="resource.description" /></b></td>
 								<td align="left" width="300px"><s:property value="old.description" /></td>
 							</tr>
 							<tr>
-								<td align="right" width="100px"><s:text name="resource.firstEntry" /></td>
+								<td align="right" width="100px"><b><s:text name="resource.firstEntry" /></b></td>
 								<td align="left" width="300px"><s:property value="old.firstEntry" /></td>
 							</tr>
 							<tr>
-								<td align="right" width="100px"><s:text name="resource.parent" /></td>
+								<td align="right" width="100px"><b><s:text name="resource.parent" /></b></td>
 								<td align="left" width="300px"><s:property value="old.parent.name" /></td>
 							</tr>
 							<tr>
