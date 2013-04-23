@@ -593,8 +593,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					builderForNewValue.append("\n<tr>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
-							.append(originName).append("\" /></td>");
+							.append("<td align=\"right\" width=\"100px\"><b><s:text name=\"resource.")
+							.append(originName).append("\" /></b></td>");
 					builderForNewValue
 							.append("\n\t")
 							.append("<td align=\"left\" width=\"300px\"><s:property value=\"")
@@ -649,8 +649,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					builderForOldValue.append("\n<tr>");
 					builderForOldValue
 							.append("\n\t")
-							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
-							.append(originName).append("\" /></td>");
+							.append("<td align=\"right\" width=\"100px\"><b><s:text name=\"resource.")
+							.append(originName).append("\" /></b></td>");
 					builderForOldValue
 							.append("\n\t")
 							.append("<td align=\"left\" width=\"300px\"><s:property value=\"old.")
@@ -659,8 +659,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					builderForNewValue.append("\n<tr>");
 					builderForNewValue
 							.append("\n\t")
-							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
-							.append(originName).append("\" /></td>");
+							.append("<td align=\"right\" width=\"100px\"><b><s:text name=\"resource.")
+							.append(originName).append("\" /></b></td>");
 					builderForNewValue
 							.append("\n\t")
 							.append("<td align=\"left\" width=\"300px\"><s:property value=\"")
@@ -759,8 +759,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 					stringBuilder.append("\n<tr>");
 					stringBuilder
 							.append("\n\t")
-							.append("<td align=\"right\" width=\"100px\"><s:text name=\"resource.")
-							.append(rowItem.getName()).append("\" /></td>");
+							.append("<td align=\"right\" width=\"100px\"><b><s:text name=\"resource.")
+							.append(rowItem.getName()).append("\" /></b></td>");
 					stringBuilder
 							.append("\n\t")
 							.append("<td align=\"left\" width=\"300px\"><s:property value=\"old.")
