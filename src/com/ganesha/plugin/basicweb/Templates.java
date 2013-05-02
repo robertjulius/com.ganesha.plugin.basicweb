@@ -101,8 +101,11 @@ public class Templates {
 		files.add("src/main/java/com/ganesha/core/utils/MappingUtils.java");
 		files.add("src/main/java/com/ganesha/hibernate/HibernateUtil.java");
 		files.add("src/main/java/com/ganesha/struts2/BaseAction.java");
+		files.add("src/main/java/com/ganesha/struts2/BusinessAction.java");
 		files.add("src/main/java/com/ganesha/struts2/components/Component/Pagination.java");
 		files.add("src/main/java/com/ganesha/struts2/FormAction.java");
+		files.add("src/main/java/com/ganesha/struts2/resourcesaction/ResourceAction.java");
+		files.add("src/main/java/com/ganesha/struts2/resourcesaction/resources-struts.xml");
 		files.add("src/main/java/com/ganesha/struts2/views/jsp/PaginationTag.java");
 		files.add("src/main/resources/global.properties");
 		files.add("src/main/resources/hibernate.cfg.xml");
@@ -114,10 +117,6 @@ public class Templates {
 		files.add("src/main/webapp/css/ganesha-table-0.1.css");
 		files.add("src/main/webapp/css/ganesha-table-popupmenu-0.1.css");
 		files.add("src/main/webapp/images/knob-horizontal.png");
-		files.add("src/main/webapp/images/logoFairways.jpg");
-		files.add("src/main/webapp/images/logoFairways1.jpg");
-		files.add("src/main/webapp/images/logoFairways2.jpg");
-		files.add("src/main/webapp/images/logoFairways3.jpg");
 		files.add("src/main/webapp/index.jsp");
 		files.add("src/main/webapp/js/ganesha-ui-0.1.js");
 		files.add("src/main/webapp/js/jquery-treeview/images/file.gif");
@@ -259,6 +258,7 @@ public class Templates {
 		files.add("src/main/webapp/WEB-INF/lib/hibernate-annotations.jar");
 		files.add("src/main/webapp/WEB-INF/lib/struts2-fullhibernatecore-plugin-2.2.2-GA.jar");
 		files.add("src/main/webapp/WEB-INF/web.xml");
+
 	}
 
 	public static int count() {

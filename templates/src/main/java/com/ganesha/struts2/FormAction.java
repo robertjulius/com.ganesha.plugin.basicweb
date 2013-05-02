@@ -7,7 +7,7 @@ import com.ganesha.basicweb.utility.PropertiesConstants;
 import com.ganesha.core.exception.AppException;
 import com.opensymphony.xwork2.ModelDriven;
 
-public abstract class FormAction<T, U> extends BaseAction<U> implements
+public abstract class FormAction<T, U> extends BusinessAction<U> implements
 		ModelDriven<T> {
 
 	private static final long serialVersionUID = -3643549719278354411L;

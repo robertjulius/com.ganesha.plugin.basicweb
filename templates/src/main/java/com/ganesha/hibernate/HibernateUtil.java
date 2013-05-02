@@ -20,7 +20,6 @@ public class HibernateUtil {
 
 		} catch (Throwable e) {
 			// Make sure you log the exception, as it might be swallowed
-			System.err.println("Initial SessionFactory creation failed." + e);
 			LoggerFactory.getLogger(HibernateUtil.class).error(
 					"Initial SessionFactory creation failed:" + e.getMessage(),
 					e);

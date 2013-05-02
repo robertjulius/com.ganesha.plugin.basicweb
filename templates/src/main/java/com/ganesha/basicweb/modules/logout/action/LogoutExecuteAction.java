@@ -5,9 +5,9 @@ import com.ganesha.basicweb.modules.login.logic.LoginBL;
 import com.ganesha.basicweb.utility.GeneralConstants.ActionType;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.exception.UserException;
-import com.ganesha.struts2.BaseAction;
+import com.ganesha.struts2.BusinessAction;
 
-public class LogoutExecuteAction extends BaseAction<LoginBL> {
+public class LogoutExecuteAction extends BusinessAction<LoginBL> {
 
 	private static final long serialVersionUID = -3643549719278354411L;
 
