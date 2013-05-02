@@ -48,7 +48,8 @@ public class SimpleFilter implements Filter {
 		LoggerFactory.getLogger(getClass()).debug("Requested URL:" + url);
 
 		if (isUrlNeedSession(url)) {
-			LoggerFactory.getLogger(getClass()).debug("URL need the session.");
+			LoggerFactory.getLogger(getClass()).debug(
+					"URL need the session: " + url);
 
 			UserSession userSession = (UserSession) session
 					.getAttribute(GeneralConstants.USER_SESSION);
@@ -102,6 +103,14 @@ public class SimpleFilter implements Filter {
 		for (String testUrl : AppContextManager.getPageFail()
 				.getUrlDoesntNeedSession()) {
 			if (testUrl.equals(url)) {
+				return false;
+			}
+
+			/*
+			 * TODO main di applicationContext aja, trus main pake regex untuk
+			 * filtering
+			 */
+			if (url.endsWith(".css") || url.endsWith(".js")) {
 				return false;
 			}
 		}

@@ -10,10 +10,9 @@
 	<constant name="struts.action.extension" value="action"/>
 	<constant name="struts.multipart.maxSize" value="10000000" />
 
-	<package name="basicweb" extends="hibernate-default" namespace="/main">
+	<package name="basicweb" extends="struts-default" namespace="/main">
 		<interceptors>
 			<interceptor-stack name="appDefault">
-				<interceptor-ref name="defaultStackHibernate" />
 				<interceptor-ref name="timer" />
 				<interceptor-ref name="logger" />
 				<interceptor-ref name="defaultStack">

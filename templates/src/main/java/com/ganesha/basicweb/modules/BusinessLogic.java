@@ -2,7 +2,6 @@ package com.ganesha.basicweb.modules;
 
 import java.util.Map;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import com.ganesha.basicweb.model.activitylog.ActivityLog;
@@ -13,39 +12,39 @@ import com.ganesha.basicweb.utility.GeneralConstants.ActionType;
 import com.ganesha.core.UserSession;
 import com.ganesha.core.exception.AppException;
 import com.ganesha.core.utils.MappingUtils;
-import com.googlecode.s2hibernate.struts2.plugin.util.HibernateSessionFactory;
+import com.ganesha.hibernate.HibernateUtil;
 import com.opensymphony.xwork2.ActionContext;
 
 public abstract class BusinessLogic {
 
 	public void beginTransaction() throws AppException {
 		try {
-			HibernateSessionFactory.getSession().getTransaction().begin();
-		} catch (HibernateException e) {
+			HibernateUtil.beginTransaction();
+		} catch (Exception e) {
 			throw new AppException(e);
 		}
 	}
 
 	public final void commit() throws AppException {
 		try {
-			HibernateSessionFactory.getSession().getTransaction().commit();
-		} catch (HibernateException e) {
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
 			throw new AppException(e);
 		}
 	}
 
 	public final Session getSession() throws AppException {
 		try {
-			return HibernateSessionFactory.getSession();
-		} catch (HibernateException e) {
+			return HibernateUtil.getCurrentSession();
+		} catch (Exception e) {
 			throw new AppException(e);
 		}
 	}
 
 	public final void rollback() throws AppException {
 		try {
-			HibernateSessionFactory.getSession().getTransaction().rollback();
-		} catch (HibernateException e) {
+			HibernateUtil.rollbackTransaction();
+		} catch (Exception e) {
 			throw new AppException(e);
 		}
 	}

@@ -7,9 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.LoggerFactory;
 
 import com.ganesha.basicweb.model.systemsetting.SystemSetting;
@@ -22,27 +19,14 @@ public class ServletStartUp extends HttpServlet {
 		try {
 			loadSystemSetting();
 		} catch (Exception e) {
-			LoggerFactory.getLogger(HibernateUtil.class).error(e.getMessage(),
-					e);
+			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
 		}
 	}
 
 	private void loadSystemSetting() throws Exception {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = null;
-
 		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
-
-		if (!session.isOpen()) {
-			session = sessionFactory.openSession();
-		}
-
-		try {
-			Criteria criteria = session.createCriteria(SystemSetting.class);
+			Criteria criteria = HibernateUtil.getCurrentSession()
+					.createCriteria(SystemSetting.class);
 			@SuppressWarnings("unchecked")
 			List<SystemSetting> systemSettings = criteria.list();
 			for (SystemSetting systemSetting : systemSettings) {
@@ -51,26 +35,13 @@ public class ServletStartUp extends HttpServlet {
 			}
 			synchConstants();
 		} finally {
-			session.close();
+			HibernateUtil.closeSession();
 		}
 	}
 
 	private void synchConstants() throws Exception {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = null;
-
 		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
-
-		if (!session.isOpen()) {
-			session = sessionFactory.openSession();
-		}
-
-		try {
-			session.beginTransaction();
+			HibernateUtil.beginTransaction();
 			Field[] fields = PropertiesConstants.class.getDeclaredFields();
 			for (Field field : fields) {
 				String id = (String) field.get(null);
@@ -83,7 +54,7 @@ public class ServletStartUp extends HttpServlet {
 						SystemSetting systemSetting = new SystemSetting();
 						systemSetting.setId(id);
 						systemSetting.setValue(GeneralConstants.EMPTY_STRING);
-						session.save(systemSetting);
+						HibernateUtil.getCurrentSession().save(systemSetting);
 
 						SystemSetting.setProperty(id,
 								GeneralConstants.EMPTY_STRING);
@@ -91,8 +62,8 @@ public class ServletStartUp extends HttpServlet {
 				}
 			}
 		} finally {
-			session.getTransaction().commit();
-			session.close();
+			HibernateUtil.commitTransaction();
+			HibernateUtil.closeSession();
 		}
 	}
 }
