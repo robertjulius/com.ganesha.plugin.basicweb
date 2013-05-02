@@ -99,6 +99,7 @@ public class Templates {
 		files.add("src/main/java/com/ganesha/core/User.java");
 		files.add("src/main/java/com/ganesha/core/UserSession.java");
 		files.add("src/main/java/com/ganesha/core/utils/MappingUtils.java");
+		files.add("src/main/java/com/ganesha/hibernate/HibernateSessionServletFilter.java");
 		files.add("src/main/java/com/ganesha/hibernate/HibernateUtil.java");
 		files.add("src/main/java/com/ganesha/struts2/BaseAction.java");
 		files.add("src/main/java/com/ganesha/struts2/BusinessAction.java");
@@ -255,10 +256,7 @@ public class Templates {
 		files.add("src/main/webapp/template/xhtml/head.ftl");
 		files.add("src/main/webapp/WEB-INF/applicationContext.xml");
 		files.add("src/main/webapp/WEB-INF/ganesha-tags.tld");
-		files.add("src/main/webapp/WEB-INF/lib/hibernate-annotations.jar");
-		files.add("src/main/webapp/WEB-INF/lib/struts2-fullhibernatecore-plugin-2.2.2-GA.jar");
 		files.add("src/main/webapp/WEB-INF/web.xml");
-
 	}
 
 	public static int count() {
