@@ -82,7 +82,10 @@ public class PrivilegeUtils {
 		while (iterator.hasNext()) {
 			String privilegeId = iterator.next();
 			Privilege privilege = treeMap.get(privilegeId);
-			return getPrivilegeFromTree(key, privilege.getChilds());
+			Privilege tempPriv = getPrivilegeFromTree(key, privilege.getChilds());
+			if (tempPriv != null) {
+				return tempPriv;
+			}
 		}
 
 		return null;
