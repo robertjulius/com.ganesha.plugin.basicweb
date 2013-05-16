@@ -1025,8 +1025,8 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		InputStream inputStream = null;
 		try {
 			IFile packageProperties = project.getFile(new StringBuilder(
-					modulePath).append(IPath.SEPARATOR)
-					.append("package.properties").toString());
+					modulePath).append(IPath.SEPARATOR).append(prefixClassName)
+					.append("Form.properties").toString());
 
 			Map<String, String> map = new HashMap<>();
 			map.put(Constants.RESOURCE_PAGE_TITLE, moduleName);
