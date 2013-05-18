@@ -1,0 +1,34 @@
+package $gns{package};
+
+import java.util.List;
+
+import com.ganesha.basicweb.model.FormBean;
+import com.ganesha.basicweb.model.Pagination;
+import $gns{entity_full_class};
+import com.ganesha.core.exception.AppException;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class $gns{class_form} extends FormBean {
+
+	private static final long serialVersionUID = 1L;
+	
+	private $gns{entity_simple_class} old;
+	
+	$gns{list_of_modify_field}
+	
+	$gns{list_of_getter_setter_modify_field}
+	
+	public void setOld($gns{entity_simple_class} old) {
+		this.old = old;
+	}
+	
+	public $gns{entity_simple_class} getOld() {
+		return old;
+	}
+
+	@Override
+	public void validate(ActionSupport action) throws AppException {
+		// TODO Auto-generated method stub
+		super.validate(action);
+	}
+}

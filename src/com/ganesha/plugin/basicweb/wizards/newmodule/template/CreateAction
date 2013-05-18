@@ -27,9 +27,10 @@ public class $gns{class_action_create} extends $gns{class_action_base} {
 	public String prepareCreate() throws AppException {
 		// TODO Auto-generated method stub
 		$gns{class_form} form = getForm();
-		form.clearForm("new");
 		
+		form.clearForm("new");
 		form.setSelectedId(null);
+		
 		return SUCCESS;
 	}
 	

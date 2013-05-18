@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.SelectionDialog;
 
+import com.ganesha.plugin.basicweb.wizards.newmodule.NewModuleWizard.NewModuleType;
+
 @SuppressWarnings("restriction")
 public class NewModuleWizardPage extends WizardPage {
 
@@ -33,6 +35,7 @@ public class NewModuleWizardPage extends WizardPage {
 	private Text txtModuleName;
 	private Text txtEntity;
 	private SourceType entity;
+	private NewModuleType newModuleType;
 
 	public NewModuleWizardPage() {
 		super(NAME);
@@ -102,13 +105,36 @@ public class NewModuleWizardPage extends WizardPage {
 		new Label(container, SWT.NONE);
 
 		Button btnGenerateBasicCrud = new Button(container, SWT.RADIO);
+		btnGenerateBasicCrud.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				newModuleType = NewModuleType.BASIC_CRUD;
+			}
+		});
 		btnGenerateBasicCrud.setSelection(true);
 		btnGenerateBasicCrud.setText("Generate basic CRUD pages");
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 
 		Button btnGenerateBasicWeb = new Button(container, SWT.RADIO);
+		btnGenerateBasicWeb.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				newModuleType = NewModuleType.WEB_PAGE;
+			}
+		});
 		btnGenerateBasicWeb.setText("Generate basic web page");
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+
+		Button btnGenerateWebsiteMenu = new Button(container, SWT.RADIO);
+		btnGenerateWebsiteMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				newModuleType = NewModuleType.WEBSITE_MENU_MAINTENANCE;
+			}
+		});
+		btnGenerateWebsiteMenu.setText("Generate website menu maintenance");
 		new Label(container, SWT.NONE);
 		txtEntity.addModifyListener(new ModifyListener() {
 			@Override
@@ -117,7 +143,7 @@ public class NewModuleWizardPage extends WizardPage {
 			}
 		});
 
-		this.txtModuleName.setFocus();
+		txtModuleName.setFocus();
 	}
 
 	public SourceType getEntity() {
@@ -126,6 +152,10 @@ public class NewModuleWizardPage extends WizardPage {
 
 	public String getModuleName() {
 		return txtModuleName.getText();
+	}
+
+	public NewModuleType getNewModuleType() {
+		return newModuleType;
 	}
 
 	private SourceType openTypeDialog() {

@@ -1,0 +1,42 @@
+package $gns{package};
+
+import java.sql.Timestamp;
+
+import org.hibernate.Criteria;
+
+import $gns{entity_full_class};
+import com.ganesha.basicweb.modules.BusinessLogic;
+import com.ganesha.basicweb.utility.GeneralConstants.ActionType;
+import com.ganesha.core.exception.AppException;
+
+public class $gns{class_bl} extends BusinessLogic {
+
+	public $gns{entity_simple_class} getDetail() throws AppException {
+		/*
+		 * TODO Auto-generated method stub
+		 * Define your own criteria
+		 */
+		Criteria criteria = getSession().createCriteria($gns{entity_simple_class}.class);
+		return ($gns{entity_simple_class}) criteria.uniqueResult();
+	}
+	
+	public void update($gns{list_of_parameter_modify_fields}, String updateBy, Timestamp updateDate)
+			throws AppException {
+
+		beginTransaction();
+
+		/*
+		 * TODO Auto-generated method stub
+		 * Define your own object
+		 */
+		$gns{entity_simple_class} $gns{entity_var_name} = getDetail();
+		$gns{list_of_modify_field}
+		$gns{entity_var_name}.setUpdateBy(updateBy);
+		$gns{entity_var_name}.setUpdateDate(updateDate);
+
+		getSession().save($gns{entity_var_name});
+		saveActivityLog(ActionType.UPDATE, $gns{entity_var_name});
+
+		commit();
+	}
+}

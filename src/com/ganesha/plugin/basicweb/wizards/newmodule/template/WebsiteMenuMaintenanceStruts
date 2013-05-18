@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="$gns{struts_package}" extends="basicweb"
+		namespace="/modules/$gns{struts_package}">
+
+		<!-- =================================== -->
+		<!-- $gns{class_action_main} : BEGIN -->
+		<!-- =================================== -->
+		<action name="initial"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
+			method="initial">
+			<result name="success" type="chain">prepareDetail
+			</result>
+		</action>
+
+		<action name="prepareDetail"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
+			method="prepareDetail">
+			<result name="success" type="chain">detail
+			</result>
+		</action>
+
+		<action name="detail"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_main}"
+			method="chainAction">
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_detail}
+			</result>
+		</action>
+		<!-- ================================= -->
+		<!-- $gns{class_action_main} : END -->
+		<!-- ================================= -->
+
+		<!-- ===================================== -->
+		<!-- $gns{class_action_update} : BEGIN -->
+		<!-- ===================================== -->
+		<action name="prepareUpdate"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
+			method="prepareUpdate">
+			<result name="success" type="chain">formUpdate
+			</result>
+		</action>
+
+		<action name="formUpdate"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
+			method="chainAction">
+			<result name="success">/jsp/modules/$gns{struts_package}/$gns{jsp_update}
+			</result>
+		</action>
+
+		<action name="executeUpdate"
+			class="$gns{ganesha_modules}.$gns{struts_package}.action.$gns{class_action_update}"
+			method="executeUpdate">
+			<result name="success" type="chain">prepareDetail
+			</result>
+			<result name="error">/jsp/modules/$gns{struts_package}/$gns{jsp_update}
+			</result>
+		</action>
+
+	</package>
+
+</struts>

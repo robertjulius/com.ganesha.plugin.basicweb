@@ -19,7 +19,7 @@ public class $gns{class_action_update} extends $gns{class_action_base} {
 
 		$gns{class_form} form = getForm();
 		$gns{list_of_modify_field}
-		getBL().update(form.getSelectedId(), $gns{list_of_parameter_modify_fields}, user.getId(), CommonUtils.getCurrentTimestamp());
+		getBL().update($gns{list_of_parameter_modify_fields}, user.getId(), CommonUtils.getCurrentTimestamp());
 
 		return SUCCESS;
 	}
@@ -32,14 +32,5 @@ public class $gns{class_action_update} extends $gns{class_action_base} {
 		form.assignFromEntity("new", form.getOld());
 
 		return SUCCESS;
-	}
-	
-	public String validateUpdate() throws AppException {
-		// TODO Auto-generated method stub
-		if (validateForm()) {
-			return SUCCESS;
-		} else {
-			return ERROR;
-		}
 	}
 }

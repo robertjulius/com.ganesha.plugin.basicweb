@@ -33,8 +33,12 @@ import com.ganesha.plugin.basicweb.Constants;
 import com.ganesha.plugin.basicweb.wizards.RowItem;
 
 public class NewModuleWizard extends Wizard implements INewWizard {
-	private ISelection selection;
 
+	public static enum NewModuleType {
+		BASIC_CRUD, WEB_PAGE, WEBSITE_MENU_MAINTENANCE
+	}
+
+	private ISelection selection;
 	private String moduleName;
 	private String prefixClassName;
 	private Properties properties;
@@ -45,10 +49,12 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	private List<RowItem> searchResults;
 	private List<RowItem> modifyFields;
 	private List<RowItem> detailFields;
+	private NewModuleType newModuleType;
 
 	public NewModuleWizard() {
 		super();
 		setNeedsProgressMonitor(true);
+		newModuleType = NewModuleType.BASIC_CRUD;
 	}
 
 	@Override
@@ -68,6 +74,21 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		NewModuleWizardPage page = (NewModuleWizardPage) getPage(NewModuleWizardPage.class
 				.getName());
+
+		newModuleType = page.getNewModuleType();
+		switch (newModuleType) {
+		case BASIC_CRUD:
+			// white list
+			break;
+		case WEBSITE_MENU_MAINTENANCE:
+			// white list
+			break;
+		default:
+			MessageDialog.openWarning(getShell(), "Not supported yet",
+					"New module type '" + newModuleType
+							+ "' is not supported yet");
+			return false;
+		}
 
 		moduleName = page.getModuleName();
 		while (moduleName.contains("  ")) {
@@ -95,14 +116,14 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 				.toString();
 
 		BasicCRUDMainPage mainPage = (BasicCRUDMainPage) getPage(BasicCRUDMainPage.NAME);
-		this.criterias = mainPage.getSearchCriterias();
-		this.searchResults = mainPage.getSearchResult();
+		criterias = mainPage.getSearchCriterias();
+		searchResults = mainPage.getSearchResult();
 
 		BasicCRUDModifyPage modifyPage = (BasicCRUDModifyPage) getPage(BasicCRUDModifyPage.NAME);
-		this.modifyFields = modifyPage.getFields();
+		modifyFields = modifyPage.getFields();
 
 		BasicCRUDDetailPage detailPage = (BasicCRUDDetailPage) getPage(BasicCRUDDetailPage.NAME);
-		this.detailFields = detailPage.getFields();
+		detailFields = detailPage.getFields();
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
@@ -258,8 +279,20 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
-			InputStream inputStream = Utils.openContentStream(
-					"template/MainAction", map, this.getClass(), false);
+			InputStream inputStream = null;
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/MainAction",
+						map, this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenanceMainAction", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			inputStreams.add(inputStream);
 
 			createFile(mainAction, inputStream, monitor);
@@ -307,11 +340,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
-			InputStream inputStream = Utils.openContentStream(
-					"template/CreateAction", map, this.getClass(), false);
-			inputStreams.add(inputStream);
-
-			createFile(createAction, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				InputStream inputStream = Utils.openContentStream(
+						"template/CreateAction", map, this.getClass(), false);
+				inputStreams.add(inputStream);
+				createFile(createAction, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		}
 
 		{ // delete action
@@ -335,11 +376,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.ENTITY_SIMPLE_VAR, entitySimpleName);
 			map.put(Constants.ENTITY_VAR_NAME, entityVarName);
 
-			InputStream inputStream = Utils.openContentStream(
-					"template/DeleteAction", map, this.getClass(), false);
-			inputStreams.add(inputStream);
-
-			createFile(deleteAction, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				InputStream inputStream = Utils.openContentStream(
+						"template/DeleteAction", map, this.getClass(), false);
+				inputStreams.add(inputStream);
+				createFile(deleteAction, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		}
 
 		{ // update action
@@ -384,8 +433,20 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
-			InputStream inputStream = Utils.openContentStream(
-					"template/UpdateAction", map, this.getClass(), false);
+			InputStream inputStream = null;
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/UpdateAction",
+						map, this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenanceUpdateAction", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			inputStreams.add(inputStream);
 
 			createFile(updateAction, inputStream, monitor);
@@ -516,8 +577,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						stringBuilder.toString().replaceFirst("\n\n", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/Form", map,
-					this.getClass(), false);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/Form", map,
+						this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenanceForm", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			createFile(businessLogic, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -606,9 +678,18 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream(
-					"template/jsp_confirm_create", map, this.getClass(), false);
-			createFile(jspFile, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream(
+						"template/jsp_confirm_create", map, this.getClass(),
+						false);
+				createFile(jspFile, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -674,9 +755,18 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream(
-					"template/jsp_confirm_update", map, this.getClass(), false);
-			createFile(jspFile, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream(
+						"template/jsp_confirm_update", map, this.getClass(),
+						false);
+				createFile(jspFile, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -722,9 +812,17 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/jsp_create", map,
-					this.getClass(), false);
-			createFile(jspFile, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/jsp_create",
+						map, this.getClass(), false);
+				createFile(jspFile, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -771,8 +869,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/jsp_detail", map,
-					this.getClass(), false);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/jsp_detail",
+						map, this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenance_jsp_detail", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			createFile(jspFile, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -833,9 +942,17 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/jsp_main", map,
-					this.getClass(), false);
-			createFile(jspFile, inputStream, monitor);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/jsp_main", map,
+						this.getClass(), false);
+				createFile(jspFile, inputStream, monitor);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				// Do nothing
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -881,11 +998,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						.toString().replaceFirst("\n", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/jsp_detail", map,
-					this.getClass(), false);
-
-			inputStream = Utils.openContentStream("template/jsp_update", map,
-					this.getClass(), false);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/jsp_update",
+						map, this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenance_jsp_update", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			createFile(jspFile, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -966,8 +1091,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						builderForParameters.toString().replaceFirst(", ", ""));
 			}
 
-			inputStream = Utils.openContentStream("template/BL", map,
-					this.getClass(), false);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/BL", map,
+						this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenanceBL", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			createFile(businessLogic, inputStream, monitor);
 		} finally {
 			if (inputStream != null) {
@@ -1099,8 +1235,19 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 			map.put(Constants.JSP_CREATE_CONFIRM, new StringBuilder(
 					prefixJspName).append("_confirm_create.jsp").toString());
 
-			inputStream = Utils.openContentStream("template/struts", map,
-					this.getClass(), false);
+			switch (newModuleType) {
+			case BASIC_CRUD:
+				inputStream = Utils.openContentStream("template/struts", map,
+						this.getClass(), false);
+				break;
+			case WEBSITE_MENU_MAINTENANCE:
+				inputStream = Utils.openContentStream(
+						"template/WebsiteMenuMaintenanceStruts", map,
+						this.getClass(), false);
+				break;
+			default:
+				// Do nothing, already filtered at function performFinish()
+			}
 			createFile(strutsXml, inputStream, monitor);
 
 			appendRootStrutsXml(project, monitor);

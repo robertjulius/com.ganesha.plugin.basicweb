@@ -1,0 +1,31 @@
+package $gns{package}.action;
+
+import $gns{entity_full_class};
+import $gns{package}.$gns{class_form};
+import com.ganesha.core.exception.AppException;
+
+public class $gns{class_action_main} extends $gns{class_action_base} {
+
+	private static final long serialVersionUID = 1L;
+
+	public $gns{class_action_main}() throws AppException {
+		super();
+	}
+	
+	public String initial() throws AppException {
+		// TODO Auto-generated method stub
+		$gns{class_form} form = getForm();
+				
+		return SUCCESS;
+	}
+	
+	public String prepareDetail() throws AppException {
+		// TODO Auto-generated method stub
+		$gns{class_form} form = getForm();
+
+		$gns{entity_simple_class} $gns{entity_var_name} = getBL().getDetail();
+		form.setOld($gns{entity_var_name});
+
+		return SUCCESS;
+	}
+}
