@@ -19,9 +19,13 @@ public class $gns{class_form} extends FormBean {
 	
 	$gns{list_of_modify_field}
 	
+	$gns{list_of_options}
+	
 	$gns{list_of_getter_setter_search_criteria}
 	
 	$gns{list_of_getter_setter_modify_field}
+	
+	$gns{list_of_getter_setter_options}
 	
 	public void setSearchResult(List<$gns{entity_simple_class}> searchResult) {
 		this.searchResult = searchResult;
