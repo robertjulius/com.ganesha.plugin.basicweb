@@ -577,6 +577,58 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 						stringBuilder.toString().replaceFirst("\n\n", ""));
 			}
 
+			{ // Create options for selectList or checkBox
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					if (rowItem.getType().startsWith("List<")) {
+						stringBuilder
+								.append("\nprivate ")
+								.append(rowItem.getType())
+								.append(" ")
+								.append(rowItem.getName().replaceFirst("new",
+										"selectList")).append(";");
+					}
+				}
+				map.put(Constants.LIST_OF_OPTIONS, stringBuilder.toString()
+						.replaceFirst("\n", ""));
+			}
+
+			{ // Create getter setter for options
+				StringBuilder stringBuilder = new StringBuilder();
+				for (RowItem rowItem : modifyFields) {
+					if (rowItem.getType().startsWith("List<")) {
+						String getterFieldName = rowItem.getName()
+								.replaceFirst("new", "selectList");
+						String getter = new StringBuilder("get")
+								.append(getterFieldName.substring(0, 1)
+										.toUpperCase())
+								.append(getterFieldName.substring(1))
+								.append("()").toString();
+						String setterFieldName = rowItem.getName()
+								.replaceFirst("new", "selectList");
+						String setter = new StringBuilder("set")
+								.append(setterFieldName.substring(0, 1)
+										.toUpperCase())
+								.append(setterFieldName.substring(1))
+								.append("(").append(rowItem.getType())
+								.append(" ").append(setterFieldName)
+								.append(")").toString();
+						stringBuilder.append("\n\npublic ")
+								.append(rowItem.getType()).append(" ")
+								.append(getter).append(" {\n").append("\t")
+								.append("return ").append(getterFieldName)
+								.append(";\n").append("}");
+						stringBuilder.append("\n\npublic void ").append(setter)
+								.append(" {\n").append("\t").append("this.")
+								.append(setterFieldName).append(" = ")
+								.append(setterFieldName).append(";\n")
+								.append("}");
+					}
+				}
+				map.put(Constants.LIST_OF_GETTER_SETTER_OPTIONS, stringBuilder
+						.toString().replaceFirst("\n\n", ""));
+			}
+
 			switch (newModuleType) {
 			case BASIC_CRUD:
 				inputStream = Utils.openContentStream("template/Form", map,
