@@ -34,6 +34,11 @@
 		<constructor-arg value="/jsp/main/error_page.jsp"/>
 		<property name="urlDoesntNeedSession">
 			<list>
+				<value>.*\.bmp</value>
+				<value>.*\.gif</value>
+				<value>.*\.jpg</value>
+				<value>.*\.js</value>
+				<value>.*\.css</value>
 				<value>/jsp/modules/login/login.jsp</value>
 				<value>/modules/login/executeLogin.action</value>
 				<value>/main/index.action</value>

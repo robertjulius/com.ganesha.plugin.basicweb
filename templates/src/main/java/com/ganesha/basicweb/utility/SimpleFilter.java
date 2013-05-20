@@ -45,7 +45,10 @@ public class SimpleFilter implements Filter {
 			url = url.substring(request.getContextPath().length());
 		}
 
-		LoggerFactory.getLogger(getClass()).debug("Requested URL:" + url);
+		if (url.endsWith(".action") || url.endsWith(".jsp")
+				|| url.endsWith(".servlet")) {
+			LoggerFactory.getLogger(getClass()).debug("Requested URL:" + url);
+		}
 
 		if (isUrlNeedSession(url)) {
 			LoggerFactory.getLogger(getClass()).debug(
@@ -92,7 +95,7 @@ public class SimpleFilter implements Filter {
 	private boolean isUrlNeedPrivilege(String url) {
 		for (String testUrl : AppContextManager.getPageFail()
 				.getUrlDoesntNeedPrivilege()) {
-			if (testUrl.equals(url)) {
+			if (url.matches(testUrl)) {
 				return false;
 			}
 		}
@@ -102,15 +105,7 @@ public class SimpleFilter implements Filter {
 	private boolean isUrlNeedSession(String url) {
 		for (String testUrl : AppContextManager.getPageFail()
 				.getUrlDoesntNeedSession()) {
-			if (testUrl.equals(url)) {
-				return false;
-			}
-
-			/*
-			 * TODO main di applicationContext aja, trus main pake regex untuk
-			 * filtering
-			 */
-			if (url.endsWith(".css") || url.endsWith(".js")) {
+			if (url.matches(testUrl)) {
 				return false;
 			}
 		}
